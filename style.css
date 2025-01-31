@@ -96,3 +96,16 @@ body {
         flex-direction: column;
     }
 }
+/* Klasa dla wyróżnienia pól */
+.highlight-red {
+    color: red;
+    font-weight: bold;
+}
+
+/* Pole cena */
+#cena {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    color: red;
+    font-weight: bold;
+}
