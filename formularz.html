@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Formularz zgłoszeniowy</title>
+</head>
+<body>
+    <h1>Formularz zgłoszeniowy</h1>
+    <form action="przetworz.php" method="post">
+        <!-- Dane osobowe -->
+        <label for="imie_nick">Imię lub nick:</label>
+        <input type="text" name="imie_nick" id="imie_nick" required>
+        <br><br>
+
+        <label for="adres">Adres:</label>
+        <input type="text" name="adres" id="adres" required>
+        <br><br>
+
+        <label for="kod">Kod pocztowy:</label>
+        <input type="text" name="kod" id="kod" required>
+        <br><br>
+
+        <label for="miasto">Miasto:</label>
+        <input type="text" name="miasto" id="miasto" required>
+        <br><br>
+
+        <label for="wojewodztwo">Województwo:</label>
+        <input type="text" name="wojewodztwo" id="wojewodztwo" required>
+        <br><br>
+
+        <label for="telefon">Telefon:</label>
+        <input type="text" name="telefon" id="telefon" required>
+        <br><br>
+
+        <label for="email">E-mail:</label>
+        <input type="email" name="email" id="email" required>
+        <br><br>
+
+        <!-- Dane pojazdu -->
+        <label for="marka">Marka pojazdu:</label>
+        <input type="text" name="marka" id="marka" required>
+        <br><br>
+
+        <label for="model">Model pojazdu:</label>
+        <input type="text" name="model" id="model" required>
+        <br><br>
+
+        <label for="kod_silnika">Kod silnika:</label>
+        <input type="text" name="kod_silnika" id="kod_silnika" required>
+        <br><br>
+
+        <label for="moc">Moc (KM):</label>
+        <input type="number" name="moc" id="moc" required>
+        <br><br>
+
+        <label for="pojemnosc">Pojemność (cm³):</label>
+        <input type="number" name="pojemnosc" id="pojemnosc" required>
+        <br><br>
+
+        <label for="rok_produkcji">Rok produkcji:</label>
+        <input type="number" name="rok_produkcji" id="rok_produkcji" required>
+        <br><br>
+
+        <input type="submit" value="Wyślij">
+    </form>
+</body>
+</html>
