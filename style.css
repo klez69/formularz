@@ -17,7 +17,7 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 1200px; /* Zwiększona szerokość dla dwóch kolumn */
+    max-width: 1000px; /* Zwiększona szerokość dla dwóch kolumn */
     display: flex;
     gap: 20px;
 }
@@ -82,6 +82,12 @@ body {
 .selected-values p {
     margin: 10px 0;
     color: #555;
+}
+
+/* Klasa dla wyróżnienia pól */
+.highlight-red {
+    color: red;
+    font-weight: bold;
 }
 
 /* Responsywność */
