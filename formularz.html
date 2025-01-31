@@ -114,30 +114,40 @@
             document.getElementById('selected-cena').textContent = cena || '-';
         }
 
-        // Funkcja do aktualizacji ceny
-        function updateCena() {
-            const marka = document.getElementById('marka').value.toLowerCase(); // Pobierz markę i zamień na małe litery
-            const cenaInput = document.getElementById('cena');
+       // Funkcja do aktualizacji ceny
+function updateCena() {
+    const marka = document.getElementById('marka').value.toLowerCase(); // Pobierz markę i zamień na małe litery
+    const model = document.getElementById('model').value.toLowerCase(); // Pobierz model i zamień na małe litery
+    const cenaInput = document.getElementById('cena');
 
-            // Ustaw cenę na 4500 zł, jeśli marka to "audi"
-            if (marka === 'audi') {
-                cenaInput.value = 4500;
-            } else {
-                cenaInput.value = ''; // Wyczyść pole ceny, jeśli marka nie jest "audi"
-            }
+    let cenaBazowa = 0;
+    let dodatkowaCena = 0;
 
-            // Zaktualizuj wyświetlane wartości
-            updateSelectedValues();
+    // Ustaw cenę bazową na 4500 zł, jeśli marka to "audi"
+    if (marka === 'audi') {
+        cenaBazowa = 4500;
+
+        // Dodaj dodatkową cenę w zależności od modelu
+        if (model === 'a1') {
+            dodatkowaCena = 300;
+        } else if (model === 'a2') {
+            dodatkowaCena = 350;
         }
+    }
 
-        // Nasłuchuj zmian we wszystkich polach formularza
-        const inputs = document.querySelectorAll('input, textarea');
-        inputs.forEach(input => {
-            input.addEventListener('input', updateSelectedValues);
-        });
+    // Oblicz całkowitą cenę
+    const cenaCalkowita = cenaBazowa + dodatkowaCena;
 
-        // Nasłuchuj zmian w polu "marka", aby aktualizować cenę
-        document.getElementById('marka').addEventListener('input', updateCena);
-    </script>
+    // Ustaw wartość pola cena
+    cenaInput.value = cenaCalkowita > 0 ? cenaCalkowita : '';
+
+    // Zaktualizuj wyświetlane wartości
+    updateSelectedValues();
+}
+
+// Nasłuchuj zmian w polach "marka" i "model", aby aktualizować cenę
+document.getElementById('marka').addEventListener('input', updateCena);
+document.getElementById('model').addEventListener('input', updateCena);
+    </scirpt>
 </body>
 </html>
