@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
     <div class="form-container">
+        <h1>Formularz zgłoszeniowy</h1>
         <form action="przetworz.php" method="post">
             <!-- Dane osobowe -->
             <label for="imie_nick">Imię lub nick:</label>
@@ -51,26 +51,32 @@
             <label for="rok_produkcji">Rok produkcji:</label>
             <input type="number" name="rok_produkcji" id="rok_produkcji" required>
 
+            <!-- Pole cena -->
+            <label for="cena">Cena (zł):</label>
+            <input type="number" name="cena" id="cena" readonly>
+
             <input type="submit" value="Wyślij">
         </form>
 
         <!-- Sekcja wyświetlająca wybrane wartości -->
-       <div class="selected-values">
-    <h2>Wybrane wartości:</h2>
-    <p><strong>Imię/nick:</strong> <span id="selected-imie_nick">-</span></p>
-    <p><strong>Adres:</strong> <span id="selected-adres">-</span></p>
-    <p><strong>Kod pocztowy:</strong> <span id="selected-kod">-</span></p>
-    <p><strong>Miasto:</strong> <span id="selected-miasto">-</span></p>
-    <p><strong>Województwo:</strong> <span id="selected-wojewodztwo">-</span></p>
-    <p><strong>Telefon:</strong> <span id="selected-telefon">-</span></p>
-    <p><strong>E-mail:</strong> <span id="selected-email">-</span></p>
-    <p><strong>Marka:</strong> <span id="selected-marka" class="highlight-red">-</span></p>
-    <p><strong>Model:</strong> <span id="selected-model" class="highlight-red">-</span></p>
-    <p><strong>Kod silnika:</strong> <span id="selected-kod_silnika" class="highlight-red">-</span></p>
-    <p><strong>Moc (KM):</strong> <span id="selected-moc" class="highlight-red">-</span></p>
-    <p><strong>Pojemność (cm³):</strong> <span id="selected-pojemnosc" class="highlight-red">-</span></p>
-    <p><strong>Rok produkcji:</strong> <span id="selected-rok_produkcji" class="highlight-red">-</span></p>
-</div>
+        <div class="selected-values">
+            <h2>Wybrane wartości:</h2>
+            <p><strong>Imię/nick:</strong> <span id="selected-imie_nick">-</span></p>
+            <p><strong>Adres:</strong> <span id="selected-adres">-</span></p>
+            <p><strong>Kod pocztowy:</strong> <span id="selected-kod">-</span></p>
+            <p><strong>Miasto:</strong> <span id="selected-miasto">-</span></p>
+            <p><strong>Województwo:</strong> <span id="selected-wojewodztwo">-</span></p>
+            <p><strong>Telefon:</strong> <span id="selected-telefon">-</span></p>
+            <p><strong>E-mail:</strong> <span id="selected-email">-</span></p>
+            <p><strong>Marka:</strong> <span id="selected-marka" class="highlight-red">-</span></p>
+            <p><strong>Model:</strong> <span id="selected-model" class="highlight-red">-</span></p>
+            <p><strong>Kod silnika:</strong> <span id="selected-kod_silnika" class="highlight-red">-</span></p>
+            <p><strong>Moc (KM):</strong> <span id="selected-moc" class="highlight-red">-</span></p>
+            <p><strong>Pojemność (cm³):</strong> <span id="selected-pojemnosc" class="highlight-red">-</span></p>
+            <p><strong>Rok produkcji:</strong> <span id="selected-rok_produkcji" class="highlight-red">-</span></p>
+            <p><strong>Cena (zł):</strong> <span id="selected-cena" class="highlight-red">-</span></p>
+        </div>
+    </div>
 
     <script>
         // Funkcja do aktualizacji wyświetlanych wartości
@@ -89,6 +95,7 @@
             const moc = document.getElementById('moc').value;
             const pojemnosc = document.getElementById('pojemnosc').value;
             const rok_produkcji = document.getElementById('rok_produkcji').value;
+            const cena = document.getElementById('cena').value;
 
             // Zaktualizuj zawartość elementów HTML
             document.getElementById('selected-imie_nick').textContent = imie_nick || '-';
@@ -104,6 +111,23 @@
             document.getElementById('selected-moc').textContent = moc || '-';
             document.getElementById('selected-pojemnosc').textContent = pojemnosc || '-';
             document.getElementById('selected-rok_produkcji').textContent = rok_produkcji || '-';
+            document.getElementById('selected-cena').textContent = cena || '-';
+        }
+
+        // Funkcja do aktualizacji ceny
+        function updateCena() {
+            const marka = document.getElementById('marka').value.toLowerCase(); // Pobierz markę i zamień na małe litery
+            const cenaInput = document.getElementById('cena');
+
+            // Ustaw cenę na 4500 zł, jeśli marka to "audi"
+            if (marka === 'audi') {
+                cenaInput.value = 4500;
+            } else {
+                cenaInput.value = ''; // Wyczyść pole ceny, jeśli marka nie jest "audi"
+            }
+
+            // Zaktualizuj wyświetlane wartości
+            updateSelectedValues();
         }
 
         // Nasłuchuj zmian we wszystkich polach formularza
@@ -111,6 +135,9 @@
         inputs.forEach(input => {
             input.addEventListener('input', updateSelectedValues);
         });
+
+        // Nasłuchuj zmian w polu "marka", aby aktualizować cenę
+        document.getElementById('marka').addEventListener('input', updateCena);
     </script>
 </body>
 </html>
