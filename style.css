@@ -17,7 +17,7 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 800px; /* Zwiększona szerokość dla dwóch kolumn */
+    max-width: 1200px; /* Zwiększona szerokość dla dwóch kolumn */
     display: flex;
     gap: 20px;
 }
