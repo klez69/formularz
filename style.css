@@ -7,7 +7,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
+    min-height: 100vh;
 }
 
 /* Kontener formularza */
@@ -17,14 +17,23 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 1200px;
+    max-width: 800px; /* Zwiększona szerokość dla dwóch kolumn */
+    display: flex;
+    gap: 20px;
 }
 
-/* Nagłówek formularza */
-.form-container h1 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
+/* Lewa kolumna (formularz) */
+.form-container form {
+    flex: 1;
+}
+
+/* Prawa kolumna (wybrane wartości) */
+.form-container .selected-values {
+    flex: 1;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
 }
 
 /* Style dla etykiet */
@@ -64,13 +73,20 @@ body {
     background-color: #218838;
 }
 
-/* Responsywność */
-@media (max-width: 600px) {
-    .form-container {
-        padding: 15px;
-    }
+/* Style dla sekcji wybranych wartości */
+.selected-values h2 {
+    margin-top: 0;
+    color: #333;
+}
 
-    .form-container h1 {
-        font-size: 24px;
+.selected-values p {
+    margin: 10px 0;
+    color: #555;
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+    .form-container {
+        flex-direction: column;
     }
 }
