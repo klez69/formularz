@@ -54,7 +54,7 @@ body {
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 16px;
+    font-size: 12px;
 }
 
 /* Style dla przycisku */
@@ -65,7 +65,7 @@ body {
     color: #fff;
     border: none;
     border-radius: 4px;
-    font-size: 16px;
+    font-size: 12px;
     cursor: pointer;
 }
 
