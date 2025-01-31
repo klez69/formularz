@@ -55,7 +55,7 @@
             <label for="cena">Cena (zł):</label>
             <input type="number" name="cena" id="cena" readonly>
 
-            <input type="submit" value="Wyślij">
+            <input type="submit" value="Wyślij" id="submit-button" disabled>
         </form>
 
         <!-- Sekcja wyświetlająca wybrane wartości -->
@@ -118,7 +118,9 @@ function updateSelectedValues() {
 function updateCena() {
     const marka = document.getElementById('marka').value.toLowerCase(); // Pobierz markę i zamień na małe litery
     const model = document.getElementById('model').value.toLowerCase(); // Pobierz model i zamień na małe litery
+    const kodSilnika = document.getElementById('kod_silnika').value.toUpperCase(); // Pobierz kod silnika i zamień na wielkie litery
     const cenaInput = document.getElementById('cena');
+    const submitButton = document.getElementById('submit-button');
 
     let cenaBazowa = 0;
     let dodatkowaCena = 0;
@@ -135,11 +137,23 @@ function updateCena() {
         }
     }
 
+    // Dodaj 200 zł, jeśli kod silnika to "DDAA"
+    if (kodSilnika === 'DDAA') {
+        dodatkowaCena += 200;
+    }
+
     // Oblicz całkowitą cenę
     const cenaCalkowita = cenaBazowa + dodatkowaCena;
 
     // Ustaw wartość pola cena
     cenaInput.value = cenaCalkowita > 0 ? cenaCalkowita : '';
+
+    // Aktywuj przycisk "Wyślij", jeśli kod silnika nie jest "DDAA"
+    if (kodSilnika !== 'DDAA') {
+        submitButton.disabled = false;
+    } else {
+        submitButton.disabled = true; // Dezaktywuj przycisk, jeśli kod silnika to "DDAA"
+    }
 
     // Zaktualizuj wyświetlane wartości
     updateSelectedValues();
@@ -151,9 +165,10 @@ inputs.forEach(input => {
     input.addEventListener('input', updateSelectedValues);
 });
 
-// Nasłuchuj zmian w polach "marka" i "model", aby aktualizować cenę
+// Nasłuchuj zmian w polach "marka", "model" i "kod_silnika", aby aktualizować cenę
 document.getElementById('marka').addEventListener('input', updateCena);
 document.getElementById('model').addEventListener('input', updateCena);
+document.getElementById('kod_silnika').addEventListener('input', updateCena);
     </script>
 </body>
 </html>
