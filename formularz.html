@@ -59,6 +59,7 @@
             <h2>Wybrane wartości:</h2>
             <p><strong>Marka:</strong> <span id="selected-marka">-</span></p>
             <p><strong>Model:</strong> <span id="selected-model">-</span></p>
+            <p><strong>Kod silnika:</strong> <span id="selected-kod_silnika">-</span></p>
         </div>
     </div>
 
@@ -68,15 +69,18 @@
             // Pobierz wartości z pól input
             const marka = document.getElementById('marka').value;
             const model = document.getElementById('model').value;
+            const model = document.getElementById('kod_silnika').value;
 
             // Zaktualizuj zawartość elementów HTML
             document.getElementById('selected-marka').textContent = marka || '-';
             document.getElementById('selected-model').textContent = model || '-';
+            document.getElementById('selected-kod_silnika').textContent = kod_silnika || '-';
         }
 
         // Nasłuchuj zmian w polach "marka" i "model"
         document.getElementById('marka').addEventListener('input', updateSelectedValues);
         document.getElementById('model').addEventListener('input', updateSelectedValues);
+        document.getElementById('kod_silnika').addEventListener('input', updateSelectedValues);
     </script>
 </body>
 </html>
