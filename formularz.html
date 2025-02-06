@@ -13,28 +13,27 @@ if (empty($_SESSION['csrf_token'])) {
     <title>Formularz zgłoszeniowy</title>
     <link rel="stylesheet" href="style.css">
     <script>
-        function toggleClientSection() {
+        function sprawdzKodSilnika() {
+            let marka = document.getElementById("marka").value.trim();
+            let model = document.getElementById("model").value.trim();
+            let moc = document.getElementById("moc").value.trim();
+            let pojemnosc = document.getElementById("pojemnosc").value.trim();
+            let rok = document.getElementById("rok").value.trim();
             let kodSilnika = document.getElementById("kod_silnika").value.trim();
-            let clientSection = document.getElementById("client-section");
+            let sekcjaKlienta = document.getElementById("client-section");
 
-            if (kodSilnika === "") {
-                clientSection.style.display = "block"; // Pokaż sekcję danych klienta
-                setClientFieldsRequired(true);
-            } else {
-                clientSection.style.display = "none"; // Ukryj sekcję danych klienta
-                setClientFieldsRequired(false);
+            // Sprawdzamy, czy wszystkie pola samochodu są wypełnione
+            if (marka && model && moc && pojemnosc && rok) {
+                if (kodSilnika === "") {
+                    sekcjaKlienta.style.display = "block"; // Pokazuje dane klienta
+                } else {
+                    sekcjaKlienta.style.display = "none"; // Ukrywa dane klienta
+                }
             }
         }
 
-        function setClientFieldsRequired(required) {
-            document.getElementById("imie").required = required;
-            document.getElementById("nazwisko").required = required;
-            document.getElementById("email").required = required;
-            document.getElementById("telefon").required = required;
-        }
-
         window.onload = function () {
-            toggleClientSection();
+            document.getElementById("client-section").style.display = "none"; // Ukrywa dane klienta na start
         };
     </script>
 </head>
@@ -46,22 +45,22 @@ if (empty($_SESSION['csrf_token'])) {
             <h2>Dane samochodu</h2>
 
             <label for="marka">Marka:</label>
-            <input type="text" id="marka" name="marka" required maxlength="50">
+            <input type="text" id="marka" name="marka" required maxlength="50" oninput="sprawdzKodSilnika()">
 
             <label for="model">Model:</label>
-            <input type="text" id="model" name="model" required maxlength="50">
+            <input type="text" id="model" name="model" required maxlength="50" oninput="sprawdzKodSilnika()">
 
             <label for="moc">Moc (KM):</label>
-            <input type="number" id="moc" name="moc" required min="10" max="2000">
+            <input type="number" id="moc" name="moc" required min="10" max="2000" oninput="sprawdzKodSilnika()">
 
             <label for="pojemnosc">Pojemność (cm³):</label>
-            <input type="number" id="pojemnosc" name="pojemnosc" required min="500" max="10000">
+            <input type="number" id="pojemnosc" name="pojemnosc" required min="500" max="10000" oninput="sprawdzKodSilnika()">
 
             <label for="rok">Rok produkcji:</label>
-            <input type="number" id="rok" name="rok" required min="1900" max="2025">
+            <input type="number" id="rok" name="rok" required min="1900" max="2025" oninput="sprawdzKodSilnika()">
 
             <label for="kod_silnika">Kod silnika:</label>
-            <input type="text" id="kod_silnika" name="kod_silnika" required pattern="[A-Za-z0-9]+" maxlength="10" oninput="toggleClientSection()">
+            <input type="text" id="kod_silnika" name="kod_silnika" required pattern="[A-Za-z0-9]+" maxlength="10" oninput="sprawdzKodSilnika()">
 
             <!-- Sekcja danych klienta (ukryta na start) -->
             <div id="client-section" style="display: none;">
