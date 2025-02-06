@@ -141,8 +141,8 @@
 
         // Funkcja do aktualizacji ceny i opisu
         function updateCena() {
-            const marka = document.getElementById('marka').value.toLowerCase(); // Pobierz markę i zamień na małe litery
-            const model = document.getElementById('model').value.toLowerCase(); // Pobierz model i zamień na małe litery
+            const marka = document.getElementById('marka').value.toUpperCase(); // Pobierz markę i zamień na wielkie litery
+            const model = document.getElementById('model').value.toUpperCase(); // Pobierz model i zamień na wielkie litery
             const kodSilnika = document.getElementById('kod_silnika').value.toUpperCase(); // Pobierz kod silnika i zamień na wielkie litery
             const cenaInput = document.getElementById('cena');
             const submitButton = document.getElementById('submit-button');
