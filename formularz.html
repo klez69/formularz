@@ -41,6 +41,9 @@
             <label for="cena">Cena (zł):</label>
             <input type="number" name="cena" id="cena" readonly>
 
+            <!-- Opis opracowania -->
+            <p id="opis-schematu" class="highlight-red"></p>
+
             <!-- Sekcja danych klienta (domyślnie ukryta) -->
             <div id="dane-klienta" style="display: none;">
                 <h2>Dane klienta:</h2>
@@ -56,18 +59,6 @@
 
             <input type="button" value="Sprawdź" id="submit-button">
         </form>
-
-        <!-- Sekcja wyświetlająca wybrane wartości -->
-        <div class="selected-values">
-            <h2>Wybrane wartości:</h2>
-            <p><strong>Marka:</strong> <span id="selected-marka">-</span></p>
-            <p><strong>Model:</strong> <span id="selected-model">-</span></p>
-            <p><strong>Kod silnika:</strong> <span id="selected-kod_silnika">-</span></p>
-            <p><strong>Moc (KM):</strong> <span id="selected-moc">-</span></p>
-            <p><strong>Pojemność (cm³):</strong> <span id="selected-pojemnosc">-</span></p>
-            <p><strong>Rok produkcji:</strong> <span id="selected-rok_produkcji">-</span></p>
-            <p><strong>Cena (zł):</strong> <span id="selected-cena">-</span></p>
-        </div>
     </div>
 
     <script>
@@ -77,21 +68,19 @@
             mercedes: ["Klasa A", "Klasa C", "Klasa E"]
         };
 
+        const opracowaneModele = {
+            audi: ["a1", "a2"],
+            bmw: ["seria 3"],
+            mercedes: ["klasa c"]
+        };
+
         const markaSelect = document.getElementById("marka");
         const modelSelect = document.getElementById("model");
         const kodSilnikaInput = document.getElementById("kod_silnika");
         const cenaInput = document.getElementById("cena");
         const submitButton = document.getElementById("submit-button");
         const daneKlienta = document.getElementById("dane-klienta");
-
-        // Sekcja "Wybrane wartości"
-        const selectedMarka = document.getElementById("selected-marka");
-        const selectedModel = document.getElementById("selected-model");
-        const selectedKodSilnika = document.getElementById("selected-kod_silnika");
-        const selectedMoc = document.getElementById("selected-moc");
-        const selectedPojemnosc = document.getElementById("selected-pojemnosc");
-        const selectedRokProdukcji = document.getElementById("selected-rok_produkcji");
-        const selectedCena = document.getElementById("selected-cena");
+        const opisSchemat = document.getElementById("opis-schematu");
 
         markaSelect.addEventListener("change", function () {
             modelSelect.innerHTML = '<option value="">-- Wybierz model --</option>';
@@ -111,7 +100,7 @@
 
         function updateCena() {
             const marka = markaSelect.value;
-            const model = modelSelect.value;
+            const model = modelSelect.value.toLowerCase();
             let cena = 0;
 
             if (marka === "audi") {
@@ -129,17 +118,31 @@
             }
 
             cenaInput.value = cena > 0 ? cena : "";
+            updateOpisSchemat();
             updateSelectedValues();
         }
 
+        function updateOpisSchemat() {
+            const marka = markaSelect.value.toLowerCase();
+            const model = modelSelect.value.toLowerCase();
+
+            if (marka && model) {
+                if (opracowaneModele[marka] && opracowaneModele[marka].includes(model)) {
+                    opisSchemat.textContent = "Do tego modelu samochodu jest opracowany schemat.";
+                    opisSchemat.style.color = "green";
+                } else {
+                    opisSchemat.textContent = "Nie posiadamy opracowania do tego samochodu. Wyślij zapytanie do warsztatu w Twoim regionie.";
+                    opisSchemat.style.color = "red";
+                }
+            } else {
+                opisSchemat.textContent = "";
+            }
+        }
+
         function updateSelectedValues() {
-            selectedMarka.textContent = markaSelect.value || "-";
-            selectedModel.textContent = modelSelect.value || "-";
-            selectedKodSilnika.textContent = kodSilnikaInput.value || "-";
-            selectedMoc.textContent = document.getElementById("moc").value || "-";
-            selectedPojemnosc.textContent = document.getElementById("pojemnosc").value || "-";
-            selectedRokProdukcji.textContent = document.getElementById("rok_produkcji").value || "-";
-            selectedCena.textContent = cenaInput.value || "-";
+            document.getElementById("selected-marka").textContent = markaSelect.value || "-";
+            document.getElementById("selected-model").textContent = modelSelect.value || "-";
+            document.getElementById("selected-kod_silnika").textContent = kodSilnikaInput.value || "-";
         }
 
         submitButton.addEventListener("click", function () {
