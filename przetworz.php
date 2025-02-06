@@ -1,9 +1,5 @@
 <?php
-// Dane do połączenia z bazą danych
-$host = 'localhost'; // Adres hosta
-$dbname = 'nazwa_bazy'; // Nazwa bazy danych
-$user = 'uzytkownik'; // Nazwa użytkownika bazy danych
-$password = 'haslo'; // Hasło użytkownika bazy danych
+include(dbt.php);
 
 // Sprawdź, czy formularz został wysłany
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
