@@ -22,6 +22,14 @@ if (empty($_SESSION['csrf_token'])) {
             let kodSilnika = document.getElementById("kod_silnika").value.trim();
             let sekcjaKlienta = document.getElementById("client-section");
 
+            // Aktualizacja sekcji wybranych wartości
+            document.getElementById("selected-marka").textContent = marka || "-";
+            document.getElementById("selected-model").textContent = model || "-";
+            document.getElementById("selected-moc").textContent = moc || "-";
+            document.getElementById("selected-pojemnosc").textContent = pojemnosc || "-";
+            document.getElementById("selected-rok").textContent = rok || "-";
+            document.getElementById("selected-kod").textContent = kodSilnika || "-";
+
             // Sprawdzamy, czy wszystkie pola samochodu są wypełnione
             if (marka && model && moc && pojemnosc && rok) {
                 if (kodSilnika === "") {
@@ -81,6 +89,17 @@ if (empty($_SESSION['csrf_token'])) {
 
             <input type="submit" value="Wyślij">
         </form>
+
+        <!-- Sekcja wybranych wartości -->
+        <div class="selected-values">
+            <h2>Wybrane wartości</h2>
+            <p><strong>Marka:</strong> <span id="selected-marka">-</span></p>
+            <p><strong>Model:</strong> <span id="selected-model">-</span></p>
+            <p><strong>Moc:</strong> <span id="selected-moc">-</span></p>
+            <p><strong>Pojemność:</strong> <span id="selected-pojemnosc">-</span></p>
+            <p><strong>Rok produkcji:</strong> <span id="selected-rok">-</span></p>
+            <p><strong>Kod silnika:</strong> <span id="selected-kod">-</span></p>
+        </div>
     </div>
 </body>
 </html>
