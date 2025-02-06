@@ -162,3 +162,12 @@ body {
 	color: #721c24;
 	border: 1px solid #f5c6cb;
 }
+/* Stylizacja formularza na środku */
+        .form-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 100%;
+            margin: 20px 0;
+        }
