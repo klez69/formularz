@@ -26,7 +26,7 @@
             </select>
 
             <label for="kod_silnika">Kod silnika:</label>
-            <input type="text" name="kod_silnika" id="kod_silnika" required>
+            <input type="text" name="kod_silnika" id="kod_silnika">
 
             <label for="moc">Moc (KM):</label>
             <input type="number" name="moc" id="moc" required>
@@ -41,20 +41,21 @@
             <label for="cena">Cena (zł):</label>
             <input type="number" name="cena" id="cena" readonly>
 
-            <input type="submit" value="Wyślij" id="submit-button" disabled>
-        </form>
+            <!-- Sekcja danych klienta (domyślnie ukryta) -->
+            <div id="dane-klienta" style="display: none;">
+                <h2>Dane klienta:</h2>
+                <label for="imie_nick">Imię lub nick:</label>
+                <input type="text" name="imie_nick" id="imie_nick" required>
 
-        <!-- Sekcja wyświetlająca wybrane wartości -->
-        <div class="selected-values">
-            <h2>Wybrane wartości:</h2>
-            <p><strong>Marka:</strong> <span id="selected-marka">-</span></p>
-            <p><strong>Model:</strong> <span id="selected-model">-</span></p>
-            <p><strong>Kod silnika:</strong> <span id="selected-kod_silnika">-</span></p>
-            <p><strong>Moc (KM):</strong> <span id="selected-moc">-</span></p>
-            <p><strong>Pojemność (cm³):</strong> <span id="selected-pojemnosc">-</span></p>
-            <p><strong>Rok produkcji:</strong> <span id="selected-rok_produkcji">-</span></p>
-            <p><strong>Cena (zł):</strong> <span id="selected-cena">-</span></p>
-        </div>
+                <label for="telefon">Telefon:</label>
+                <input type="text" name="telefon" id="telefon" required>
+
+                <label for="email">E-mail:</label>
+                <input type="email" name="email" id="email" required>
+            </div>
+
+            <input type="submit" value="Sprawdź" id="submit-button">
+        </form>
     </div>
 
     <script>
@@ -69,20 +70,9 @@
         const markaSelect = document.getElementById("marka");
         const modelSelect = document.getElementById("model");
         const kodSilnikaInput = document.getElementById("kod_silnika");
-        const mocInput = document.getElementById("moc");
-        const pojemnoscInput = document.getElementById("pojemnosc");
-        const rokProdukcjiInput = document.getElementById("rok_produkcji");
         const cenaInput = document.getElementById("cena");
         const submitButton = document.getElementById("submit-button");
-
-        // Pobranie elementów do wyświetlania wybranych wartości
-        const selectedMarka = document.getElementById("selected-marka");
-        const selectedModel = document.getElementById("selected-model");
-        const selectedKodSilnika = document.getElementById("selected-kod_silnika");
-        const selectedMoc = document.getElementById("selected-moc");
-        const selectedPojemnosc = document.getElementById("selected-pojemnosc");
-        const selectedRokProdukcji = document.getElementById("selected-rok_produkcji");
-        const selectedCena = document.getElementById("selected-cena");
+        const daneKlienta = document.getElementById("dane-klienta");
 
         // Obsługa zmiany marki - aktualizacja modeli
         markaSelect.addEventListener("change", function () {
@@ -100,15 +90,13 @@
             } else {
                 modelSelect.disabled = true;
             }
-
-            updateSelectedValues();
         });
 
-        // Funkcja do aktualizacji ceny i wyświetlanych wartości
+        // Funkcja do aktualizacji ceny i obsługi danych klienta
         function updateCena() {
             const marka = markaSelect.value;
             const model = modelSelect.value;
-            const kodSilnika = kodSilnikaInput.value.toUpperCase();
+            const kodSilnika = kodSilnikaInput.value.trim();
 
             let cenaBazowa = 0;
             let dodatkowaCena = 0;
@@ -129,7 +117,7 @@
             }
 
             // Dodatkowa opłata za kod silnika
-            if (kodSilnika === "DDAA") {
+            if (kodSilnika.toUpperCase() === "DDAA") {
                 dodatkowaCena += 200;
             }
 
@@ -137,30 +125,20 @@
             const cenaCalkowita = cenaBazowa + dodatkowaCena;
             cenaInput.value = cenaCalkowita > 0 ? cenaCalkowita : "";
 
-            // Aktywacja przycisku "Wyślij", jeśli cena została obliczona
-            submitButton.disabled = !(cenaCalkowita > 0);
-
-            updateSelectedValues();
-        }
-
-        // Funkcja do aktualizacji sekcji "Wybrane wartości"
-        function updateSelectedValues() {
-            selectedMarka.textContent = markaSelect.value || "-";
-            selectedModel.textContent = modelSelect.value || "-";
-            selectedKodSilnika.textContent = kodSilnikaInput.value || "-";
-            selectedMoc.textContent = mocInput.value || "-";
-            selectedPojemnosc.textContent = pojemnoscInput.value || "-";
-            selectedRokProdukcji.textContent = rokProdukcjiInput.value || "-";
-            selectedCena.textContent = cenaInput.value || "-";
+            // Obsługa sekcji "Dane klienta" i zmiany przycisku
+            if (kodSilnika === "") {
+                daneKlienta.style.display = "block";
+                submitButton.value = "Wyślij";
+            } else {
+                daneKlienta.style.display = "none";
+                submitButton.value = "Sprawdź";
+            }
         }
 
         // Nasłuchiwanie zmian
         markaSelect.addEventListener("change", updateCena);
         modelSelect.addEventListener("change", updateCena);
         kodSilnikaInput.addEventListener("input", updateCena);
-        mocInput.addEventListener("input", updateSelectedValues);
-        pojemnoscInput.addEventListener("input", updateSelectedValues);
-        rokProdukcjiInput.addEventListener("input", updateSelectedValues);
     </script>
 </body>
 </html>
