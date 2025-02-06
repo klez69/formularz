@@ -57,18 +57,6 @@
 
             <input type="button" value="Sprawdź" id="submit-button">
         </form>
-
-        <!-- Sekcja wyświetlająca wybrane wartości -->
-        <div class="selected-values">
-            <h2>Wybrane wartości:</h2>
-            <p><strong>Marka:</strong> <span id="selected-marka">-</span></p>
-            <p><strong>Model:</strong> <span id="selected-model">-</span></p>
-            <p><strong>Kod silnika:</strong> <span id="selected-kod_silnika">-</span></p>
-            <p><strong>Moc (KM):</strong> <span id="selected-moc">-</span></p>
-            <p><strong>Pojemność (cm³):</strong> <span id="selected-pojemnosc">-</span></p>
-            <p><strong>Rok produkcji:</strong> <span id="selected-rok_produkcji">-</span></p>
-            <p><strong>Cena (zł):</strong> <span id="selected-cena">-</span></p>
-        </div>
     </div>
 
     <script>
@@ -87,6 +75,7 @@
         const markaSelect = document.getElementById("marka");
         const modelSelect = document.getElementById("model");
         const kodSilnikaInput = document.getElementById("kod_silnika");
+        const cenaInput = document.getElementById("cena");
         const submitButton = document.getElementById("submit-button");
         const daneKlienta = document.getElementById("dane-klienta");
         const opisSchemat = document.getElementById("opis-schematu");
@@ -113,23 +102,44 @@
             } else {
                 daneKlienta.style.display = "none";
                 submitButton.value = "Sprawdź";
+                updateCena();
                 updateOpisSchemat();
             }
         });
 
+        function updateCena() {
+            const marka = markaSelect.value.toLowerCase();
+            const model = modelSelect.value.toLowerCase();
+            let cena = 0;
+
+            if (marka === "audi") {
+                cena = 4500;
+                if (model === "a1") cena += 300;
+                if (model === "a2") cena += 350;
+            } else if (marka === "bmw") {
+                cena = 5000;
+                if (model === "seria 1") cena += 400;
+                if (model === "seria 3") cena += 600;
+            } else if (marka === "mercedes") {
+                cena = 5500;
+                if (model === "klasa a") cena += 500;
+                if (model === "klasa c") cena += 700;
+            }
+
+            cenaInput.value = cena > 0 ? cena : "";
+        }
+
         function updateOpisSchemat() {
             const marka = markaSelect.value.toLowerCase();
             const model = modelSelect.value.toLowerCase();
+            opisSchemat.style.display = "block";
 
-            if (marka && model) {
-                if (opracowaneModele[marka] && opracowaneModele[marka].includes(model)) {
-                    opisSchemat.textContent = "Do tego modelu samochodu jest opracowany schemat.";
-                    opisSchemat.className = "opis-green";
-                } else {
-                    opisSchemat.textContent = "Nie posiadamy opracowania do tego samochodu. Wyślij zapytanie do warsztatu.";
-                    opisSchemat.className = "opis-red";
-                }
-                opisSchemat.style.display = "block";
+            if (opracowaneModele[marka] && opracowaneModele[marka].includes(model)) {
+                opisSchemat.textContent = "Do tego modelu samochodu jest opracowany schemat.";
+                opisSchemat.className = "opis-green";
+            } else {
+                opisSchemat.textContent = "Brak opracowania. Skontaktuj się z warsztatem.";
+                opisSchemat.className = "opis-red";
             }
         }
     </script>
