@@ -8,140 +8,197 @@
 </head>
 <body>
     <div class="form-container">
+        <h1>Formularz zgłoszeniowy</h1>
         <form action="przetworz.php" method="post">
-            <h1>Formularz zgłoszeniowy</h1>
-
+            <!-- Dane samochodu (wstępnie wypełnione) -->
             <label for="marka">Marka pojazdu:</label>
-            <select name="marka" id="marka" required>
-                <option value="">-- Wybierz markę --</option>
-                <option value="audi">Audi</option>
-                <option value="bmw">BMW</option>
-                <option value="mercedes">Mercedes</option>
-            </select>
+            <input type="text" name="marka" id="marka" value="" required>
 
             <label for="model">Model pojazdu:</label>
-            <select name="model" id="model" required disabled>
-                <option value="">-- Najpierw wybierz markę --</option>
-            </select>
+            <input type="text" name="model" id="model" value="" required>
 
             <label for="kod_silnika">Kod silnika:</label>
-            <input type="text" name="kod_silnika" id="kod_silnika">
+            <input type="text" name="kod_silnika" id="kod_silnika" required>
 
             <label for="moc">Moc (KM):</label>
-            <input type="number" name="moc" id="moc" required>
+            <input type="number" name="moc" id="moc" value="" required>
 
             <label for="pojemnosc">Pojemność (cm³):</label>
-            <input type="number" name="pojemnosc" id="pojemnosc" required>
+            <input type="number" name="pojemnosc" id="pojemnosc" value="" required>
 
             <label for="rok_produkcji">Rok produkcji:</label>
-            <input type="number" name="rok_produkcji" id="rok_produkcji" required>
+            <input type="number" name="rok_produkcji" id="rok_produkcji" value="" required>
 
+            <!-- Pole cena -->
             <label for="cena">Cena (zł):</label>
             <input type="number" name="cena" id="cena" readonly>
 
-            <!-- Opis schematu (ukryty na start) -->
-            <p id="opis-schematu"></p>
-
-            <!-- Sekcja danych klienta (ukryta na start) -->
-            <div id="dane-klienta" style="display: none;">
+            <!-- Dane klienta (ukryte, jeśli kod silnika jest wpisany) -->
+            <div id="dane-klienta">
                 <h2>Dane klienta:</h2>
                 <label for="imie_nick">Imię lub nick:</label>
-                <input type="text" name="imie_nick" id="imie_nick" required>
+                <input type="text" name="imie_nick" id="imie_nick">
+
+                <label for="adres">Adres:</label>
+                <input type="text" name="adres" id="adres">
+
+                <label for="kod">Kod pocztowy:</label>
+                <input type="text" name="kod" id="kod">
+
+                <label for="miasto">Miasto:</label>
+                <input type="text" name="miasto" id="miasto">
+
+                <label for="wojewodztwo">Województwo:</label>
+                <input type="text" name="wojewodztwo" id="wojewodztwo">
 
                 <label for="telefon">Telefon:</label>
-                <input type="text" name="telefon" id="telefon" required>
+                <input type="text" name="telefon" id="telefon">
 
                 <label for="email">E-mail:</label>
-                <input type="email" name="email" id="email" required>
+                <input type="email" name="email" id="email">
             </div>
 
-            <input type="button" value="Sprawdź" id="submit-button">
+            <input type="submit" value="Wyślij" id="submit-button" disabled>
         </form>
+
+        <!-- Sekcja wyświetlająca wybrane wartości -->
+        <div class="selected-values">
+            <h2>Wybrane wartości:</h2>
+            <p><strong>Imię/nick:</strong> <span id="selected-imie_nick">-</span></p>
+            <p><strong>Adres:</strong> <span id="selected-adres">-</span></p>
+            <p><strong>Kod pocztowy:</strong> <span id="selected-kod">-</span></p>
+            <p><strong>Miasto:</strong> <span id="selected-miasto">-</span></p>
+            <p><strong>Województwo:</strong> <span id="selected-wojewodztwo">-</span></p>
+            <p><strong>Telefon:</strong> <span id="selected-telefon">-</span></p>
+            <p><strong>E-mail:</strong> <span id="selected-email">-</span></p>
+            <p><strong>Marka:</strong> <span id="selected-marka" class="highlight-red">-</span></p>
+            <p><strong>Model:</strong> <span id="selected-model" class="highlight-red">-</span></p>
+            <p><strong>Kod silnika:</strong> <span id="selected-kod_silnika" class="highlight-red">-</span></p>
+            <p><strong>Moc (KM):</strong> <span id="selected-moc" class="highlight-red">-</span></p>
+            <p><strong>Pojemność (cm³):</strong> <span id="selected-pojemnosc" class="highlight-red">-</span></p>
+            <p><strong>Rok produkcji:</strong> <span id="selected-rok_produkcji" class="highlight-red">-</span></p>
+            <p><strong>Cena (zł):</strong> <span id="selected-cena" class="highlight-red">-</span></p>
+            <!-- Opis schematu -->
+            <p id="opis-schematu" class="highlight-red"></p>
+        </div>
     </div>
 
     <script>
-        const modele = {
-            audi: ["A1", "A2", "A3", "A4"],
-            bmw: ["Seria 1", "Seria 3", "Seria 5"],
-            mercedes: ["Klasa A", "Klasa C", "Klasa E"]
-        };
+        // Funkcja do aktualizacji wyświetlanych wartości
+        function updateSelectedValues() {
+            console.log("Aktualizowanie wyświetlanych wartości..."); // Debugowanie
 
-        const opracowaneModele = {
-            audi: ["a1", "a2"],
-            bmw: ["seria 3"],
-            mercedes: ["klasa c"]
-        };
+            // Pobierz wartości z pól input
+            const imie_nick = document.getElementById('imie_nick').value;
+            const adres = document.getElementById('adres').value;
+            const kod = document.getElementById('kod').value;
+            const miasto = document.getElementById('miasto').value;
+            const wojewodztwo = document.getElementById('wojewodztwo').value;
+            const telefon = document.getElementById('telefon').value;
+            const email = document.getElementById('email').value;
+            const marka = document.getElementById('marka').value;
+            const model = document.getElementById('model').value;
+            const kod_silnika = document.getElementById('kod_silnika').value;
+            const moc = document.getElementById('moc').value;
+            const pojemnosc = document.getElementById('pojemnosc').value;
+            const rok_produkcji = document.getElementById('rok_produkcji').value;
+            const cena = document.getElementById('cena').value;
 
-        const markaSelect = document.getElementById("marka");
-        const modelSelect = document.getElementById("model");
-        const kodSilnikaInput = document.getElementById("kod_silnika");
-        const cenaInput = document.getElementById("cena");
-        const submitButton = document.getElementById("submit-button");
-        const daneKlienta = document.getElementById("dane-klienta");
-        const opisSchemat = document.getElementById("opis-schematu");
+            // Zaktualizuj zawartość elementów HTML
+            document.getElementById('selected-imie_nick').textContent = imie_nick || '-';
+            document.getElementById('selected-adres').textContent = adres || '-';
+            document.getElementById('selected-kod').textContent = kod || '-';
+            document.getElementById('selected-miasto').textContent = miasto || '-';
+            document.getElementById('selected-wojewodztwo').textContent = wojewodztwo || '-';
+            document.getElementById('selected-telefon').textContent = telefon || '-';
+            document.getElementById('selected-email').textContent = email || '-';
+            document.getElementById('selected-marka').textContent = marka || '-';
+            document.getElementById('selected-model').textContent = model || '-';
+            document.getElementById('selected-kod_silnika').textContent = kod_silnika || '-';
+            document.getElementById('selected-moc').textContent = moc || '-';
+            document.getElementById('selected-pojemnosc').textContent = pojemnosc || '-';
+            document.getElementById('selected-rok_produkcji').textContent = rok_produkcji || '-';
+            document.getElementById('selected-cena').textContent = cena || '-';
+        }
 
-        markaSelect.addEventListener("change", function () {
-            modelSelect.innerHTML = '<option value="">-- Wybierz model --</option>';
-            if (this.value && modele[this.value]) {
-                modele[this.value].forEach(model => {
-                    const option = document.createElement("option");
-                    option.value = model.toLowerCase();
-                    option.textContent = model;
-                    modelSelect.appendChild(option);
-                });
-                modelSelect.disabled = false;
-            } else {
-                modelSelect.disabled = true;
-            }
-        });
-
-        submitButton.addEventListener("click", function () {
-            if (kodSilnikaInput.value.trim() === "") {
-                daneKlienta.style.display = "block";
-                submitButton.value = "Wyślij";
-            } else {
-                daneKlienta.style.display = "none";
-                submitButton.value = "Sprawdź";
-                updateCena();
-                updateOpisSchemat();
-            }
-        });
-
+        // Funkcja do aktualizacji ceny i opisu
         function updateCena() {
-            const marka = markaSelect.value.toLowerCase();
-            const model = modelSelect.value.toLowerCase();
-            let cena = 0;
+            const marka = document.getElementById('marka').value.toLowerCase(); // Pobierz markę i zamień na małe litery
+            const model = document.getElementById('model').value.toLowerCase(); // Pobierz model i zamień na małe litery
+            const kodSilnika = document.getElementById('kod_silnika').value.toUpperCase(); // Pobierz kod silnika i zamień na wielkie litery
+            const cenaInput = document.getElementById('cena');
+            const submitButton = document.getElementById('submit-button');
+            const opisSchematu = document.getElementById('opis-schematu'); // Element do wyświetlania opisu
+            const daneKlienta = document.getElementById('dane-klienta'); // Sekcja danych klienta
 
-            if (marka === "audi") {
-                cena = 4500;
-                if (model === "a1") cena += 300;
-                if (model === "a2") cena += 350;
-            } else if (marka === "bmw") {
-                cena = 5000;
-                if (model === "seria 1") cena += 400;
-                if (model === "seria 3") cena += 600;
-            } else if (marka === "mercedes") {
-                cena = 5500;
-                if (model === "klasa a") cena += 500;
-                if (model === "klasa c") cena += 700;
+            let cenaBazowa = 0;
+            let dodatkowaCena = 0;
+
+            // Ustaw cenę bazową na 4500 zł, jeśli marka to "audi"
+            if (marka === 'audi') {
+                cenaBazowa = 4500;
+
+                // Dodaj dodatkową cenę w zależności od modelu
+                if (model === 'a1') {
+                    dodatkowaCena = 300;
+                } else if (model === 'a2') {
+                    dodatkowaCena = 350;
+                }
             }
 
-            cenaInput.value = cena > 0 ? cena : "";
-        }
+            // Dodaj 200 zł, jeśli kod silnika to "DDAA"
+            if (kodSilnika === 'DDAA') {
+                dodatkowaCena += 200;
+            }
 
-        function updateOpisSchemat() {
-            const marka = markaSelect.value.toLowerCase();
-            const model = modelSelect.value.toLowerCase();
-            opisSchemat.style.display = "block";
+            // Oblicz całkowitą cenę
+            const cenaCalkowita = cenaBazowa + dodatkowaCena;
 
-            if (opracowaneModele[marka] && opracowaneModele[marka].includes(model)) {
-                opisSchemat.textContent = "Do tego modelu samochodu jest opracowany schemat.";
-                opisSchemat.className = "opis-green";
+            // Ustaw wartość pola cena
+            cenaInput.value = cenaCalkowita > 0 ? cenaCalkowita : '';
+
+            // Aktywuj przycisk "Wyślij", jeśli kod silnika nie jest "DDAA"
+            if (kodSilnika !== 'DDAA') {
+                submitButton.disabled = false;
             } else {
-                opisSchemat.textContent = "Brak opracowania. Skontaktuj się z warsztatem.";
-                opisSchemat.className = "opis-red";
+                submitButton.disabled = true; // Dezaktywuj przycisk, jeśli kod silnika to "DDAA"
             }
+
+            // Wyświetl opis tylko po wpisaniu kodu silnika
+            if (kodSilnika) {
+                if (marka === 'audi' && (model === 'a1' || model === 'a2') && kodSilnika === 'DDAA') {
+                    opisSchematu.textContent = "Do tego modelu samochodu jest opracowany schemat.";
+                } else {
+                    opisSchematu.textContent = "Nie posiadamy opracowania do tego samochodu. Wyślij zapytanie do warsztatu w Twoim regionie.";
+                }
+            } else {
+                opisSchematu.textContent = ""; // Ukryj opis, jeśli kod silnika nie został wpisany
+            }
+
+            // Ukryj lub pokaż dane klienta w zależności od kodu silnika
+            if (kodSilnika) {
+                daneKlienta.style.display = 'none'; // Ukryj dane klienta, jeśli kod silnika jest wpisany
+            } else {
+                daneKlienta.style.display = 'block'; // Pokaż dane klienta, jeśli kod silnika nie jest wpisany
+            }
+
+            // Zaktualizuj wyświetlane wartości
+            updateSelectedValues();
         }
+
+        // Nasłuchuj zmian we wszystkich polach formularza
+        const inputs = document.querySelectorAll('input, textarea');
+        inputs.forEach(input => {
+            input.addEventListener('input', updateSelectedValues);
+        });
+
+        // Nasłuchuj zmian w polach "marka", "model" i "kod_silnika", aby aktualizować cenę i opis
+        document.getElementById('marka').addEventListener('input', updateCena);
+        document.getElementById('model').addEventListener('input', updateCena);
+        document.getElementById('kod_silnika').addEventListener('input', updateCena);
+
+        // Wywołaj funkcję updateCena na starcie, aby ustawić początkowy stan
+        updateCena();
     </script>
 </body>
 </html>
