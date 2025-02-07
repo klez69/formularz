@@ -5,48 +5,108 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formularz zgłoszeniowy</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Stylizacja formularza na środku */
+        .form-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .form-container {
+            max-width: 600px;
+            width: 100%;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            width: 100%;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"], input[type="button"] {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        input[type="submit"]:disabled, input[type="button"]:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        #dane-klienta {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <div class="form-container">
-            <h1>Formularz zgłoszeniowy</h1>
-        <form action="przetworz.php" method="post">
-            <!-- Dane samochodu (wstępnie wypełnione) -->
+
+    <!-- Formularz zgłoszeniowy na środku -->
+    <div class="form-wrapper">
+        <h1>Formularz zgłoszeniowy</h1>
+        <form id="formularz" action="przetworz.php" method="post" class="form-container">
             <label for="marka">Marka pojazdu:</label>
-            <input type="text" name="marka" id="marka" value="" required>
+            <input type="text" name="marka" id="marka" required>
 
             <label for="model">Model pojazdu:</label>
-            <input type="text" name="model" id="model" value="" required>
+            <input type="text" name="model" id="model" required>
 
             <label for="kod_silnika">Kod silnika:</label>
             <input type="text" name="kod_silnika" id="kod_silnika" required>
 
             <label for="moc">Moc (KM):</label>
-            <input type="number" name="moc" id="moc" value="" required>
+            <input type="number" name="moc" id="moc" required>
 
             <label for="pojemnosc">Pojemność (cm³):</label>
-            <input type="number" name="pojemnosc" id="pojemnosc" value="" required>
+            <input type="number" name="pojemnosc" id="pojemnosc" required>
 
             <label for="rok_produkcji">Rok produkcji:</label>
-            <input type="number" name="rok_produkcji" id="rok_produkcji" value="" required>
+            <input type="number" name="rok_produkcji" id="rok_produkcji" required>
 
             <!-- Pole cena -->
             <label for="cena">Cena (zł):</label>
             <input type="number" name="cena" id="cena" readonly>
 
-            <!-- Dane klienta (ukryte, jeśli kod silnika jest wpisany) -->
+            <!-- Dane klienta -->
             <div id="dane-klienta">
                 <h2>Dane klienta:</h2>
                 <label for="imie_nick">Imię lub nick:</label>
-                <input type="text" name="imie_nick" id="imie_nick">
+                <input type="text" name="imie_nick" id="imie_nick" required>
 
                 <label for="adres">Adres:</label>
-                <input type="text" name="adres" id="adres">
+                <input type="text" name="adres" id="adres" required>
 
                 <label for="kod">Kod pocztowy:</label>
-                <input type="text" name="kod" id="kod">
+                <input type="text" name="kod" id="kod" required>
 
                 <label for="miasto">Miasto:</label>
-                <input type="text" name="miasto" id="miasto">
+                <input type="text" name="miasto" id="miasto" required>
 
                 <label for="wojewodztwo">Województwo:</label>
                 <select name="wojewodztwo" id="wojewodztwo">
