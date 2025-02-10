@@ -95,7 +95,7 @@
 				<p><strong>Moc (KM):</strong> <span id="selected-moc" class="highlight-red">-</span></p>
 				<p><strong>Pojemność (cm³):</strong> <span id="selected-pojemnosc" class="highlight-red">-</span></p>
 				<p><strong>Rok produkcji:</strong> <span id="selected-rok_produkcji" class="highlight-red">-</span></p>
-				<p><strong>Cena (zł):</strong> <span id="selected-cena" class="highlight-red">-</span></p>
+				
 				<!-- Opis schematu -->
 				<p id="opis-schematu" class="highlight-red"></p>
 			</div>
@@ -136,7 +136,7 @@
 				document.getElementById('selected-moc').textContent = moc || '-'
 				document.getElementById('selected-pojemnosc').textContent = pojemnosc || '-'
 				document.getElementById('selected-rok_produkcji').textContent = rok_produkcji || '-'
-				document.getElementById('selected-cena').textContent = cena || '-'
+				// document.getElementById('selected-cena').textContent = cena || '-'
 			}
 
 			// Funkcja do aktualizacji ceny i opisu
@@ -144,7 +144,7 @@
 				const marka = document.getElementById('marka').value.toLowerCase() // Pobierz markę i zamień na małe litery
 				const model = document.getElementById('model').value.toLowerCase() // Pobierz model i zamień na małe litery
 				const kodSilnika = document.getElementById('kod_silnika').value.toUpperCase() // Pobierz kod silnika i zamień na wielkie litery
-				const cenaInput = document.getElementById('cena')
+				// const cenaInput = document.getElementById('cena')
 				const submitButton = document.getElementById('submit-button')
 				const opisSchematu = document.getElementById('opis-schematu') // Element do wyświetlania opisu
 				const daneKlienta = document.getElementById('dane-klienta') // Sekcja danych klienta
