@@ -114,7 +114,7 @@ body {
 
 /* Style dla list rozwijanych */
 .form-container select {
-	width: 100%;
+	width: 80%;
 	padding: 10px;
 	margin-bottom: 15px;
 	border: 1px solid #ccc;
@@ -126,7 +126,7 @@ body {
 
 /* Style dla przycisku */
 .form-container input[type='button'] {
-	width: 100%;
+	width: 80%;
 	padding: 10px;
 	background-color: #007bff;
 	color: #fff;
