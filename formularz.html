@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="form-container">
-        <h2>Dane samochodu</h2>
+        <h1>Formularz zgłoszeniowy</h1>
         <form action="przetworz.php" method="post">
             <!-- Dane samochodu (wstępnie wypełnione) -->
             <label for="marka">Marka pojazdu:</label>
@@ -29,7 +29,9 @@
             <label for="rok_produkcji">Rok produkcji:</label>
             <input type="number" name="rok_produkcji" id="rok_produkcji" value="" required>
 
-            
+            <!-- Pole cena -->
+            <label for="cena">Cena (zł):</label>
+            <input type="number" name="cena" id="cena" readonly>
 
             <!-- Dane klienta (ukryte, jeśli kod silnika jest wpisany) -->
             <div id="dane-klienta">
@@ -95,7 +97,7 @@
             <p><strong>Moc (KM):</strong> <span id="selected-moc" class="highlight-red">-</span></p>
             <p><strong>Pojemność (cm³):</strong> <span id="selected-pojemnosc" class="highlight-red">-</span></p>
             <p><strong>Rok produkcji:</strong> <span id="selected-rok_produkcji" class="highlight-red">-</span></p>
-            
+            <p><strong>Cena (zł):</strong> <span id="selected-cena" class="highlight-red">-</span></p>
             <!-- Opis schematu -->
             <p id="opis-schematu" class="highlight-red"></p>
         </div>
@@ -120,7 +122,7 @@
             const moc = document.getElementById('moc').value;
             const pojemnosc = document.getElementById('pojemnosc').value;
             const rok_produkcji = document.getElementById('rok_produkcji').value;
-            
+            const cena = document.getElementById('cena').value;
 
             // Zaktualizuj zawartość elementów HTML
             document.getElementById('selected-imie_nick').textContent = imie_nick || '-';
@@ -136,7 +138,7 @@
             document.getElementById('selected-moc').textContent = moc || '-';
             document.getElementById('selected-pojemnosc').textContent = pojemnosc || '-';
             document.getElementById('selected-rok_produkcji').textContent = rok_produkcji || '-';
-            
+            document.getElementById('selected-cena').textContent = cena || '-';
         }
 
         // Funkcja do aktualizacji ceny i opisu
@@ -144,10 +146,42 @@
             const marka = document.getElementById('marka').value.toLowerCase(); // Pobierz markę i zamień na małe litery
             const model = document.getElementById('model').value.toLowerCase(); // Pobierz model i zamień na małe litery
             const kodSilnika = document.getElementById('kod_silnika').value.toUpperCase(); // Pobierz kod silnika i zamień na wielkie litery
+            const cenaInput = document.getElementById('cena');
             const submitButton = document.getElementById('submit-button');
             const opisSchematu = document.getElementById('opis-schematu'); // Element do wyświetlania opisu
             const daneKlienta = document.getElementById('dane-klienta'); // Sekcja danych klienta
 
+            let cenaBazowa = 0;
+            let dodatkowaCena = 0;
+
+            // Ustaw cenę bazową na 4500 zł, jeśli marka to "audi"
+            if (marka === 'audi') {
+                cenaBazowa = 4500;
+
+                // Dodaj dodatkową cenę w zależności od modelu
+                if (model === 'a1') {
+                    dodatkowaCena = 300;
+                } else if (model === 'a2') {
+                    dodatkowaCena = 350;
+                }
+            }
+
+            // Dodaj 200 zł, jeśli kod silnika to "DDAA"
+            if (kodSilnika === 'DDAA') {
+                dodatkowaCena += 200;
+            }
+
+            // Oblicz całkowitą cenę
+            const cenaCalkowita = cenaBazowa + dodatkowaCena;
+
+            // Ustaw wartość pola cena
+            cenaInput.value = cenaCalkowita > 0 ? cenaCalkowita : '';
+
+            // Aktywuj przycisk "Wyślij", jeśli kod silnika nie jest "DDAA"
+            if (kodSilnika !== 'DDAA') {
+                submitButton.disabled = false;
+            } else {
+                submitButton.disabled = true; // Dezaktywuj przycisk, jeśli kod silnika to "DDAA"
             }
 
             // Wyświetl opis tylko po wpisaniu kodu silnika
@@ -162,10 +196,14 @@
             }
 
             // Ukryj lub pokaż dane klienta w zależności od kodu silnika
-            if (kodSilnika) { 
+            if (kodSilnika) {
+                daneKlienta.style.display = 'none'; // Ukryj dane klienta, jeśli kod silnika jest wpisany
+            } else {
                 daneKlienta.style.display = 'block'; // Pokaż dane klienta, jeśli kod silnika nie jest wpisany
             }
 
+            // Zaktualizuj wyświetlane wartości
+            updateSelectedValues();
         }
 
         // Nasłuchuj zmian we wszystkich polach formularza
@@ -173,6 +211,14 @@
         inputs.forEach(input => {
             input.addEventListener('input', updateSelectedValues);
         });
+
+        // Nasłuchuj zmian w polach "marka", "model" i "kod_silnika", aby aktualizować cenę i opis
+        document.getElementById('marka').addEventListener('input', updateCena);
+        document.getElementById('model').addEventListener('input', updateCena);
+        document.getElementById('kod_silnika').addEventListener('input', updateCena);
+
+        // Wywołaj funkcję updateCena na starcie, aby ustawić początkowy stan
+        updateCena();
     </script>
 </body>
 </html>
