@@ -1,4 +1,4 @@
-<script>
+
         // Funkcja do aktualizacji wyświetlanych wartości
         function updateSelectedValues() {
             console.log("Aktualizowanie wyświetlanych wartości..."); // Debugowanie
@@ -114,4 +114,3 @@
 
         // Wywołaj funkcję updateCena na starcie, aby ustawić początkowy stan
         updateCena();
-    </script>
