@@ -16,7 +16,7 @@ function updateSelectedValues() {
 	const moc = document.getElementById('moc').value
 	const pojemnosc = document.getElementById('pojemnosc').value
 	const rok_produkcji = document.getElementById('rok_produkcji').value
-	
+	const cena = document.getElementById('cena').value
 
 	// Zaktualizuj zawartość elementów HTML
 	document.getElementById('selected-imie_nick').textContent = imie_nick || '-'
@@ -107,6 +107,10 @@ inputs.forEach(input => {
 	input.addEventListener('input', updateSelectedValues)
 })
 
+// Nasłuchuj zmian w polach "marka", "model" i "kod_silnika", aby aktualizować cenę i opis
+document.getElementById('marka').addEventListener('input', updateCena)
+document.getElementById('model').addEventListener('input', updateCena)
+document.getElementById('kod_silnika').addEventListener('input', updateCena)
 
 // Wywołaj funkcję updateCena na starcie, aby ustawić początkowy stan
 updateCena()
