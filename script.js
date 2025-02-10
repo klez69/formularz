@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	// Ukrywanie sekcji "Dane klienta", jeśli kod silnika jest pusty
 	function toggleDaneKlienta() {
-		daneKlienta.style.display = kodSilnika.value.trim() ? "block";
+		daneKlienta.style.display = kodSilnika.value.trim() ? "block" : "none";
 	}
 
 	// Sprawdzenie, czy wszystkie wymagane pola są uzupełnione
