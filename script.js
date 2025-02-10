@@ -1,67 +1,58 @@
-// Funkcja do aktualizacji wyświetlanych wartości
-function updateSelectedValues() {
-	console.log('Aktualizowanie wyświetlanych wartości...') // Debugowanie
+document.addEventListener("DOMContentLoaded", function () {
+	// Pobranie pól formularza
+	const formFields = document.querySelectorAll("input, select");
+	const kodSilnika = document.getElementById("kod_silnika");
+	const daneKlienta = document.getElementById("dane-klienta");
+	const submitButton = document.getElementById("submit-button");
 
-	// Pobierz wartości z pól input
-	const imie_nick = document.getElementById('imie_nick').value
-	const adres = document.getElementById('adres').value
-	const kod = document.getElementById('kod').value
-	const miasto = document.getElementById('miasto').value
-	const wojewodztwo = document.getElementById('wojewodztwo').value
-	const telefon = document.getElementById('telefon').value
-	const email = document.getElementById('email').value
-	const marka = document.getElementById('marka').value
-	const model = document.getElementById('model').value
-	const kod_silnika = document.getElementById('kod_silnika').value
-	const moc = document.getElementById('moc').value
-	const pojemnosc = document.getElementById('pojemnosc').value
-	const rok_produkcji = document.getElementById('rok_produkcji').value
-	
+	// Sekcja podsumowania
+	const summaryFields = {
+		marka: document.getElementById("selected-marka"),
+		model: document.getElementById("selected-model"),
+		kod_silnika: document.getElementById("selected-kod_silnika"),
+		moc: document.getElementById("selected-moc"),
+		pojemnosc: document.getElementById("selected-pojemnosc"),
+		rok_produkcji: document.getElementById("selected-rok_produkcji"),
+		imie_nick: document.getElementById("selected-imie_nick"),
+		adres: document.getElementById("selected-adres"),
+		kod: document.getElementById("selected-kod"),
+		miasto: document.getElementById("selected-miasto"),
+		wojewodztwo: document.getElementById("selected-wojewodztwo"),
+		telefon: document.getElementById("selected-telefon"),
+		email: document.getElementById("selected-email"),
+	};
 
-	// Zaktualizuj zawartość elementów HTML
-	document.getElementById('selected-imie_nick').textContent = imie_nick || '-'
-	document.getElementById('selected-adres').textContent = adres || '-'
-	document.getElementById('selected-kod').textContent = kod || '-'
-	document.getElementById('selected-miasto').textContent = miasto || '-'
-	document.getElementById('selected-wojewodztwo').textContent = wojewodztwo || '-'
-	document.getElementById('selected-telefon').textContent = telefon || '-'
-	document.getElementById('selected-email').textContent = email || '-'
-	document.getElementById('selected-marka').textContent = marka || '-'
-	document.getElementById('selected-model').textContent = model || '-'
-	document.getElementById('selected-kod_silnika').textContent = kod_silnika || '-'
-	document.getElementById('selected-moc').textContent = moc || '-'
-	document.getElementById('selected-pojemnosc').textContent = pojemnosc || '-'
-	document.getElementById('selected-rok_produkcji').textContent = rok_produkcji || '-'
-	
-}
+	// Funkcja aktualizująca podsumowanie
+	function updateSummary(event) {
+		const field = event.target;
+		if (summaryFields[field.id]) {
+			summaryFields[field.id].textContent = field.value || "-";
+		}
+		checkFormCompletion();
+	}
 
-// Funkcja do aktualizacji ceny i opisu
-function updateCena() {
-	const marka = document.getElementById('marka').value.toLowerCase() // Pobierz markę i zamień na małe litery
-	const model = document.getElementById('model').value.toLowerCase() // Pobierz model i zamień na małe litery
-	const kodSilnika = document.getElementById('kod_silnika').value.toUpperCase() // Pobierz kod silnika i zamień na wielkie litery
-	
-	const submitButton = document.getElementById('submit-button')
-	const opisSchematu = document.getElementById('opis-schematu') // Element do wyświetlania opisu
-	const daneKlienta = document.getElementById('dane-klienta') // Sekcja danych klienta
+	// Ukrywanie sekcji "Dane klienta", jeśli kod silnika jest pusty
+	function toggleDaneKlienta() {
+		daneKlienta.style.display = kodSilnika.value.trim() ? "block" : "none";
+	}
 
-	
+	// Sprawdzenie, czy wszystkie wymagane pola są uzupełnione
+	function checkFormCompletion() {
+		let allFilled = true;
+		document.querySelectorAll("input[required]").forEach((input) => {
+			if (!input.value.trim()) {
+				allFilled = false;
+			}
+		});
+		submitButton.disabled = !allFilled;
+	}
 
-	
-	// Aktywuj przycisk "Wyślij", jeśli kod silnika nie jest ""
-	if (kodSilnika !== '') {
-		submitButton.disabled = false
-	} 
+	// Nasłuchiwanie zmian w formularzu
+	formFields.forEach((field) => {
+		field.addEventListener("input", updateSummary);
+	});
 
-	
-
-	// Zaktualizuj wyświetlane wartości
-	updateSelectedValues()
-}
-
-// Nasłuchuj zmian we wszystkich polach formularza
-const inputs = document.querySelectorAll('input, textarea')
-inputs.forEach(input => {
-	input.addEventListener('input', updateSelectedValues)
-})
-
+	// Ukrycie sekcji na początku
+	toggleDaneKlienta();
+	kodSilnika.addEventListener("input", toggleDaneKlienta);
+});
