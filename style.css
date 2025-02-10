@@ -17,7 +17,7 @@ body {
 	padding: 20px;
 	border-radius: 8px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	width: 70%;
+	width: 100%;
 	max-width: 1400px; /* Zwiększona szerokość dla dwóch kolumn */
 	display: flex;
 	gap: 20px;
@@ -50,7 +50,7 @@ body {
 .form-container input[type='email'],
 .form-container input[type='number'],
 .form-container textarea {
-	width: 80%;
+	width: 100%;
 	padding: 10px;
 	margin-bottom: 15px;
 	border: 1px solid #ccc;
