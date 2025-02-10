@@ -1,98 +1,223 @@
 <!DOCTYPE html>
 <html lang="pl">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Formularz zgłoszeniowy</title>
-    <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-    <div class="form-container">
-        <h1>Formularz zgłoszeniowy</h1>
-        <form action="przetworz.php" method="post">
-            <!-- Dane samochodu -->
-            <label for="marka">Marka pojazdu:</label>
-            <input type="text" name="marka" id="marka" required />
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Formularz zgłoszeniowy</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<div class="form-container">
+			<h1>Formularz zgłoszeniowy</h1>
+			<form action="przetworz.php" method="post">
+				<!-- Dane samochodu (wstępnie wypełnione) -->
+				<label for="marka">Marka pojazdu:</label>
+				<input type="text" name="marka" id="marka" value="" required />
 
-            <label for="model">Model pojazdu:</label>
-            <input type="text" name="model" id="model" required />
+				<label for="model">Model pojazdu:</label>
+				<input type="text" name="model" id="model" value="" required />
 
-            <label for="kod_silnika">Kod silnika:</label>
-            <input type="text" name="kod_silnika" id="kod_silnika" required />
+				<label for="kod_silnika">Kod silnika:</label>
+				<input type="text" name="kod_silnika" id="kod_silnika" required />
 
-            <label for="moc">Moc (KM):</label>
-            <input type="number" name="moc" id="moc" required />
+				<label for="moc">Moc (KM):</label>
+				<input type="number" name="moc" id="moc" value="" required />
 
-            <label for="pojemnosc">Pojemność (cm³):</label>
-            <input type="number" name="pojemnosc" id="pojemnosc" required />
+				<label for="pojemnosc">Pojemność (cm³):</label>
+				<input type="number" name="pojemnosc" id="pojemnosc" value="" required />
 
-            <label for="rok_produkcji">Rok produkcji:</label>
-            <input type="number" name="rok_produkcji" id="rok_produkcji" required />
+				<label for="rok_produkcji">Rok produkcji:</label>
+				<input type="number" name="rok_produkcji" id="rok_produkcji" value="" required />
 
-            <!-- Dane klienta -->
-            <div id="dane-klienta">
-                <h2>Dane klienta:</h2>
-                <label for="imie_nick">Imię lub nick:</label>
-                <input type="text" name="imie_nick" id="imie_nick" />
+				<!-- Pole cena -->
+				<label for="cena">Cena (zł):</label>
+				<input type="number" name="cena" id="cena" readonly />
 
-                <label for="adres">Adres:</label>
-                <input type="text" name="adres" id="adres" />
+				<!-- Dane klienta (ukryte, jeśli kod silnika jest wpisany) -->
+				<div id="dane-klienta">
+					<h2>Dane klienta:</h2>
+					<label for="imie_nick">Imię lub nick:</label>
+					<input type="text" name="imie_nick" id="imie_nick" />
 
-                <label for="kod">Kod pocztowy:</label>
-                <input type="text" name="kod" id="kod" />
+					<label for="adres">Adres:</label>
+					<input type="text" name="adres" id="adres" />
 
-                <label for="miasto">Miasto:</label>
-                <input type="text" name="miasto" id="miasto" />
+					<label for="kod">Kod pocztowy:</label>
+					<input type="text" name="kod" id="kod" />
 
-                <label for="wojewodztwo">Województwo:</label>
-                <select name="wojewodztwo" id="wojewodztwo">
-                    <option value="">-- Wybierz województwo --</option>
-                    <option value="dolnoslaskie">Dolnośląskie</option>
-                    <option value="kujawsko-pomorskie">Kujawsko-Pomorskie</option>
-                    <option value="lubelskie">Lubelskie</option>
-                    <option value="lubuskie">Lubuskie</option>
-                    <option value="lodzkie">Łódzkie</option>
-                    <option value="malopolskie">Małopolskie</option>
-                    <option value="mazowieckie">Mazowieckie</option>
-                    <option value="opolskie">Opolskie</option>
-                    <option value="podkarpackie">Podkarpackie</option>
-                    <option value="podlaskie">Podlaskie</option>
-                    <option value="pomorskie">Pomorskie</option>
-                    <option value="slaskie">Śląskie</option>
-                    <option value="swietokrzyskie">Świętokrzyskie</option>
-                    <option value="warminsko-mazurskie">Warmińsko-Mazurskie</option>
-                    <option value="wielkopolskie">Wielkopolskie</option>
-                    <option value="zachodniopomorskie">Zachodniopomorskie</option>
-                </select>
+					<label for="miasto">Miasto:</label>
+					<input type="text" name="miasto" id="miasto" />
 
-                <label for="telefon">Telefon:</label>
-                <input type="text" name="telefon" id="telefon" />
+					<label for="wojewodztwo">Województwo:</label>
+					<select name="wojewodztwo" id="wojewodztwo">
+						<option value="">-- Wybierz województwo --</option>
+						<option value="dolnoslaskie">Dolnośląskie</option>
+						<option value="kujawsko-pomorskie">Kujawsko-Pomorskie</option>
+						<option value="lubelskie">Lubelskie</option>
+						<option value="lubuskie">Lubuskie</option>
+						<option value="lodzkie">Łódzkie</option>
+						<option value="malopolskie">Małopolskie</option>
+						<option value="mazowieckie">Mazowieckie</option>
+						<option value="opolskie">Opolskie</option>
+						<option value="podkarpackie">Podkarpackie</option>
+						<option value="podlaskie">Podlaskie</option>
+						<option value="pomorskie">Pomorskie</option>
+						<option value="slaskie">Śląskie</option>
+						<option value="swietokrzyskie">Świętokrzyskie</option>
+						<option value="warminsko-mazurskie">Warmińsko-Mazurskie</option>
+						<option value="wielkopolskie">Wielkopolskie</option>
+						<option value="zachodniopomorskie">Zachodniopomorskie</option>
+					</select>
 
-                <label for="email">E-mail:</label>
-                <input type="email" name="email" id="email" />
-            </div>
+					<label for="telefon">Telefon:</label>
+					<input type="text" name="telefon" id="telefon" />
 
-            <input type="submit" value="Wyślij" id="submit-button" disabled />
-        </form>
+					<label for="email">E-mail:</label>
+					<input type="email" name="email" id="email" />
+				</div>
 
-        <!-- Sekcja wyświetlająca wybrane wartości -->
-        <div class="selected-values">
-            <h2>Wybrane wartości:</h2>
-            <p><strong>Imię/nick:</strong> <span id="selected-imie_nick">-</span></p>
-            <p><strong>Adres:</strong> <span id="selected-adres">-</span></p>
-            <p><strong>Kod pocztowy:</strong> <span id="selected-kod">-</span></p>
-            <p><strong>Miasto:</strong> <span id="selected-miasto">-</span></p>
-            <p><strong>Województwo:</strong> <span id="selected-wojewodztwo">-</span></p>
-            <p><strong>Telefon:</strong> <span id="selected-telefon">-</span></p>
-            <p><strong>E-mail:</strong> <span id="selected-email">-</span></p>
-            <p><strong>Marka:</strong> <span id="selected-marka">-</span></p>
-            <p><strong>Model:</strong> <span id="selected-model">-</span></p>
-            <p><strong>Kod silnika:</strong> <span id="selected-kod_silnika">-</span></p>
-            <p><strong>Moc (KM):</strong> <span id="selected-moc">-</span></p>
-            <p><strong>Pojemność (cm³):</strong> <span id="selected-pojemnosc">-</span></p>
-            <p><strong>Rok produkcji:</strong> <span id="selected-rok_produkcji">-</span></p>
-        </div>
-    </div>
-    <script src="script.js"></script>
-</body>
+				<input type="submit" value="Wyślij" id="submit-button" disabled />
+			</form>
+
+			<!-- Sekcja wyświetlająca wybrane wartości -->
+			<div class="selected-values">
+				<h2>Wybrane wartości:</h2>
+				<p><strong>Imię/nick:</strong> <span id="selected-imie_nick">-</span></p>
+				<p><strong>Adres:</strong> <span id="selected-adres">-</span></p>
+				<p><strong>Kod pocztowy:</strong> <span id="selected-kod">-</span></p>
+				<p><strong>Miasto:</strong> <span id="selected-miasto">-</span></p>
+				<p><strong>Województwo:</strong> <span id="selected-wojewodztwo">-</span></p>
+				<p><strong>Telefon:</strong> <span id="selected-telefon">-</span></p>
+				<p><strong>E-mail:</strong> <span id="selected-email">-</span></p>
+				<p><strong>Marka:</strong> <span id="selected-marka" class="highlight-red">-</span></p>
+				<p><strong>Model:</strong> <span id="selected-model" class="highlight-red">-</span></p>
+				<p><strong>Kod silnika:</strong> <span id="selected-kod_silnika" class="highlight-red">-</span></p>
+				<p><strong>Moc (KM):</strong> <span id="selected-moc" class="highlight-red">-</span></p>
+				<p><strong>Pojemność (cm³):</strong> <span id="selected-pojemnosc" class="highlight-red">-</span></p>
+				<p><strong>Rok produkcji:</strong> <span id="selected-rok_produkcji" class="highlight-red">-</span></p>
+				<p><strong>Cena (zł):</strong> <span id="selected-cena" class="highlight-red">-</span></p>
+				<!-- Opis schematu -->
+				<p id="opis-schematu" class="highlight-red"></p>
+			</div>
+		</div>
+
+		<script>
+			// Funkcja do aktualizacji wyświetlanych wartości
+			function updateSelectedValues() {
+				console.log('Aktualizowanie wyświetlanych wartości...') // Debugowanie
+
+				// Pobierz wartości z pól input
+				const imie_nick = document.getElementById('imie_nick').value
+				const adres = document.getElementById('adres').value
+				const kod = document.getElementById('kod').value
+				const miasto = document.getElementById('miasto').value
+				const wojewodztwo = document.getElementById('wojewodztwo').value
+				const telefon = document.getElementById('telefon').value
+				const email = document.getElementById('email').value
+				const marka = document.getElementById('marka').value
+				const model = document.getElementById('model').value
+				const kod_silnika = document.getElementById('kod_silnika').value
+				const moc = document.getElementById('moc').value
+				const pojemnosc = document.getElementById('pojemnosc').value
+				const rok_produkcji = document.getElementById('rok_produkcji').value
+				const cena = document.getElementById('cena').value
+
+				// Zaktualizuj zawartość elementów HTML
+				document.getElementById('selected-imie_nick').textContent = imie_nick || '-'
+				document.getElementById('selected-adres').textContent = adres || '-'
+				document.getElementById('selected-kod').textContent = kod || '-'
+				document.getElementById('selected-miasto').textContent = miasto || '-'
+				document.getElementById('selected-wojewodztwo').textContent = wojewodztwo || '-'
+				document.getElementById('selected-telefon').textContent = telefon || '-'
+				document.getElementById('selected-email').textContent = email || '-'
+				document.getElementById('selected-marka').textContent = marka || '-'
+				document.getElementById('selected-model').textContent = model || '-'
+				document.getElementById('selected-kod_silnika').textContent = kod_silnika || '-'
+				document.getElementById('selected-moc').textContent = moc || '-'
+				document.getElementById('selected-pojemnosc').textContent = pojemnosc || '-'
+				document.getElementById('selected-rok_produkcji').textContent = rok_produkcji || '-'
+				document.getElementById('selected-cena').textContent = cena || '-'
+			}
+
+			// Funkcja do aktualizacji ceny i opisu
+			function updateCena() {
+				const marka = document.getElementById('marka').value.toLowerCase() // Pobierz markę i zamień na małe litery
+				const model = document.getElementById('model').value.toLowerCase() // Pobierz model i zamień na małe litery
+				const kodSilnika = document.getElementById('kod_silnika').value.toUpperCase() // Pobierz kod silnika i zamień na wielkie litery
+				const cenaInput = document.getElementById('cena')
+				const submitButton = document.getElementById('submit-button')
+				const opisSchematu = document.getElementById('opis-schematu') // Element do wyświetlania opisu
+				const daneKlienta = document.getElementById('dane-klienta') // Sekcja danych klienta
+
+				let cenaBazowa = 0
+				let dodatkowaCena = 0
+
+				// Ustaw cenę bazową na 4500 zł, jeśli marka to "audi"
+				if (marka === 'audi') {
+					cenaBazowa = 4500
+
+					// Dodaj dodatkową cenę w zależności od modelu
+					if (model === 'a1') {
+						dodatkowaCena = 300
+					} else if (model === 'a2') {
+						dodatkowaCena = 350
+					}
+				}
+
+				// Dodaj 200 zł, jeśli kod silnika to "DDAA"
+				if (kodSilnika === 'DDAA') {
+					dodatkowaCena += 200
+				}
+
+				// Oblicz całkowitą cenę
+				const cenaCalkowita = cenaBazowa + dodatkowaCena
+
+				// Ustaw wartość pola cena
+				cenaInput.value = cenaCalkowita > 0 ? cenaCalkowita : ''
+
+				// Aktywuj przycisk "Wyślij", jeśli kod silnika nie jest "DDAA"
+				if (kodSilnika !== 'DDAA') {
+					submitButton.disabled = false
+				} else {
+					submitButton.disabled = true // Dezaktywuj przycisk, jeśli kod silnika to "DDAA"
+				}
+
+				// Wyświetl opis tylko po wpisaniu kodu silnika
+				if (kodSilnika) {
+					if (marka === 'audi' && (model === 'a1' || model === 'a2') && kodSilnika === 'DDAA') {
+						opisSchematu.textContent = 'Do tego modelu samochodu jest opracowany schemat.'
+					} else {
+						opisSchematu.textContent =
+							'Nie posiadamy opracowania do tego samochodu. Wyślij zapytanie do warsztatu w Twoim regionie.'
+					}
+				} else {
+					opisSchematu.textContent = '' // Ukryj opis, jeśli kod silnika nie został wpisany
+				}
+
+				// Ukryj lub pokaż dane klienta w zależności od kodu silnika
+				if (kodSilnika) {
+					daneKlienta.style.display = 'none' // Ukryj dane klienta, jeśli kod silnika jest wpisany
+				} else {
+					daneKlienta.style.display = 'block' // Pokaż dane klienta, jeśli kod silnika nie jest wpisany
+				}
+
+				// Zaktualizuj wyświetlane wartości
+				updateSelectedValues()
+			}
+
+			// Nasłuchuj zmian we wszystkich polach formularza
+			const inputs = document.querySelectorAll('input, textarea')
+			inputs.forEach(input => {
+				input.addEventListener('input', updateSelectedValues)
+			})
+
+			// Nasłuchuj zmian w polach "marka", "model" i "kod_silnika", aby aktualizować cenę i opis
+			document.getElementById('marka').addEventListener('input', updateCena)
+			document.getElementById('model').addEventListener('input', updateCena)
+			document.getElementById('kod_silnika').addEventListener('input', updateCena)
+
+			// Wywołaj funkcję updateCena na starcie, aby ustawić początkowy stan
+			updateCena()
+		</script>
+	</body>
 </html>
