@@ -17,9 +17,9 @@ body {
 	padding: 20px;
 	border-radius: 8px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	width: 80%;
+	width: 70%;
 	max-width: 1400px; /* Zwiększona szerokość dla dwóch kolumn */
-	/* display: flex; */
+	display: flex;
 	gap: 20px;
 }
 
