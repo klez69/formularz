@@ -1,7 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
     const wojewodztwoSelect = document.getElementById("wojewodztwo");
     const firmaSelect = document.getElementById("firma");
-    const klientFields = ["imie_nick", "adres", "kod", "miasto", "telefon", "email"];
+    const allFields = ["marka", "model", "moc", "pojemnosc", "rok_produkcji", "firma", "imie_nick", "adres", "kod", "miasto", "telefon", "email"];
+
+    function aktualizujPodsumowanie() {
+        allFields.forEach(fieldId => {
+            const inputElement = document.getElementById(fieldId);
+            const outputElement = document.getElementById(`selected-${fieldId}`);
+
+            if (inputElement && outputElement) {
+                outputElement.textContent = inputElement.value.trim() || "-";
+            }
+        });
+    }
 
     wojewodztwoSelect.addEventListener("change", function () {
         const wojewodztwo = wojewodztwoSelect.value;
@@ -21,8 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             firmaSelect.appendChild(option);
                         });
                     }
-                })
-                .catch(error => console.error("Błąd pobierania danych:", error));
+                });
         }
     });
 
@@ -32,16 +42,12 @@ document.addEventListener("DOMContentLoaded", function () {
         if (selectedOption.value) {
             document.getElementById("telefon").value = selectedOption.dataset.telefon || "";
             document.getElementById("email").value = selectedOption.dataset.email || "";
-
-            document.getElementById("selected-firma").textContent = selectedOption.value;
-            document.getElementById("selected-telefon").textContent = selectedOption.dataset.telefon || "-";
-            document.getElementById("selected-email").textContent = selectedOption.dataset.email || "-";
         }
+
+        aktualizujPodsumowanie();
     });
 
-    klientFields.forEach(fieldId => {
-        document.getElementById(fieldId).addEventListener("input", function () {
-            document.getElementById(`selected-${fieldId}`).textContent = this.value || "-";
-        });
+    allFields.forEach(fieldId => {
+        document.getElementById(fieldId).addEventListener("input", aktualizujPodsumowanie);
     });
 });
