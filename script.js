@@ -4,15 +4,24 @@ document.addEventListener("DOMContentLoaded", function () {
     const telefonInput = document.getElementById("telefon");
     const emailInput = document.getElementById("email");
 
+    const selectedFirma = document.getElementById("selected-firma");
+    const selectedTelefon = document.getElementById("selected-telefon");
+    const selectedEmail = document.getElementById("selected-email");
+
     wojewodztwoSelect.addEventListener("change", function () {
         const wojewodztwo = wojewodztwoSelect.value;
+        firmaSelect.innerHTML = '<option value="">-- Wybierz firmę --</option>';
+        telefonInput.value = "";
+        emailInput.value = "";
+
+        selectedFirma.textContent = "-";
+        selectedTelefon.textContent = "-";
+        selectedEmail.textContent = "-";
 
         if (wojewodztwo) {
             fetch(`get_firmy.php?wojewodztwo=${wojewodztwo}`)
                 .then(response => response.json())
                 .then(data => {
-                    firmaSelect.innerHTML = '<option value="">-- Wybierz firmę --</option>';
-
                     if (!data.error) {
                         data.forEach(firma => {
                             const option = document.createElement("option");
@@ -37,22 +46,13 @@ document.addEventListener("DOMContentLoaded", function () {
             telefonInput.value = selectedOption.dataset.telefon || "";
             emailInput.value = selectedOption.dataset.email || "";
 
-            document.getElementById("selected-firma").textContent = selectedOption.value;
-            document.getElementById("selected-telefon").textContent = selectedOption.dataset.telefon || "-";
-            document.getElementById("selected-email").textContent = selectedOption.dataset.email || "-";
-        }
-    });
-
-    // Aktualizacja sekcji "Wybrane wartości" na bieżąco
-    const allFields = ["wojewodztwo", "firma", "telefon", "email"];
-    allFields.forEach(fieldId => {
-        const inputElement = document.getElementById(fieldId);
-        const outputElement = document.getElementById(`selected-${fieldId}`);
-
-        if (inputElement && outputElement) {
-            inputElement.addEventListener("input", function () {
-                outputElement.textContent = inputElement.value.trim() || "-";
-            });
+            selectedFirma.textContent = selectedOption.value;
+            selectedTelefon.textContent = selectedOption.dataset.telefon || "-";
+            selectedEmail.textContent = selectedOption.dataset.email || "-";
+        } else {
+            selectedFirma.textContent = "-";
+            selectedTelefon.textContent = "-";
+            selectedEmail.textContent = "-";
         }
     });
 });
