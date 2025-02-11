@@ -1,18 +1,36 @@
 document.addEventListener("DOMContentLoaded", function () {
     const wojewodztwoSelect = document.getElementById("wojewodztwo");
     const firmaSelect = document.getElementById("firma");
-    const allFields = ["marka", "model", "moc", "pojemnosc", "rok_produkcji", "firma", "imie_nick", "adres", "kod", "miasto", "telefon", "email"];
+    const sprawdzButton = document.getElementById("sprawdz-button");
+    const submitButton = document.getElementById("submit-button");
+    const daneKlientaDiv = document.getElementById("dane-klienta");
 
-    function aktualizujPodsumowanie() {
-        allFields.forEach(fieldId => {
-            const inputElement = document.getElementById(fieldId);
-            const outputElement = document.getElementById(`selected-${fieldId}`);
+    const pojazdFields = ["marka", "model", "moc", "pojemnosc", "rok_produkcji"];
+    const klientFields = ["firma", "imie_nick", "adres", "kod", "miasto", "telefon", "email"];
 
-            if (inputElement && outputElement) {
-                outputElement.textContent = inputElement.value.trim() || "-";
-            }
+    sprawdzButton.addEventListener("click", function () {
+        let wszystkieUzupelnione = pojazdFields.every(fieldId => {
+            return document.getElementById(fieldId).value.trim() !== "";
         });
+
+        if (wszystkieUzupelnione) {
+            daneKlientaDiv.style.display = "block";
+        } else {
+            alert("Proszę uzupełnić wszystkie wymagane pola pojazdu.");
+        }
+    });
+
+    function sprawdzKlienta() {
+        let wszystkieUzupelnione = klientFields.every(fieldId => {
+            return document.getElementById(fieldId).value.trim() !== "";
+        });
+
+        submitButton.disabled = !wszystkieUzupelnione;
     }
+
+    klientFields.forEach(fieldId => {
+        document.getElementById(fieldId).addEventListener("input", sprawdzKlienta);
+    });
 
     wojewodztwoSelect.addEventListener("change", function () {
         const wojewodztwo = wojewodztwoSelect.value;
@@ -27,27 +45,10 @@ document.addEventListener("DOMContentLoaded", function () {
                             const option = document.createElement("option");
                             option.value = firma.firma;
                             option.textContent = firma.firma;
-                            option.dataset.telefon = firma.telefon;
-                            option.dataset.email = firma.email;
                             firmaSelect.appendChild(option);
                         });
                     }
                 });
         }
-    });
-
-    firmaSelect.addEventListener("change", function () {
-        const selectedOption = firmaSelect.options[firmaSelect.selectedIndex];
-
-        if (selectedOption.value) {
-            document.getElementById("telefon").value = selectedOption.dataset.telefon || "";
-            document.getElementById("email").value = selectedOption.dataset.email || "";
-        }
-
-        aktualizujPodsumowanie();
-    });
-
-    allFields.forEach(fieldId => {
-        document.getElementById(fieldId).addEventListener("input", aktualizujPodsumowanie);
     });
 });
