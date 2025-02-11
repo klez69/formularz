@@ -1,4 +1,5 @@
-wojewodztwo,imie_nick,adres,kod,miasto,telefon,email
-mazowieckie,Jan Kowalski,ul. Warszawska 1,00-001,Warszawa,123456789,jan.kowalski@example.com
-malopolskie,Anna Nowak,ul. Krakowska 5,30-001,Kraków,987654321,anna.nowak@example.com
-slaskie,Piotr Wiśniewski,ul. Katowicka 12,40-001,Katowice,555333222,piotr.wisniewski@example.com
+wojewodztwo,firma,telefon,email
+mazowieckie,AutoSerwis Jan,123456789,serwis.jan@example.com
+mazowieckie,Mechanika Kowalski,987654321,mechanika.kowalski@example.com
+malopolskie,AutoNaprawa Nowak,555888999,naprawa.nowak@example.com
+malopolskie,Serwis AutoFix,666777888,autofix@example.com
