@@ -1,40 +1,20 @@
 document.addEventListener("DOMContentLoaded", function () {
     const wojewodztwoSelect = document.getElementById("wojewodztwo");
     const firmaSelect = document.getElementById("firma");
-    const sprawdzButton = document.getElementById("sprawdz-button");
-    const submitButton = document.getElementById("submit-button");
-    const daneKlientaDiv = document.getElementById("dane-klienta");
+    const telefonInput = document.getElementById("telefon");
+    const emailInput = document.getElementById("email");
 
-    const pojazdFields = ["marka", "model", "moc", "pojemnosc", "rok_produkcji"];
-    const klientFields = ["firma", "imie_nick", "adres", "kod", "miasto", "telefon", "email"];
-
-    sprawdzButton.addEventListener("click", function () {
-        let wszystkieUzupelnione = pojazdFields.every(fieldId => {
-            return document.getElementById(fieldId).value.trim() !== "";
-        });
-
-        if (wszystkieUzupelnione) {
-            daneKlientaDiv.style.display = "block";
-        } else {
-            alert("Proszę uzupełnić wszystkie wymagane pola pojazdu.");
-        }
-    });
-
-    function sprawdzKlienta() {
-        let wszystkieUzupelnione = klientFields.every(fieldId => {
-            return document.getElementById(fieldId).value.trim() !== "";
-        });
-
-        submitButton.disabled = !wszystkieUzupelnione;
-    }
-
-    klientFields.forEach(fieldId => {
-        document.getElementById(fieldId).addEventListener("input", sprawdzKlienta);
-    });
+    const selectedFirma = document.getElementById("selected-firma");
+    const selectedWojewodztwo = document.getElementById("selected-wojewodztwo");
 
     wojewodztwoSelect.addEventListener("change", function () {
         const wojewodztwo = wojewodztwoSelect.value;
+        selectedWojewodztwo.textContent = wojewodztwo ? wojewodztwoSelect.options[wojewodztwoSelect.selectedIndex].text : "-";
+        
         firmaSelect.innerHTML = '<option value="">-- Wybierz firmę --</option>';
+        telefonInput.value = "";
+        emailInput.value = "";
+        selectedFirma.textContent = "-";
 
         if (wojewodztwo) {
             fetch(`get_firmy.php?wojewodztwo=${wojewodztwo}`)
@@ -45,10 +25,29 @@ document.addEventListener("DOMContentLoaded", function () {
                             const option = document.createElement("option");
                             option.value = firma.firma;
                             option.textContent = firma.firma;
+                            option.dataset.telefon = firma.telefon;
+                            option.dataset.email = firma.email;
                             firmaSelect.appendChild(option);
                         });
+                    } else {
+                        console.error("Brak firm dla wybranego województwa");
                     }
-                });
+                })
+                .catch(error => console.error("Błąd pobierania danych:", error));
+        }
+    });
+
+    firmaSelect.addEventListener("change", function () {
+        const selectedOption = firmaSelect.options[firmaSelect.selectedIndex];
+
+        if (selectedOption.value) {
+            telefonInput.value = selectedOption.dataset.telefon || "";
+            emailInput.value = selectedOption.dataset.email || "";
+            selectedFirma.textContent = selectedOption.value;
+        } else {
+            telefonInput.value = "";
+            emailInput.value = "";
+            selectedFirma.textContent = "-";
         }
     });
 });
