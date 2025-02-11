@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Sprawdzenie i pokazanie sekcji klienta
+    // Pokazanie sekcji klienta po kliknięciu "Sprawdź"
     sprawdzButton.addEventListener("click", function () {
         let wszystkieUzupelnione = pojazdFields.every(fieldId => {
             return document.getElementById(fieldId).value.trim() !== "";
@@ -58,10 +58,10 @@ document.addEventListener("DOMContentLoaded", function () {
         emailInput.value = "";
 
         if (wojewodztwo) {
-            fetch(`get_firmy.php?wojewodztwo=${wojewodztwo}`)
+            fetch(`get_firmy.php?wojewodztwo=${encodeURIComponent(wojewodztwo)}`)
                 .then(response => response.json())
                 .then(data => {
-                    if (data.length > 0) {
+                    if (Array.isArray(data) && data.length > 0) {
                         data.forEach(firma => {
                             const option = document.createElement("option");
                             option.value = firma.firma;
