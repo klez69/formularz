@@ -15,8 +15,8 @@ if (isset($_GET['wojewodztwo'])) {
 
     $firmy = [];
 
-    while ($row = fgetcsv($handle)) {
-        if ($row[0] === $wojewodztwo) {
+    while (($row = fgetcsv($handle, 1000, ",")) !== FALSE) {
+        if (trim($row[0]) === trim($wojewodztwo)) {
             $firmy[] = [
                 'firma' => $row[1],
                 'telefon' => $row[2],
@@ -26,6 +26,7 @@ if (isset($_GET['wojewodztwo'])) {
     }
 
     fclose($handle);
+
     echo json_encode($firmy);
 }
 ?>
