@@ -1,22 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
     const wojewodztwoSelect = document.getElementById("wojewodztwo");
     const firmaSelect = document.getElementById("firma");
-    const telefonInput = document.getElementById("telefon");
-    const emailInput = document.getElementById("email");
-
-    const selectedFirma = document.getElementById("selected-firma");
-    const selectedTelefon = document.getElementById("selected-telefon");
-    const selectedEmail = document.getElementById("selected-email");
+    const klientFields = ["imie_nick", "adres", "kod", "miasto", "telefon", "email"];
 
     wojewodztwoSelect.addEventListener("change", function () {
         const wojewodztwo = wojewodztwoSelect.value;
         firmaSelect.innerHTML = '<option value="">-- Wybierz firmę --</option>';
-        telefonInput.value = "";
-        emailInput.value = "";
-
-        selectedFirma.textContent = "-";
-        selectedTelefon.textContent = "-";
-        selectedEmail.textContent = "-";
 
         if (wojewodztwo) {
             fetch(`get_firmy.php?wojewodztwo=${wojewodztwo}`)
@@ -31,8 +20,6 @@ document.addEventListener("DOMContentLoaded", function () {
                             option.dataset.email = firma.email;
                             firmaSelect.appendChild(option);
                         });
-                    } else {
-                        console.log(data.error);
                     }
                 })
                 .catch(error => console.error("Błąd pobierania danych:", error));
@@ -43,16 +30,18 @@ document.addEventListener("DOMContentLoaded", function () {
         const selectedOption = firmaSelect.options[firmaSelect.selectedIndex];
 
         if (selectedOption.value) {
-            telefonInput.value = selectedOption.dataset.telefon || "";
-            emailInput.value = selectedOption.dataset.email || "";
+            document.getElementById("telefon").value = selectedOption.dataset.telefon || "";
+            document.getElementById("email").value = selectedOption.dataset.email || "";
 
-            selectedFirma.textContent = selectedOption.value;
-            selectedTelefon.textContent = selectedOption.dataset.telefon || "-";
-            selectedEmail.textContent = selectedOption.dataset.email || "-";
-        } else {
-            selectedFirma.textContent = "-";
-            selectedTelefon.textContent = "-";
-            selectedEmail.textContent = "-";
+            document.getElementById("selected-firma").textContent = selectedOption.value;
+            document.getElementById("selected-telefon").textContent = selectedOption.dataset.telefon || "-";
+            document.getElementById("selected-email").textContent = selectedOption.dataset.email || "-";
         }
+    });
+
+    klientFields.forEach(fieldId => {
+        document.getElementById(fieldId).addEventListener("input", function () {
+            document.getElementById(`selected-${fieldId}`).textContent = this.value || "-";
+        });
     });
 });
