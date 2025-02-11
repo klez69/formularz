@@ -1,104 +1,98 @@
 <!DOCTYPE html>
 <html lang="pl">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Formularz zgłoszeniowy</title>
-		<link rel="stylesheet" href="style.css" />
-	</head>
-	<body>
-		<div class="form-container">
-			<h1>Formularz zgłoszeniowy</h1>
-			<form action="przetworz.php" method="post">
-				<!-- Dane samochodu (wstępnie wypełnione) -->
-				<label for="marka">Marka pojazdu:</label>
-				<input type="text" name="marka" id="marka" value="" required />
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formularz zgłoszeniowy</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="form-container">
+        <h1>Formularz zgłoszeniowy</h1>
+        <form action="przetworz.php" method="post">
+            <label for="marka">Marka pojazdu:</label>
+            <input type="text" name="marka" id="marka" required />
 
-				<label for="model">Model pojazdu:</label>
-				<input type="text" name="model" id="model" value="" required />
+            <label for="model">Model pojazdu:</label>
+            <input type="text" name="model" id="model" required />
 
-				<label for="kod_silnika">Kod silnika:</label>
-				<input type="text" name="kod_silnika" id="kod_silnika" required />
+            <label for="kod_silnika">Kod silnika:</label>
+            <input type="text" name="kod_silnika" id="kod_silnika" />
 
-				<label for="moc">Moc (KM):</label>
-				<input type="number" name="moc" id="moc" value="" required />
+            <label for="moc">Moc (KM):</label>
+            <input type="number" name="moc" id="moc" required />
 
-				<label for="pojemnosc">Pojemność (cm³):</label>
-				<input type="number" name="pojemnosc" id="pojemnosc" value="" required />
+            <label for="pojemnosc">Pojemność (cm³):</label>
+            <input type="number" name="pojemnosc" id="pojemnosc" required />
 
-				<label for="rok_produkcji">Rok produkcji:</label>
-				<input type="number" name="rok_produkcji" id="rok_produkcji" value="" required />
+            <label for="rok_produkcji">Rok produkcji:</label>
+            <input type="number" name="rok_produkcji" id="rok_produkcji" required />
 
-				<!-- Pole cena -->
-				
+            <input type="button" value="Sprawdź" id="sprawdz-button" />
 
-				<!-- Dane klienta (ukryte, jeśli kod silnika jest wpisany) -->
-				<div id="dane-klienta">
-					<h2>Dane klienta:</h2>
-					<label for="imie_nick">Imię lub nick:</label>
-					<input type="text" name="imie_nick" id="imie_nick" />
+            <div id="dane-klienta" style="display: none;">
+                <h2>Dane klienta:</h2>
+                <label for="imie_nick">Imię lub nick:</label>
+                <input type="text" name="imie_nick" id="imie_nick" />
 
-					<label for="adres">Adres:</label>
-					<input type="text" name="adres" id="adres" />
+                <label for="adres">Adres:</label>
+                <input type="text" name="adres" id="adres" />
 
-					<label for="kod">Kod pocztowy:</label>
-					<input type="text" name="kod" id="kod" />
+                <label for="kod">Kod pocztowy:</label>
+                <input type="text" name="kod" id="kod" />
 
-					<label for="miasto">Miasto:</label>
-					<input type="text" name="miasto" id="miasto" />
+                <label for="miasto">Miasto:</label>
+                <input type="text" name="miasto" id="miasto" />
 
-					<label for="wojewodztwo">Województwo:</label>
-					<select name="wojewodztwo" id="wojewodztwo">
-						<option value="">-- Wybierz województwo --</option>
-						<option value="dolnoslaskie">Dolnośląskie</option>
-						<option value="kujawsko-pomorskie">Kujawsko-Pomorskie</option>
-						<option value="lubelskie">Lubelskie</option>
-						<option value="lubuskie">Lubuskie</option>
-						<option value="lodzkie">Łódzkie</option>
-						<option value="malopolskie">Małopolskie</option>
-						<option value="mazowieckie">Mazowieckie</option>
-						<option value="opolskie">Opolskie</option>
-						<option value="podkarpackie">Podkarpackie</option>
-						<option value="podlaskie">Podlaskie</option>
-						<option value="pomorskie">Pomorskie</option>
-						<option value="slaskie">Śląskie</option>
-						<option value="swietokrzyskie">Świętokrzyskie</option>
-						<option value="warminsko-mazurskie">Warmińsko-Mazurskie</option>
-						<option value="wielkopolskie">Wielkopolskie</option>
-						<option value="zachodniopomorskie">Zachodniopomorskie</option>
-					</select>
+                <label for="wojewodztwo">Województwo:</label>
+                <select name="wojewodztwo" id="wojewodztwo">
+                    <option value="">-- Wybierz województwo --</option>
+                    <option value="dolnoslaskie">Dolnośląskie</option>
+                    <option value="kujawsko-pomorskie">Kujawsko-Pomorskie</option>
+                    <option value="lubelskie">Lubelskie</option>
+                    <option value="lubuskie">Lubuskie</option>
+                    <option value="lodzkie">Łódzkie</option>
+                    <option value="malopolskie">Małopolskie</option>
+                    <option value="mazowieckie">Mazowieckie</option>
+                    <option value="opolskie">Opolskie</option>
+                    <option value="podkarpackie">Podkarpackie</option>
+                    <option value="podlaskie">Podlaskie</option>
+                    <option value="pomorskie">Pomorskie</option>
+                    <option value="slaskie">Śląskie</option>
+                    <option value="swietokrzyskie">Świętokrzyskie</option>
+                    <option value="warminsko-mazurskie">Warmińsko-Mazurskie</option>
+                    <option value="wielkopolskie">Wielkopolskie</option>
+                    <option value="zachodniopomorskie">Zachodniopomorskie</option>
+                </select>
 
-					<label for="telefon">Telefon:</label>
-					<input type="text" name="telefon" id="telefon" />
+                <label for="telefon">Telefon:</label>
+                <input type="text" name="telefon" id="telefon" />
 
-					<label for="email">E-mail:</label>
-					<input type="email" name="email" id="email" />
-				</div>
+                <label for="email">E-mail:</label>
+                <input type="email" name="email" id="email" />
+            </div>
 
-				<input type="submit" value="Wyślij" id="submit-button" disabled />
-			</form>
+            <input type="submit" value="Wyślij" id="submit-button" disabled />
+        </form>
 
-			<!-- Sekcja wyświetlająca wybrane wartości -->
-			<div class="selected-values">
-				<h2>Wybrane wartości:</h2>
-				<p><strong>Imię/nick:</strong> <span id="selected-imie_nick">-</span></p>
-				<p><strong>Adres:</strong> <span id="selected-adres">-</span></p>
-				<p><strong>Kod pocztowy:</strong> <span id="selected-kod">-</span></p>
-				<p><strong>Miasto:</strong> <span id="selected-miasto">-</span></p>
-				<p><strong>Województwo:</strong> <span id="selected-wojewodztwo">-</span></p>
-				<p><strong>Telefon:</strong> <span id="selected-telefon">-</span></p>
-				<p><strong>E-mail:</strong> <span id="selected-email">-</span></p>
-				<p><strong>Marka:</strong> <span id="selected-marka" class="highlight-red">-</span></p>
-				<p><strong>Model:</strong> <span id="selected-model" class="highlight-red">-</span></p>
-				<p><strong>Kod silnika:</strong> <span id="selected-kod_silnika" class="highlight-red">-</span></p>
-				<p><strong>Moc (KM):</strong> <span id="selected-moc" class="highlight-red">-</span></p>
-				<p><strong>Pojemność (cm³):</strong> <span id="selected-pojemnosc" class="highlight-red">-</span></p>
-				<p><strong>Rok produkcji:</strong> <span id="selected-rok_produkcji" class="highlight-red">-</span></p>
-				
-				<!-- Opis schematu -->
-				<p id="opis-schematu" class="highlight-red"></p>
-			</div>
-		</div>
-		<script src="script.js"></script>
-	</body>
+        <!-- Sekcja wybrane wartości -->
+        <div class="selected-values">
+            <h2>Wybrane wartości:</h2>
+            <p><strong>Marka:</strong> <span id="selected-marka">-</span></p>
+            <p><strong>Model:</strong> <span id="selected-model">-</span></p>
+            <p><strong>Kod silnika:</strong> <span id="selected-kod_silnika">-</span></p>
+            <p><strong>Moc:</strong> <span id="selected-moc">-</span></p>
+            <p><strong>Pojemność:</strong> <span id="selected-pojemnosc">-</span></p>
+            <p><strong>Rok produkcji:</strong> <span id="selected-rok_produkcji">-</span></p>
+            <p><strong>Imię/Nick:</strong> <span id="selected-imie_nick">-</span></p>
+            <p><strong>Adres:</strong> <span id="selected-adres">-</span></p>
+            <p><strong>Kod pocztowy:</strong> <span id="selected-kod">-</span></p>
+            <p><strong>Miasto:</strong> <span id="selected-miasto">-</span></p>
+            <p><strong>Telefon:</strong> <span id="selected-telefon">-</span></p>
+            <p><strong>Email:</strong> <span id="selected-email">-</span></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
 </html>
