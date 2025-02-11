@@ -33,10 +33,18 @@
             <div id="dane-klienta" style="display: none">
                 <h2>Dane klienta:</h2>
 
+                <label for="wojewodztwo">Województwo:</label>
+                <select name="wojewodztwo" id="wojewodztwo">
+                    <option value="">-- Wybierz województwo --</option>
+                    <option value="mazowieckie">Mazowieckie</option>
+                    <option value="malopolskie">Małopolskie</option>
+                    <option value="slaskie">Śląskie</option>
+                </select>
+
                 <label for="firma">Firma:</label>
-<select name="firma" id="firma">
-    <option value="">-- Wybierz firmę --</option>
-</select>
+                <select name="firma" id="firma">
+                    <option value="">-- Wybierz firmę --</option>
+                </select>
 
                 <label for="imie_nick">Imię lub nick:</label>
                 <input type="text" name="imie_nick" id="imie_nick" />
@@ -49,27 +57,6 @@
 
                 <label for="miasto">Miasto:</label>
                 <input type="text" name="miasto" id="miasto" />
-
-                <label for="wojewodztwo">Województwo:</label>
-                <select name="wojewodztwo" id="wojewodztwo">
-                    <option value="">-- Wybierz województwo --</option>
-                    <option value="dolnoslaskie">Dolnośląskie</option>
-                    <option value="kujawsko-pomorskie">Kujawsko-Pomorskie</option>
-                    <option value="lubelskie">Lubelskie</option>
-                    <option value="lubuskie">Lubuskie</option>
-                    <option value="lodzkie">Łódzkie</option>
-                    <option value="malopolskie">Małopolskie</option>
-                    <option value="mazowieckie">Mazowieckie</option>
-                    <option value="opolskie">Opolskie</option>
-                    <option value="podkarpackie">Podkarpackie</option>
-                    <option value="podlaskie">Podlaskie</option>
-                    <option value="pomorskie">Pomorskie</option>
-                    <option value="slaskie">Śląskie</option>
-                    <option value="swietokrzyskie">Świętokrzyskie</option>
-                    <option value="warminsko-mazurskie">Warmińsko-Mazurskie</option>
-                    <option value="wielkopolskie">Wielkopolskie</option>
-                    <option value="zachodniopomorskie">Zachodniopomorskie</option>
-                </select>
 
                 <label for="telefon">Telefon:</label>
                 <input type="text" name="telefon" id="telefon" />
@@ -86,7 +73,6 @@
             <h2>Wybrane wartości:</h2>
             <p><strong>Marka:</strong> <span id="selected-marka">-</span></p>
             <p><strong>Model:</strong> <span id="selected-model">-</span></p>
-            <p><strong>Kod silnika:</strong> <span id="selected-kod_silnika">-</span></p>
             <p><strong>Moc:</strong> <span id="selected-moc">-</span></p>
             <p><strong>Pojemność:</strong> <span id="selected-pojemnosc">-</span></p>
             <p><strong>Rok produkcji:</strong> <span id="selected-rok_produkcji">-</span></p>
@@ -95,14 +81,8 @@
             <p><strong>Adres:</strong> <span id="selected-adres">-</span></p>
             <p><strong>Kod pocztowy:</strong> <span id="selected-kod">-</span></p>
             <p><strong>Miasto:</strong> <span id="selected-miasto">-</span></p>
-            <p><strong>Województwo:</strong> <span id="selected-wojewodztwo">-</span></p>
             <p><strong>Telefon:</strong> <span id="selected-telefon">-</span></p>
             <p><strong>Email:</strong> <span id="selected-email">-</span></p>
-            <hr>
-            <p><strong>Firma:</strong> <span id="selected-firma">-</span></p>
-            <p><strong>Telefon:</strong> <span id="selected-telefon">-</span></p>
-            <p><strong>Email:</strong> <span id="selected-email">-</span></p>
-
         </div>
     </div>
 
