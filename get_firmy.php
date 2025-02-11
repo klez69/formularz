@@ -1,6 +1,8 @@
 <?php
+header("Content-Type: application/json");
+
 if (isset($_GET['wojewodztwo'])) {
-    $wojewodztwo = $_GET['wojewodztwo'];
+    $wojewodztwo = urldecode($_GET['wojewodztwo']);
     $file = 'klienci.csv';
 
     if (!file_exists($file)) {
@@ -27,3 +29,4 @@ if (isset($_GET['wojewodztwo'])) {
     echo json_encode($firmy);
 }
 ?>
+
