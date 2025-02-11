@@ -1,52 +1,35 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const kodSilnika = document.getElementById('kod_silnika');
-    const daneKlienta = document.getElementById('dane-klienta');
-    const sprawdzButton = document.getElementById('sprawdz-button');
-    const submitButton = document.getElementById('submit-button');
+document.addEventListener("DOMContentLoaded", function () {
+    const sprawdzButton = document.getElementById("sprawdz-button");
+    const daneKlientaDiv = document.getElementById("dane-klienta");
+    const submitButton = document.getElementById("submit-button");
 
-    const summaryFields = {
-        marka: document.getElementById('selected-marka'),
-        model: document.getElementById('selected-model'),
-        kod_silnika: document.getElementById('selected-kod_silnika'),
-        moc: document.getElementById('selected-moc'),
-        pojemnosc: document.getElementById('selected-pojemnosc'),
-        rok_produkcji: document.getElementById('selected-rok_produkcji'),
-        imie_nick: document.getElementById('selected-imie_nick'),
-        adres: document.getElementById('selected-adres'),
-        kod: document.getElementById('selected-kod'),
-        miasto: document.getElementById('selected-miasto'),
-        wojewodztwo: document.getElementById('selected-wojewodztwo'),
-        telefon: document.getElementById('selected-telefon'),
-        email: document.getElementById('selected-email')
-    };
+    sprawdzButton.addEventListener("click", function () {
+        const marka = document.getElementById("marka").value.trim();
+        const model = document.getElementById("model").value.trim();
+        const moc = document.getElementById("moc").value.trim();
+        const pojemnosc = document.getElementById("pojemnosc").value.trim();
+        const rokProdukcji = document.getElementById("rok_produkcji").value.trim();
 
-    function updateSummary(event) {
-        const field = event.target;
-        if (summaryFields[field.id]) {
-            summaryFields[field.id].textContent = field.value || '-';
-        }
-    }
-
-    function checkFormCompletion() {
-        let allFilled = true;
-        document.querySelectorAll('input[required]').forEach(input => {
-            if (!input.value.trim()) {
-                allFilled = false;
-            }
-        });
-        submitButton.disabled = !allFilled;
-    }
-
-    sprawdzButton.addEventListener('click', function () {
-        if (!kodSilnika.value.trim()) {
-            daneKlienta.style.display = 'block';
+        if (marka && model && moc && pojemnosc && rokProdukcji) {
+            daneKlientaDiv.style.display = "block"; // Pokaż sekcję z danymi klienta
         } else {
-            daneKlienta.style.display = 'none';
+            alert("Proszę wypełnić wszystkie wymagane pola pojazdu.");
         }
     });
 
-    document.querySelectorAll('input, select').forEach(field => {
-        field.addEventListener('input', updateSummary);
-        field.addEventListener('input', checkFormCompletion);
+    const klientInputs = document.querySelectorAll("#dane-klienta input, #dane-klienta select");
+
+    klientInputs.forEach(input => {
+        input.addEventListener("input", function () {
+            let wszystkieUzupelnione = true;
+
+            klientInputs.forEach(field => {
+                if (field.type !== "checkbox" && field.value.trim() === "") {
+                    wszystkieUzupelnione = false;
+                }
+            });
+
+            submitButton.disabled = !wszystkieUzupelnione;
+        });
     });
 });
