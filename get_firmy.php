@@ -4,7 +4,7 @@ if (isset($_GET['wojewodztwo'])) {
     $file = 'klienci.csv';
 
     if (!file_exists($file)) {
-        echo json_encode(['error' => 'Brak pliku klienci.csv']);
+        echo json_encode([]);
         exit;
     }
 
@@ -24,11 +24,6 @@ if (isset($_GET['wojewodztwo'])) {
     }
 
     fclose($handle);
-
-    if (!empty($firmy)) {
-        echo json_encode($firmy);
-    } else {
-        echo json_encode(['error' => 'Brak firm dla wybranego województwa']);
-    }
+    echo json_encode($firmy);
 }
 ?>
