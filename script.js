@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
         adres: document.getElementById('selected-adres'),
         kod: document.getElementById('selected-kod'),
         miasto: document.getElementById('selected-miasto'),
+        wojewodztwo: document.getElementById('selected-wojewodztwo'),
         telefon: document.getElementById('selected-telefon'),
         email: document.getElementById('selected-email')
     };
