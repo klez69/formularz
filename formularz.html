@@ -1,77 +1,82 @@
 <!DOCTYPE html>
 <html lang="pl">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Formularz zgłoszeniowy</title>
-    <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-    <div class="form-container">
-        <h1>Formularz zgłoszeniowy</h1>
-        <form action="przetworz.php" method="post">
-            <label for="marka">Marka pojazdu:</label>
-            <input type="text" name="marka" id="marka" required />
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Formularz zgłoszeniowy</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<div class="form-container">
+			<h1>Formularz zgłoszeniowy</h1>
+			<form action="przetworz.php" method="post">
+				<label for="marka">Marka pojazdu:</label>
+				<input type="text" name="marka" id="marka" required />
 
-            <label for="model">Model pojazdu:</label>
-            <input type="text" name="model" id="model" required />
+				<label for="model">Model pojazdu:</label>
+				<input type="text" name="model" id="model" required />
 
-            <label for="kod_silnika">Kod silnika:</label>
-            <input type="text" name="kod_silnika" id="kod_silnika" />
+				<label for="kod_silnika">Kod silnika:</label>
+				<input type="text" name="kod_silnika" id="kod_silnika" />
 
-            <label for="moc">Moc (KM):</label>
-            <input type="number" name="moc" id="moc" required />
+				<label for="moc">Moc (KM):</label>
+				<input type="number" name="moc" id="moc" required />
 
-            <label for="pojemnosc">Pojemność (cm³):</label>
-            <input type="number" name="pojemnosc" id="pojemnosc" required />
+				<label for="pojemnosc">Pojemność (cm³):</label>
+				<input type="number" name="pojemnosc" id="pojemnosc" required />
 
-            <label for="rok_produkcji">Rok produkcji:</label>
-            <input type="number" name="rok_produkcji" id="rok_produkcji" required />
+				<label for="rok_produkcji">Rok produkcji:</label>
+				<input type="number" name="rok_produkcji" id="rok_produkcji" required />
 
-            <input type="button" value="Sprawdź" id="sprawdz-button" />
+				<!-- Przycisk sprawdzający -->
+				<input type="button" value="Sprawdź" id="sprawdz-button" />
 
-            <div id="dane-klienta" style="display: none;">
-                <h2>Dane klienta:</h2>
-                <label for="imie_nick">Imię lub nick:</label>
-                <input type="text" name="imie_nick" id="imie_nick" />
+				<!-- Dane klienta (ukryte domyślnie) -->
+				<div id="dane-klienta" style="display: none;">
+					<h2>Dane klienta:</h2>
+					<label for="imie_nick">Imię lub nick:</label>
+					<input type="text" name="imie_nick" id="imie_nick" />
 
-                <label for="adres">Adres:</label>
-                <input type="text" name="adres" id="adres" />
+					<label for="adres">Adres:</label>
+					<input type="text" name="adres" id="adres" />
 
-                <label for="kod">Kod pocztowy:</label>
-                <input type="text" name="kod" id="kod" />
+					<label for="kod">Kod pocztowy:</label>
+					<input type="text" name="kod" id="kod" />
 
-                <label for="miasto">Miasto:</label>
-                <input type="text" name="miasto" id="miasto" />
+					<label for="miasto">Miasto:</label>
+					<input type="text" name="miasto" id="miasto" />
 
-                <label for="wojewodztwo">Województwo:</label>
-                <select name="wojewodztwo" id="wojewodztwo">
-                    <option value="">-- Wybierz województwo --</option>
-                    <option value="Dolnośląskie">Dolnośląskie</option>
-                    <option value="Kujawsko-Pomorskie">Kujawsko-Pomorskie</option>
-                    <option value="Lubelskie">Lubelskie</option>
-                    <option value="Mazowieckie">Mazowieckie</option>
-                    <option value="Małopolskie">Małopolskie</option>
-                    <option value="Pomorskie">Pomorskie</option>
-                    <option value="Śląskie">Śląskie</option>
-                    <option value="Wielkopolskie">Wielkopolskie</option>
-                    <option value="Zachodniopomorskie">Zachodniopomorskie</option>
-                </select>
-            </div>
+					<label for="wojewodztwo">Województwo:</label>
+					<select name="wojewodztwo" id="wojewodztwo">
+						<option value="">-- Wybierz województwo --</option>
+						<option value="dolnoslaskie">Dolnośląskie</option>
+						<option value="kujawsko-pomorskie">Kujawsko-Pomorskie</option>
+						<option value="lubelskie">Lubelskie</option>
+						<option value="lubuskie">Lubuskie</option>
+						<option value="lodzkie">Łódzkie</option>
+						<option value="malopolskie">Małopolskie</option>
+						<option value="mazowieckie">Mazowieckie</option>
+						<option value="opolskie">Opolskie</option>
+						<option value="podkarpackie">Podkarpackie</option>
+						<option value="podlaskie">Podlaskie</option>
+						<option value="pomorskie">Pomorskie</option>
+						<option value="slaskie">Śląskie</option>
+						<option value="swietokrzyskie">Świętokrzyskie</option>
+						<option value="warminsko-mazurskie">Warmińsko-Mazurskie</option>
+						<option value="wielkopolskie">Wielkopolskie</option>
+						<option value="zachodniopomorskie">Zachodniopomorskie</option>
+					</select>
 
-            <input type="submit" value="Wyślij" id="submit-button" disabled />
-        </form>
+					<label for="telefon">Telefon:</label>
+					<input type="text" name="telefon" id="telefon" />
 
-        <!-- Sekcja wybrane wartości -->
-        <div class="selected-values">
-            <h2>Wybrane wartości:</h2>
-            <p><strong>Województwo:</strong> <span id="selected-wojewodztwo">-</span></p>
-            <p><strong>Nazwa Firmy:</strong> <span id="selected-nazwa-firmy">-</span></p>
-            <p><strong>Telefon:</strong> <span id="selected-telefon">-</span></p>
-            <p><strong>Email:</strong> <span id="selected-email">-</span></p>
-        </div>
-    </div>
+					<label for="email">E-mail:</label>
+					<input type="email" name="email" id="email" />
+				</div>
 
-    <script src="script.js"></script>
-</body>
+				<input type="submit" value="Wyślij" id="submit-button" disabled />
+			</form>
+		</div>
+		<script src="script.js"></script>
+	</body>
 </html>
