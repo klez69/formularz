@@ -33,3 +33,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+document.addEventListener("DOMContentLoaded", function () {
+    const wojewodztwoSelect = document.getElementById("wojewodztwo");
+    const selectedWojewodztwo = document.getElementById("selected-wojewodztwo");
+
+    wojewodztwoSelect.addEventListener("change", function () {
+        selectedWojewodztwo.textContent = wojewodztwoSelect.options[wojewodztwoSelect.selectedIndex].text;
+    });
+});
