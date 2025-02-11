@@ -1,30 +1,61 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const fieldsToTrack = [
-        { id: "marka", output: "selected-marka" },
-        { id: "model", output: "selected-model" },
-        { id: "kod_silnika", output: "selected-kod_silnika" },
-        { id: "moc", output: "selected-moc" },
-        { id: "pojemnosc", output: "selected-pojemnosc" },
-        { id: "rok_produkcji", output: "selected-rok_produkcji" },
-        { id: "imie_nick", output: "selected-imie_nick" },
-        { id: "adres", output: "selected-adres" },
-        { id: "kod", output: "selected-kod" },
-        { id: "miasto", output: "selected-miasto" },
-        { id: "telefon", output: "selected-telefon" },
-        { id: "email", output: "selected-email" },
-        { id: "wojewodztwo", output: "selected-wojewodztwo", isSelect: true }
-    ];
+    const sprawdzButton = document.getElementById("sprawdz-button");
+    const daneKlientaDiv = document.getElementById("dane-klienta");
+    const submitButton = document.getElementById("submit-button");
 
-    fieldsToTrack.forEach(field => {
-        const inputElement = document.getElementById(field.id);
-        const outputElement = document.getElementById(field.output);
+    const pojazdFields = ["marka", "model", "moc", "pojemnosc", "rok_produkcji"];
+    const klientFields = ["imie_nick", "adres", "kod", "miasto", "telefon", "email", "wojewodztwo"];
 
-        if (inputElement) {
+    function sprawdzPojazd() {
+        let wszystkieUzupelnione = true;
+
+        pojazdFields.forEach(fieldId => {
+            const field = document.getElementById(fieldId);
+            if (!field.value.trim()) {
+                wszystkieUzupelnione = false;
+            }
+        });
+
+        if (wszystkieUzupelnione) {
+            daneKlientaDiv.style.display = "block"; // Pokazujemy sekcję klienta
+        } else {
+            alert("Proszę uzupełnić wszystkie wymagane pola pojazdu.");
+        }
+    }
+
+    function sprawdzKlienta() {
+        let wszystkieUzupelnione = true;
+
+        klientFields.forEach(fieldId => {
+            const field = document.getElementById(fieldId);
+            if (!field.value.trim()) {
+                wszystkieUzupelnione = false;
+            }
+        });
+
+        submitButton.disabled = !wszystkieUzupelnione; // Aktywujemy "Wyślij" tylko gdy wszystkie pola są uzupełnione
+    }
+
+    sprawdzButton.addEventListener("click", sprawdzPojazd);
+
+    klientFields.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        field.addEventListener("input", sprawdzKlienta);
+        field.addEventListener("change", sprawdzKlienta);
+    });
+
+    // Aktualizacja wybranych wartości w podsumowaniu
+    const allFields = [...pojazdFields, "kod_silnika", ...klientFields];
+    allFields.forEach(fieldId => {
+        const inputElement = document.getElementById(fieldId);
+        const outputElement = document.getElementById(`selected-${fieldId}`);
+
+        if (inputElement && outputElement) {
             inputElement.addEventListener("input", function () {
-                outputElement.textContent = inputElement.value || "-";
+                outputElement.textContent = inputElement.value.trim() || "-";
             });
 
-            if (field.isSelect) {
+            if (fieldId === "wojewodztwo") {
                 inputElement.addEventListener("change", function () {
                     outputElement.textContent = inputElement.options[inputElement.selectedIndex].text || "-";
                 });
