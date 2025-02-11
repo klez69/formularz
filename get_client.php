@@ -11,23 +11,25 @@ if (isset($_GET['wojewodztwo'])) {
     $handle = fopen($file, 'r');
     fgetcsv($handle); // Pomijamy nagłówek
 
+    $firmy = [];
+
     while ($row = fgetcsv($handle)) {
         if ($row[0] === $wojewodztwo) {
-            echo json_encode([
+            $firmy[] = [
                 'firma' => $row[1],
-                'imie_nick' => $row[2],
-                'adres' => $row[3],
-                'kod' => $row[4],
-                'miasto' => $row[5],
-                'telefon' => $row[6],
-                'email' => $row[7]
-            ]);
-            fclose($handle);
-            exit;
+                'telefon' => $row[2],
+                'email' => $row[3]
+            ];
         }
     }
 
     fclose($handle);
-    echo json_encode(['error' => 'Brak danych dla wybranego województwa']);
+
+    if (!empty($firmy)) {
+        echo json_encode($firmy);
+    } else {
+        echo json_encode(['error' => 'Brak firm dla wybranego województwa']);
+    }
 }
 ?>
+
