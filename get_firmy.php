@@ -29,4 +29,3 @@ if (isset($_GET['wojewodztwo'])) {
     echo json_encode($firmy);
 }
 ?>
-
