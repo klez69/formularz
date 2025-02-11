@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Przygotowanie przycisku "Sprawdź"
+    // Sprawdzenie i pokazanie sekcji klienta
     sprawdzButton.addEventListener("click", function () {
         let wszystkieUzupelnione = pojazdFields.every(fieldId => {
             return document.getElementById(fieldId).value.trim() !== "";
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Sprawdzenie, czy dane klienta są uzupełnione, aby aktywować "Wyślij"
+    // Sprawdzenie, czy dane klienta są uzupełnione
     function sprawdzKlienta() {
         let wszystkieUzupelnione = klientFields.every(fieldId => {
             return document.getElementById(fieldId).value.trim() !== "";
@@ -50,20 +50,18 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // Pobieranie listy firm po wybraniu województwa
+    // Pobieranie firm po wyborze województwa
     wojewodztwoSelect.addEventListener("change", function () {
         const wojewodztwo = wojewodztwoSelect.value;
         firmaSelect.innerHTML = '<option value="">-- Wybierz firmę --</option>';
         telefonInput.value = "";
         emailInput.value = "";
 
-        aktualizujPodsumowanie();
-
         if (wojewodztwo) {
             fetch(`get_firmy.php?wojewodztwo=${wojewodztwo}`)
                 .then(response => response.json())
                 .then(data => {
-                    if (!data.error) {
+                    if (data.length > 0) {
                         data.forEach(firma => {
                             const option = document.createElement("option");
                             option.value = firma.firma;
@@ -72,10 +70,13 @@ document.addEventListener("DOMContentLoaded", function () {
                             option.dataset.email = firma.email;
                             firmaSelect.appendChild(option);
                         });
+                    } else {
+                        console.error("Brak firm dla wybranego województwa");
                     }
                 })
                 .catch(error => console.error("Błąd pobierania danych:", error));
         }
+        aktualizujPodsumowanie();
     });
 
     // Automatyczne uzupełnianie telefonu i e-maila po wyborze firmy
