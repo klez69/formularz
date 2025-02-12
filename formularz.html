@@ -39,12 +39,7 @@
                 </select>
 
 
-<label for="firma">Wybierz firmę:</label>
-    <select id="firma">
-        <option value="">-- Wybierz firmę --</option>
-    </select>
 
-    <div id="daneFirmy"></div>
 
 
 
@@ -89,9 +84,11 @@
             <p><strong>Województwo:</strong> <span id="selected-wojewodztwo">-</span></p>
             <hr>
             <h3>Firmy dla wybranego województwa:</h3>
-            <p><span id="selected-firma">-</span></p>
-            <div id="daneFirmy"></div>
-                    <hr>
+            <label for="firma">Wybierz firmę:</label>
+    <select id="firma">
+        <option value="">-- Wybierz firmę --</option>
+    </select>
+    <div id="daneFirmy"></div>
 <script>
         // PRZECHOWYWANIE FIRM W PAMIĘCI (ZAMIAST GET_FIRMY.PHP)
         let firmy = {
