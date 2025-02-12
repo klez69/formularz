@@ -84,11 +84,7 @@
             <p><strong>Województwo:</strong> <span id="selected-wojewodztwo">-</span></p>
             <hr>
             <h3>Firmy dla wybranego województwa:</h3>
-            <label for="firma">Wybierz firmę:</label>
-    <select id="firma">
-        <option value="">-- Wybierz firmę --</option>
-    </select>
-    <div id="daneFirmy"></div>
+            <div id="daneFirmy"></div>
 <script>
         // PRZECHOWYWANIE FIRM W PAMIĘCI (ZAMIAST GET_FIRMY.PHP)
         let firmy = {
@@ -104,44 +100,48 @@
             ]
         };
 
-        // Pobieranie referencji do elementów HTML
+        // Pobranie referencji do elementów HTML
         let selectWojewodztwo = document.getElementById("wojewodztwo");
-        let selectFirma = document.getElementById("firma");
         let daneFirmyDiv = document.getElementById("daneFirmy");
 
         // Obsługa zmiany województwa
         selectWojewodztwo.addEventListener("change", function() {
             let wybraneWojewodztwo = this.value;
-            selectFirma.innerHTML = '<option value="">-- Wybierz firmę --</option>'; // Resetowanie listy firm
+            daneFirmyDiv.innerHTML = ""; // Czyszczenie poprzednich danych
 
             if (wybraneWojewodztwo && firmy[wybraneWojewodztwo]) {
-                firmy[wybraneWojewodztwo].forEach(firma => {
-                    let option = document.createElement("option");
-                    option.value = firma.firma;
-                    option.textContent = firma.firma;
-                    selectFirma.appendChild(option);
-                });
+                let listaFirm = firmy[wybraneWojewodztwo];
+
+                // Jeśli jest tylko jedna firma, wyświetl jej dane
+                if (listaFirm.length === 1) {
+                    wyswietlDaneFirmy(listaFirm[0]);
+                } else {
+                    // Jeśli jest więcej firm, wyświetl listę wszystkich firm
+                    let listaHTML = "<h3>Dostępne firmy:</h3><ul>";
+                    listaFirm.forEach(firma => {
+                        listaHTML += `
+                            <li>
+                                <strong>${firma.firma}</strong><br>
+                                Telefon: ${firma.telefon}<br>
+                                Email: <a href="mailto:${firma.email}">${firma.email}</a>
+                            </li>
+                        `;
+                    });
+                    listaHTML += "</ul>";
+                    daneFirmyDiv.innerHTML = listaHTML;
+                }
             }
         });
 
-        // Obsługa zmiany firmy
-        selectFirma.addEventListener("change", function() {
-            let wybranaFirma = this.value;
-            let wybraneWojewodztwo = selectWojewodztwo.value;
-            
-            if (wybraneWojewodztwo && wybranaFirma) {
-                let firma = firmy[wybraneWojewodztwo].find(f => f.firma === wybranaFirma);
-                if (firma) {
-                    daneFirmyDiv.innerHTML = `
-                        <p><strong>Firma:</strong> ${firma.firma}</p>
-                        <p><strong>Telefon:</strong> ${firma.telefon}</p>
-                        <p><strong>Email:</strong> <a href="mailto:${firma.email}">${firma.email}</a></p>
-                    `;
-                }
-            } else {
-                daneFirmyDiv.innerHTML = "";
-            }
-        });
+        // Funkcja do wyświetlania danych firmy
+        function wyswietlDaneFirmy(firma) {
+            daneFirmyDiv.innerHTML = `
+                <h3>Dane firmy:</h3>
+                <p><strong>Firma:</strong> ${firma.firma}</p>
+                <p><strong>Telefon:</strong> ${firma.telefon}</p>
+                <p><strong>Email:</strong> <a href="mailto:${firma.email}">${firma.email}</a></p>
+            `;
+        }
     </script>
 
 
