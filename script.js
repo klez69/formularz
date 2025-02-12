@@ -1,6 +1,37 @@
 document.addEventListener("DOMContentLoaded", function () {
     const wojewodztwoSelect = document.getElementById("wojewodztwo");
+    const sprawdzButton = document.getElementById("sprawdz-button");
+    const submitButton = document.getElementById("submit-button");
+    const daneKlientaDiv = document.getElementById("dane-klienta");
     const firmaList = document.getElementById("selected-firma-list");
+
+    const pojazdFields = ["marka", "model", "moc", "pojemnosc", "rok_produkcji"];
+    const klientFields = ["imie_nick", "adres", "kod", "miasto", "telefon", "email", "wojewodztwo"];
+
+    function sprawdzPojazd() {
+        let wszystkieUzupelnione = pojazdFields.every(fieldId => {
+            return document.getElementById(fieldId).value.trim() !== "";
+        });
+
+        if (wszystkieUzupelnione) {
+            daneKlientaDiv.style.display = "block";
+        } else {
+            alert("Proszę uzupełnić wszystkie wymagane pola pojazdu.");
+        }
+    }
+
+    function sprawdzKlienta() {
+        let wszystkieUzupelnione = klientFields.every(fieldId => {
+            return document.getElementById(fieldId).value.trim() !== "";
+        });
+
+        submitButton.disabled = !wszystkieUzupelnione;
+    }
+
+    sprawdzButton.addEventListener("click", sprawdzPojazd);
+    klientFields.forEach(fieldId => {
+        document.getElementById(fieldId).addEventListener("input", sprawdzKlienta);
+    });
 
     wojewodztwoSelect.addEventListener("change", function () {
         const wojewodztwo = wojewodztwoSelect.value.trim();
@@ -10,9 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
             fetch(`get_firmy.php?wojewodztwo=${encodeURIComponent(wojewodztwo)}`)
                 .then(response => response.json())
                 .then(data => {
-                    console.log("Otrzymane firmy:", data);
-
-                    firmaList.innerHTML = ""; // Wyczyść listę przed dodaniem nowych firm
+                    firmaList.innerHTML = "";
 
                     if (Array.isArray(data) && data.length > 0) {
                         data.forEach(firma => {
