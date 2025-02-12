@@ -48,37 +48,72 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    wojewodztwoSelect.addEventListener("change", function () {
-        const wojewodztwo = wojewodztwoSelect.value.trim();
-        document.getElementById("selected-wojewodztwo").textContent = wojewodztwo || "-";
-        firmaList.innerHTML = "<p>Ładowanie...</p>";
+        // PRZECHOWYWANIE FIRM W PAMIĘCI (ZAMIAST GET_FIRMY.PHP)
+    let firmy = {
+        "mazowieckie": [
+            { "firma": "AutoSerwis Jan", "telefon": "123456789", "email": "serwis.jan@example.com" },
+            { "firma": "Mechanika Kowalski", "telefon": "987654321", "email": "mechanika.kowalski@example.com" }
+        ],
+        "malopolskie": [
+            { "firma": "AutoNaprawa Nowak", "telefon": "555888999", "email": "naprawa.nowak@example.com" }
+        ],
+        "slaskie": [
+            { "firma": "Serwis AutoFix", "telefon": "666777888", "email": "autofix@example.com" }
+        ]
+    };
 
-        if (wojewodztwo) {
-            fetch(`get_firmy.php?wojewodztwo=${encodeURIComponent(wojewodztwo)}`)
-                .then(response => response.json())
-                .then(data => {
-                    firmaList.innerHTML = "";
-                    if (Array.isArray(data) && data.length > 0) {
-                        data.forEach(firma => {
-                            const firmaDiv = document.createElement("div");
-                            firmaDiv.innerHTML = `
-                                <p><strong>Firma:</strong> ${firma.firma}</p>
-                                <p><strong>Telefon:</strong> ${firma.telefon}</p>
-                                <p><strong>Email:</strong> ${firma.email}</p>
-                                <hr>
-                            `;
-                            firmaList.appendChild(firmaDiv);
-                        });
-                    } else {
-                        firmaList.innerHTML = "<p>Brak firm dla wybranego województwa.</p>";
-                    }
-                })
-                .catch(error => {
-                    console.error("Błąd pobierania firm:", error);
-                    firmaList.innerHTML = "<p>Błąd ładowania firm.</p>";
-                });
+    // FUNKCJA AKTUALIZUJĄCA LISTĘ FIRM
+    function aktualizujListeFirm() {
+        const wojewodztwo = wojewodztwoSelect.value.trim();
+        firmaSelect.innerHTML = '<option value="">-- Wybierz firmę --</option>';
+        firmaList.innerHTML = "";
+
+        if (wojewodztwo && firmy[wojewodztwo]) {
+            firmy[wojewodztwo].forEach(firma => {
+                const option = document.createElement("option");
+                option.value = firma.firma;
+                option.textContent = firma.firma;
+                option.dataset.telefon = firma.telefon;
+                option.dataset.email = firma.email;
+                firmaSelect.appendChild(option);
+
+                const firmaDiv = document.createElement("div");
+                firmaDiv.innerHTML = `
+                    <p><strong>Firma:</strong> ${firma.firma}</p>
+                    <p><strong>Telefon:</strong> ${firma.telefon}</p>
+                    <p><strong>Email:</strong> ${firma.email}</p>
+                    <hr>
+                `;
+                firmaList.appendChild(firmaDiv);
+            });
         } else {
-            firmaList.innerHTML = "<p>Wybierz województwo, aby zobaczyć dostępne firmy.</p>";
+            firmaList.innerHTML = "<p>Brak firm dla wybranego województwa.</p>";
+        }
+    }
+
+    // OBSŁUGA ZMIANY WOJEWÓDZTWA
+    wojewodztwoSelect.addEventListener("change", aktualizujListeFirm);
+
+    // DODAWANIE NOWEJ FIRMY DO LISTY
+    dodajFirmeButton.addEventListener("click", function () {
+        const wojewodztwo = wojewodztwoSelect.value.trim();
+        const nowaFirma = nowaFirmaInput.value.trim();
+        const telefon = nowaFirmaTelefon.value.trim();
+        const email = nowaFirmaEmail.value.trim();
+
+        if (wojewodztwo && nowaFirma && telefon && email) {
+            if (!firmy[wojewodztwo]) {
+                firmy[wojewodztwo] = [];
+            }
+
+            firmy[wojewodztwo].push({ "firma": nowaFirma, "telefon": telefon, "email": email });
+            aktualizujListeFirm();
+
+            nowaFirmaInput.value = "";
+            nowaFirmaTelefon.value = "";
+            nowaFirmaEmail.value = "";
+        } else {
+            alert("Wypełnij wszystkie pola, aby dodać firmę.");
         }
     });
 });
