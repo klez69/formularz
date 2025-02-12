@@ -48,46 +48,62 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+  
         // PRZECHOWYWANIE FIRM W PAMIĘCI (ZAMIAST GET_FIRMY.PHP)
-    let firmy = {
-        "mazowieckie": [
-            { "firma": "AutoSerwis Jan", "telefon": "123456789", "email": "serwis.jan@example.com" },
-            { "firma": "Mechanika Kowalski", "telefon": "987654321", "email": "mechanika.kowalski@example.com" }
-        ],
-        "malopolskie": [
-            { "firma": "AutoNaprawa Nowak", "telefon": "555888999", "email": "naprawa.nowak@example.com" }
-        ],
-        "slaskie": [
-            { "firma": "Serwis AutoFix", "telefon": "666777888", "email": "autofix@example.com" }
-        ]
-    };
+        let firmy = {
+            "mazowieckie": [
+                { "firma": "AutoSerwis Jan", "telefon": "123456789", "email": "serwis.jan@example.com" },
+                { "firma": "Mechanika Kowalski", "telefon": "987654321", "email": "mechanika.kowalski@example.com" }
+            ],
+            "malopolskie": [
+                { "firma": "AutoNaprawa Nowak", "telefon": "555888999", "email": "naprawa.nowak@example.com" }
+            ],
+            "slaskie": [
+                { "firma": "Serwis AutoFix", "telefon": "666777888", "email": "autofix@example.com" }
+            ]
+        };
 
-    // FUNKCJA AKTUALIZUJĄCA LISTĘ FIRM
-    function aktualizujListeFirm() {
-        const wojewodztwo = wojewodztwoSelect.value.trim();
-        firmaSelect.innerHTML = '<option value="">-- Wybierz firmę --</option>';
-        firmaList.innerHTML = "";
+        // Pobranie referencji do elementów HTML
+        let selectWojewodztwo = document.getElementById("wojewodztwo");
+        let daneFirmyDiv = document.getElementById("daneFirmy");
 
-        if (wojewodztwo && firmy[wojewodztwo]) {
-            firmy[wojewodztwo].forEach(firma => {
-                const option = document.createElement("option");
-                option.value = firma.firma;
-                option.textContent = firma.firma;
-                option.dataset.telefon = firma.telefon;
-                option.dataset.email = firma.email;
-                firmaSelect.appendChild(option);
+        // Obsługa zmiany województwa
+        selectWojewodztwo.addEventListener("change", function() {
+            let wybraneWojewodztwo = this.value;
+            daneFirmyDiv.innerHTML = ""; // Czyszczenie poprzednich danych
 
-                const firmaDiv = document.createElement("div");
-                firmaDiv.innerHTML = `
-                    <p><strong>Firma:</strong> ${firma.firma}</p>
-                    <p><strong>Telefon:</strong> ${firma.telefon}</p>
-                    <p><strong>Email:</strong> ${firma.email}</p>
-                    <hr>
-                `;
-                firmaList.appendChild(firmaDiv);
-            });
-        } else {
-            firmaList.innerHTML = "<p>Brak firm dla wybranego województwa.</p>";
+            if (wybraneWojewodztwo && firmy[wybraneWojewodztwo]) {
+                let listaFirm = firmy[wybraneWojewodztwo];
+
+                // Jeśli jest tylko jedna firma, wyświetl jej dane
+                if (listaFirm.length === 1) {
+                    wyswietlDaneFirmy(listaFirm[0]);
+                } else {
+                    // Jeśli jest więcej firm, wyświetl listę wszystkich firm
+                    let listaHTML = "<h3>Dostępne firmy:</h3><ul>";
+                    listaFirm.forEach(firma => {
+                        listaHTML += `
+                            <li>
+                                <strong>${firma.firma}</strong><br>
+                                Telefon: ${firma.telefon}<br>
+                                Email: <a href="mailto:${firma.email}">${firma.email}</a>
+                            </li>
+                        `;
+                    });
+                    listaHTML += "</ul>";
+                    daneFirmyDiv.innerHTML = listaHTML;
+                }
+            }
+        });
+
+        // Funkcja do wyświetlania danych firmy
+        function wyswietlDaneFirmy(firma) {
+            daneFirmyDiv.innerHTML = `
+                <h3>Dane firmy:</h3>
+                <p><strong>Firma:</strong> ${firma.firma}</p>
+                <p><strong>Telefon:</strong> ${firma.telefon}</p>
+                <p><strong>Email:</strong> <a href="mailto:${firma.email}">${firma.email}</a></p>
+            `;
         }
-    }
+    
 });
