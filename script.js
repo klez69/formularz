@@ -8,6 +8,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const pojazdFields = ["marka", "model", "moc", "pojemnosc", "rok_produkcji"];
     const klientFields = ["imie_nick", "adres", "kod", "miasto", "telefon", "email", "wojewodztwo"];
 
+    function aktualizujPodsumowanie() {
+        [...pojazdFields, ...klientFields].forEach(fieldId => {
+            const inputElement = document.getElementById(fieldId);
+            const outputElement = document.getElementById(`selected-${fieldId}`);
+
+            if (inputElement && outputElement) {
+                outputElement.textContent = inputElement.value.trim() || "-";
+            }
+        });
+    }
+
     function sprawdzPojazd() {
         let wszystkieUzupelnione = pojazdFields.every(fieldId => {
             return document.getElementById(fieldId).value.trim() !== "";
@@ -29,12 +40,16 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     sprawdzButton.addEventListener("click", sprawdzPojazd);
-    klientFields.forEach(fieldId => {
-        document.getElementById(fieldId).addEventListener("input", sprawdzKlienta);
+    [...pojazdFields, ...klientFields].forEach(fieldId => {
+        document.getElementById(fieldId).addEventListener("input", function () {
+            aktualizujPodsumowanie();
+            sprawdzKlienta();
+        });
     });
 
     wojewodztwoSelect.addEventListener("change", function () {
         const wojewodztwo = wojewodztwoSelect.value.trim();
+        document.getElementById("selected-wojewodztwo").textContent = wojewodztwo || "-";
         firmaList.innerHTML = "<p>Ładowanie...</p>";
 
         if (wojewodztwo) {
@@ -42,7 +57,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then(response => response.json())
                 .then(data => {
                     firmaList.innerHTML = "";
-
                     if (Array.isArray(data) && data.length > 0) {
                         data.forEach(firma => {
                             const firmaDiv = document.createElement("div");
