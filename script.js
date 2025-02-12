@@ -6,10 +6,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const firmaList = document.getElementById("selected-firma-list");
 
     const pojazdFields = ["marka", "model", "moc", "pojemnosc", "rok_produkcji"];
-    const klientFields = ["imie_nick", "adres", "kod", "miasto", "telefon", "email", "wojewodztwo"];
+    const klientFields = ["imie_nick", "adres", "kod", "miasto", "telefon", "email"];
 
     function aktualizujPodsumowanie() {
-        [...pojazdFields, ...klientFields].forEach(fieldId => {
+        [...pojazdFields, ...klientFields, "wojewodztwo"].forEach(fieldId => {
             const inputElement = document.getElementById(fieldId);
             const outputElement = document.getElementById(`selected-${fieldId}`);
 
@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (wszystkieUzupelnione) {
             daneKlientaDiv.style.display = "block";
+            aktualizujPodsumowanie();
         } else {
             alert("Proszę uzupełnić wszystkie wymagane pola pojazdu.");
         }
@@ -40,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     sprawdzButton.addEventListener("click", sprawdzPojazd);
-    [...pojazdFields, ...klientFields].forEach(fieldId => {
+    [...pojazdFields, ...klientFields, "wojewodztwo"].forEach(fieldId => {
         document.getElementById(fieldId).addEventListener("input", function () {
             aktualizujPodsumowanie();
             sprawdzKlienta();
