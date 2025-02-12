@@ -90,30 +90,4 @@ document.addEventListener("DOMContentLoaded", function () {
             firmaList.innerHTML = "<p>Brak firm dla wybranego województwa.</p>";
         }
     }
-
-    // OBSŁUGA ZMIANY WOJEWÓDZTWA
-    wojewodztwoSelect.addEventListener("change", aktualizujListeFirm);
-
-    // DODAWANIE NOWEJ FIRMY DO LISTY
-    dodajFirmeButton.addEventListener("click", function () {
-        const wojewodztwo = wojewodztwoSelect.value.trim();
-        const nowaFirma = nowaFirmaInput.value.trim();
-        const telefon = nowaFirmaTelefon.value.trim();
-        const email = nowaFirmaEmail.value.trim();
-
-        if (wojewodztwo && nowaFirma && telefon && email) {
-            if (!firmy[wojewodztwo]) {
-                firmy[wojewodztwo] = [];
-            }
-
-            firmy[wojewodztwo].push({ "firma": nowaFirma, "telefon": telefon, "email": email });
-            aktualizujListeFirm();
-
-            nowaFirmaInput.value = "";
-            nowaFirmaTelefon.value = "";
-            nowaFirmaEmail.value = "";
-        } else {
-            alert("Wypełnij wszystkie pola, aby dodać firmę.");
-        }
-    });
 });
