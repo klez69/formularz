@@ -6,7 +6,7 @@ if (isset($_GET['wojewodztwo'])) {
     $file = 'klienci.csv';
 
     if (!file_exists($file)) {
-        echo json_encode([]);
+        echo json_encode(["error" => "Plik klienci.csv nie istnieje"]);
         exit;
     }
 
@@ -14,19 +14,21 @@ if (isset($_GET['wojewodztwo'])) {
     fgetcsv($handle); // Pomijamy nagłówek
 
     $firmy = [];
-
     while (($row = fgetcsv($handle, 1000, ",")) !== FALSE) {
-        if (trim($row[0]) === trim($wojewodztwo)) {
+        if (trim(mb_strtolower($row[0])) === trim(mb_strtolower($wojewodztwo))) {
             $firmy[] = [
-                'firma' => $row[1],
-                'telefon' => $row[2],
-                'email' => $row[3]
+                'firma' => trim($row[1]),
+                'telefon' => trim($row[2]),
+                'email' => trim($row[3])
             ];
         }
     }
-
     fclose($handle);
 
-    echo json_encode($firmy);
+    if (empty($firmy)) {
+        echo json_encode(["error" => "Brak firm dla województwa: " . $wojewodztwo]);
+    } else {
+        echo json_encode($firmy);
+    }
 }
 ?>
