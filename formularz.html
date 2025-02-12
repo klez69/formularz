@@ -81,6 +81,63 @@
             <div id="selected-firma-list">
                 <p>Wybierz województwo, aby zobaczyć dostępne firmy.</p>
                     <hr>
+<script>
+        // PRZECHOWYWANIE FIRM W PAMIĘCI (ZAMIAST GET_FIRMY.PHP)
+        let firmy = {
+            "mazowieckie": [
+                { "firma": "AutoSerwis Jan", "telefon": "123456789", "email": "serwis.jan@example.com" },
+                { "firma": "Mechanika Kowalski", "telefon": "987654321", "email": "mechanika.kowalski@example.com" }
+            ],
+            "malopolskie": [
+                { "firma": "AutoNaprawa Nowak", "telefon": "555888999", "email": "naprawa.nowak@example.com" }
+            ],
+            "slaskie": [
+                { "firma": "Serwis AutoFix", "telefon": "666777888", "email": "autofix@example.com" }
+            ]
+        };
+
+        // Pobieranie referencji do elementów HTML
+        let selectWojewodztwo = document.getElementById("wojewodztwo");
+        let selectFirma = document.getElementById("firma");
+        let daneFirmyDiv = document.getElementById("daneFirmy");
+
+        // Obsługa zmiany województwa
+        selectWojewodztwo.addEventListener("change", function() {
+            let wybraneWojewodztwo = this.value;
+            selectFirma.innerHTML = '<option value="">-- Wybierz firmę --</option>'; // Resetowanie listy firm
+
+            if (wybraneWojewodztwo && firmy[wybraneWojewodztwo]) {
+                firmy[wybraneWojewodztwo].forEach(firma => {
+                    let option = document.createElement("option");
+                    option.value = firma.firma;
+                    option.textContent = firma.firma;
+                    selectFirma.appendChild(option);
+                });
+            }
+        });
+
+        // Obsługa zmiany firmy
+        selectFirma.addEventListener("change", function() {
+            let wybranaFirma = this.value;
+            let wybraneWojewodztwo = selectWojewodztwo.value;
+            
+            if (wybraneWojewodztwo && wybranaFirma) {
+                let firma = firmy[wybraneWojewodztwo].find(f => f.firma === wybranaFirma);
+                if (firma) {
+                    daneFirmyDiv.innerHTML = `
+                        <p><strong>Firma:</strong> ${firma.firma}</p>
+                        <p><strong>Telefon:</strong> ${firma.telefon}</p>
+                        <p><strong>Email:</strong> <a href="mailto:${firma.email}">${firma.email}</a></p>
+                    `;
+                }
+            } else {
+                daneFirmyDiv.innerHTML = "";
+            }
+        });
+    </script>
+
+
+                
             </div>
         </div>
     </div>
