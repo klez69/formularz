@@ -58,8 +58,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			{ firma: 'AutoNaprawa Nowak', telefon: '555888999', email: 'naprawa.nowak@example.com' }
 		],
 		slaskie: [
-			{ firma: 'Serwis AutoFix', telefon: '666777888', email: 'autofix@example.com' },
-			{ firma: 'Serwis AutoFix', telefon: '666777888', email: 'autofix@example.com' },
+			{ firma: 'Serwis AutoFix', telefon: '6656777888', email: 'zautofix@example.com' },
+			{ firma: 'Serwis AutoFix', telefon: '5666777888', email: 'bautofix@example.com' },
 		],
 	}
 
