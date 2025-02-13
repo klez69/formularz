@@ -84,8 +84,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     listaFirm.forEach(firma => {
                         listaHTML += `
                             <li>
-                                <p><strong>Firma:</strong> ${firma.firma}</p><br>
-                                <p><strong>Telefon:</strong> ${firma.telefon}</p><br>
+                                <p><strong>Firma:</strong> ${firma.firma}</p>
+                                <p><strong>Telefon:</strong> ${firma.telefon}</p>
                                 <p><strong>Email:</strong> <a href="mailto:${firma.email}">${firma.email}</a></p>
                             </li>
                         `;
