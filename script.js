@@ -54,8 +54,13 @@ document.addEventListener('DOMContentLoaded', function () {
 			{ firma: 'AutoSerwis Jan', telefon: '123456789', email: 'serwis.jan@example.com' },
 			{ firma: 'Mechanika Kowalski', telefon: '987654321', email: 'mechanika.kowalski@example.com' },
 		],
-		malopolskie: [{ firma: 'AutoNaprawa Nowak', telefon: '555888999', email: 'naprawa.nowak@example.com' }],
-		slaskie: [{ firma: 'Serwis AutoFix', telefon: '666777888', email: 'autofix@example.com' }],
+		malopolskie: [
+			{ firma: 'AutoNaprawa Nowak', telefon: '555888999', email: 'naprawa.nowak@example.com' }
+		],
+		slaskie: [
+			{ firma: 'Serwis AutoFix', telefon: '666777888', email: 'autofix@example.com' },
+			{ firma: 'Serwis AutoFix', telefon: '666777888', email: 'autofix@example.com' },
+		],
 	}
 
 	// Pobranie referencji do elementów HTML
