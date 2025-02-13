@@ -83,7 +83,6 @@ body {
 .selected-values p {
 	margin: 10px 0;
 	color: #ff0000;
-	font-style: italic;
 	font-weight: bold;
 }
 
