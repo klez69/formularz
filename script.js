@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const daneKlientaDiv = document.getElementById("dane-klienta");
     const firmaList = document.getElementById("selected-firma-list");
 
-    const pojazdFields = ["marka", "model", "moc", "pojemnosc", "rok_produkcji"];
+    const pojazdFields = ["marka", "model", "moc", "kod-silnika", "pojemnosc", "rok_produkcji"];
     const klientFields = ["imie_nick", "adres", "kod", "miasto", "telefon", "email"];
 
     function aktualizujPodsumowanie() {
