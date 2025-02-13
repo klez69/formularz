@@ -60,7 +60,7 @@ body {
 
 /* Style dla przycisku */
 .form-container input[type='submit'] {
-	width: 100%;
+	width: 90%;
 	padding: 10px;
 	background-color: #28a745;
 	color: #fff;
