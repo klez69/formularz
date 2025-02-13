@@ -34,3 +34,7 @@ Kod silnika nie wpisany:
 Sekcja danych klienta jest widoczna.
 
 Przycisk Wyślij jest aktywny.
+✅ Pole "Firma" w formularzu i sekcji "Wybrane wartości".
+✅ Pole "Województwo" dynamicznie zmienia dane klienta.
+✅ "Wybrane wartości" aktualizują się na bieżąco (firma, telefon, e-mail też).
+✅ Przycisk "Wyślij" odblokowuje się dopiero po wypełnieniu formularza.
