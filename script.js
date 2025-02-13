@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			{ firma: 'Mechanika Kowalski', telefon: '987654321', email: 'mechanika.kowalski@example.com' },
 		],
 		malopolskie: [
-			{ firma: 'AutoNaprawa Nowak', telefon: '555888999', email: 'naprawa.nowak@example.com' }
+			{ firma: 'AutoNaprawa Nowak', telefon: '555888999', email: 'naprawa.nowak@example.com' },
 		],
 		slaskie: [
 			{ firma: 'Serwis AutoFix', telefon: '6656777888', email: 'zautofix@example.com' },
