@@ -60,6 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
             ],
             "slaskie": [
                 { "firma": "Serwis AutoFix", "telefon": "666777888", "email": "autofix@example.com" }
+                { "firma": "Serwis AutoFix", "telefon": "666777888", "email": "ggggautofix@example.com" }
             ]
         };
 
@@ -102,13 +103,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 <h3>Dane firmy:</h3>
                 <p><strong>Firma:</strong> ${firma.firma}</p>
                 <p><strong>Telefon:</strong> ${firma.telefon}</p>
-                <p><strong>Email:</strong> <a href="mailto:${firma.email}">${firma.email}</a></p>
-            `;
-        }
-        // Funkcja do wyświetlania danych firmy w formularzu
-        function wyswietlDanaFirma(firma) {
-            danaFirmyDiv.innerHTML = `
-                <p><strong>Firma:</strong> ${firma.firma}</p>
                 <p><strong>Email:</strong> <a href="mailto:${firma.email}">${firma.email}</a></p>
             `;
         }
