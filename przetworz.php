@@ -61,9 +61,9 @@ $stmt->bind_param("ssiiissssssssss",
 
 // Wykonanie zapytania i sprawdzenie wyniku
 if ($stmt->execute()) {
-    // Pobranie ID nowo dodanego rekordu
-    $last_id = $conn->insert_id;
-    echo "Rekord został dodany. ID: " . $last_id;
+    // Jeśli rekord został dodany, przekierowanie do formularz.html
+    header("Location: formularz.html");
+    exit;
 } else {
     echo "Błąd: " . $stmt->error;
 }
