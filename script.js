@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     // Pola formularza pojazdu i klienta
     const pojazdFields = ['marka', 'model', 'moc', 'pojemnosc', 'rok_produkcji'];
-    const klientFields = ['imie_nick', 'adres', 'kod', 'miasto', 'telefon', 'email'];
+    const klientFields = ['imie_nick', 'adres', 'kod', 'miasto', 'email'];
     
     function aktualizujPodsumowanie() {
         [...pojazdFields, ...klientFields, 'wojewodztwo'].forEach(fieldId => {
