@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const sprawdzButton = document.getElementById('sprawdz-button');
     const submitButton = document.getElementById('submit-button');
     const daneKlientaDiv = document.getElementById('dane-klienta');
-    const firmaSelect = document.getElementById('firma'); // Nowe pole wyboru firmy
+    const firmaSelect = document.getElementById('firma'); // Pole wyboru firmy
 
     const pojazdFields = ['marka', 'model', 'moc', 'pojemnosc', 'rok_produkcji'];
     const klientFields = ['imie_nick', 'adres', 'kod', 'miasto', 'telefon', 'email'];
@@ -60,25 +60,25 @@ document.addEventListener('DOMContentLoaded', function () {
         ],
     };
 
-    // Pobranie referencji do elementów HTML
+    // Referencje do elementów HTML
     let selectWojewodztwo = document.getElementById('wojewodztwo');
     let daneFirmyDiv = document.getElementById('daneFirmy');
 
-    // Obsługa zmiany województwa
+    // Po zmianie województwa – uzupełnienie pola wyboru firmy
     selectWojewodztwo.addEventListener('change', function () {
         let wybraneWojewodztwo = this.value;
         daneFirmyDiv.innerHTML = ''; // Czyszczenie poprzednich danych
 
-        // Czyszczenie opcji w polu wyboru firmy i dodanie domyślnej opcji
+        // Czyszczenie opcji w select firmy i dodanie opcji domyślnej
         firmaSelect.innerHTML = '<option value="">-- Wybierz firmę --</option>';
 
         if (wybraneWojewodztwo && firmy[wybraneWojewodztwo]) {
             let listaFirm = firmy[wybraneWojewodztwo];
 
-            // Uzupełnienie pola select opcjami
+            // Uzupełnienie pola select – opcje mają wartość adresu e-mail, a wyświetlana jest nazwa firmy
             listaFirm.forEach(function(firma) {
                 let opt = document.createElement('option');
-                opt.value = firma.email; // lub inna unikalna wartość, np. numer telefonu
+                opt.value = firma.email;
                 opt.textContent = firma.firma;
                 firmaSelect.appendChild(opt);
             });
@@ -103,10 +103,15 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Obsługa wyboru firmy z nowego pola select
+    // Po wyborze firmy – aktualizacja podsumowania oraz wstawienie e-maila firmy do ukrytego pola
     firmaSelect.addEventListener('change', function () {
-        let wybranaFirma = firmaSelect.options[firmaSelect.selectedIndex].text;
-        document.getElementById('selected-firma').textContent = (wybranaFirma && wybranaFirma !== '-- Wybierz firmę --') ? wybranaFirma : '-';
+        let selectedOption = firmaSelect.options[firmaSelect.selectedIndex];
+        document.getElementById('selected-firma').textContent = (selectedOption.text && selectedOption.text !== '-- Wybierz firmę --') ? selectedOption.text : '-';
+        // Ustawienie adresu e-mail wybranej firmy do pola ukrytego (przyjmujemy, że istnieje input o id "email_firmy")
+        let emailFirmaInput = document.getElementById('email_firmy');
+        if (emailFirmaInput) {
+            emailFirmaInput.value = selectedOption.value;
+        }
     });
 
     // Funkcja do wyświetlania danych firmy w divie daneFirmy
