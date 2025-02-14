@@ -41,6 +41,11 @@
                     <option value="slaskie">Śląskie</option>
                 </select>
 
+                <!-- Nowe pole wyboru firmy -->
+                <label for="firma">Wybierz firmę:</label>
+                <select name="firma" id="firma">
+                <option value="">-- Wybierz firmę --</option>
+                </select>
                 
                 <label for="imie_nick">Imię lub nick:</label>
                 <input type="text" name="imie_nick" id="imie_nick" required />
@@ -84,7 +89,7 @@
             <hr>
             <h3>Firmy dla wybranego województwa:</h3>
             <div id="daneFirmy"></div>
-
+            <p><strong>Wybrana firma:</strong> <span id="selected-firma">-</span></p>
 
 
                 
