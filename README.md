@@ -8,28 +8,18 @@ Pola marki, modelu, mocy, pojemności i roku produkcji są wstępnie wypełnione
 
 Dane klienta:
 
-Jeśli kod silnika jest wpisany, sekcja danych klienta jest ukryta (display: none).
+Jeśli kod silnika jest wpisany, sekcja danych klienta jest ukryta (display: none) nie jest obowiązkowe.
 
-Jeśli kod silnika nie jest wpisany, sekcja danych klienta jest widoczna (display: block).
+Przycisk Sprawdż:
 
-Cena i opis:
-
-Cena jest obliczana na podstawie marki, modelu i kodu silnika.
-
-Opis jest wyświetlany po wpisaniu kodu silnika.
-
-Przycisk Wyślij:
-
-Przycisk Wyślij jest aktywny tylko wtedy, gdy kod silnika nie jest DDAA.
+Przycisk Sprawdź jest aktywny.
 
 Przykładowe zachowanie
-Kod silnika wpisany:
 
 Sekcja danych klienta jest ukryta.
 
-Przycisk Wyślij jest aktywny (jeśli kod silnika nie jest DDAA).
+Przycisk Wyślij jest aktywny.
 
-Kod silnika nie wpisany:
 
 Sekcja danych klienta jest widoczna.
 
