@@ -1,13 +1,16 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // Elementy formularza
     const wojewodztwoSelect = document.getElementById('wojewodztwo');
     const sprawdzButton = document.getElementById('sprawdz-button');
     const submitButton = document.getElementById('submit-button');
     const daneKlientaDiv = document.getElementById('dane-klienta');
-    const firmaSelect = document.getElementById('firma'); // Pole wyboru firmy
-
+    // Pole wyboru firmy – musi być dodane w formularzu
+    const firmaSelect = document.getElementById('firma');
+    
+    // Pola formularza pojazdu i klienta
     const pojazdFields = ['marka', 'model', 'moc', 'pojemnosc', 'rok_produkcji'];
     const klientFields = ['imie_nick', 'adres', 'kod', 'miasto', 'telefon', 'email'];
-
+    
     function aktualizujPodsumowanie() {
         [...pojazdFields, ...klientFields, 'wojewodztwo'].forEach(fieldId => {
             const inputElement = document.getElementById(fieldId);
@@ -17,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
-
+    
     function sprawdzPojazd() {
         let wszystkieUzupelnione = pojazdFields.every(fieldId => {
             return document.getElementById(fieldId).value.trim() !== '';
@@ -29,14 +32,14 @@ document.addEventListener('DOMContentLoaded', function () {
             alert('Proszę uzupełnić wszystkie wymagane pola pojazdu.');
         }
     }
-
+    
     function sprawdzKlienta() {
         let wszystkieUzupelnione = klientFields.every(fieldId => {
             return document.getElementById(fieldId).value.trim() !== '';
         });
         submitButton.disabled = !wszystkieUzupelnione;
     }
-
+    
     sprawdzButton.addEventListener('click', sprawdzPojazd);
     [...pojazdFields, ...klientFields, 'wojewodztwo'].forEach(fieldId => {
         document.getElementById(fieldId).addEventListener('input', function () {
@@ -44,8 +47,8 @@ document.addEventListener('DOMContentLoaded', function () {
             sprawdzKlienta();
         });
     });
-
-    // PRZECHOWYWANIE FIRM W PAMIĘCI (ZAMIAST GET_FIRMY.PHP)
+    
+    // Dane firm przechowywane lokalnie – zamiast wywoływania GET_FIRMY.PHP
     let firmy = {
         mazowieckie: [
             { firma: 'AutoSerwis Jan', telefon: '123456789', email: 'serwis.jan@example.com' },
@@ -59,31 +62,30 @@ document.addEventListener('DOMContentLoaded', function () {
             { firma: 'Serwis AutoFix', telefon: '5666777888', email: 'bautofix@example.com' },
         ],
     };
-
-    // Referencje do elementów HTML
-    let selectWojewodztwo = document.getElementById('wojewodztwo');
+    
+    // Element do tradycyjnego wyświetlania danych firm
     let daneFirmyDiv = document.getElementById('daneFirmy');
-
+    
     // Po zmianie województwa – uzupełnienie pola wyboru firmy
-    selectWojewodztwo.addEventListener('change', function () {
+    wojewodztwoSelect.addEventListener('change', function () {
         let wybraneWojewodztwo = this.value;
-        daneFirmyDiv.innerHTML = ''; // Czyszczenie poprzednich danych
-
-        // Czyszczenie opcji w select firmy i dodanie opcji domyślnej
+        // Czyścimy tradycyjny podgląd firm
+        daneFirmyDiv.innerHTML = '';
+        // Resetujemy select firm
         firmaSelect.innerHTML = '<option value="">-- Wybierz firmę --</option>';
-
+        
         if (wybraneWojewodztwo && firmy[wybraneWojewodztwo]) {
             let listaFirm = firmy[wybraneWojewodztwo];
-
-            // Uzupełnienie pola select – opcje mają wartość adresu e-mail, a wyświetlana jest nazwa firmy
+            
+            // Uzupełniamy pole select – opcje mają wartość adresu e-mail, a wyświetlana jest nazwa firmy
             listaFirm.forEach(function(firma) {
                 let opt = document.createElement('option');
                 opt.value = firma.email;
                 opt.textContent = firma.firma;
                 firmaSelect.appendChild(opt);
             });
-
-            // Wyświetlenie firm w tradycyjnym formacie w divie daneFirmy
+            
+            // Wyświetlenie firm w tradycyjnym formacie
             if (listaFirm.length === 1) {
                 wyswietlDaneFirmy(listaFirm[0]);
             } else {
@@ -102,19 +104,19 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     });
-
-    // Po wyborze firmy – aktualizacja podsumowania oraz wstawienie e-maila firmy do ukrytego pola
+    
+    // Obsługa wyboru firmy – po wybraniu, wstawiamy e-mail firmy do ukrytego pola
     firmaSelect.addEventListener('change', function () {
         let selectedOption = firmaSelect.options[firmaSelect.selectedIndex];
         document.getElementById('selected-firma').textContent = (selectedOption.text && selectedOption.text !== '-- Wybierz firmę --') ? selectedOption.text : '-';
-        // Ustawienie adresu e-mail wybranej firmy do pola ukrytego (przyjmujemy, że istnieje input o id "email_firmy")
+        // Przypisujemy e-mail firmy do ukrytego pola (upewnij się, że w formularzu masz input o id "email_firmy")
         let emailFirmaInput = document.getElementById('email_firmy');
         if (emailFirmaInput) {
             emailFirmaInput.value = selectedOption.value;
         }
     });
-
-    // Funkcja do wyświetlania danych firmy w divie daneFirmy
+    
+    // Funkcja do wyświetlania danych firmy w tradycyjnym formacie
     function wyswietlDaneFirmy(firma) {
         daneFirmyDiv.innerHTML = `
             <h3>Dane firmy:</h3>
