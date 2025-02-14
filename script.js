@@ -48,6 +48,12 @@ document.addEventListener('DOMContentLoaded', function () {
 		})
 	})
 
+	// kod silnika
+	document.getElementById('kod_silnika').addEventListener('input', function () {
+    	document.getElementById('selected-kod_silnika').textContent = this.value.trim() || '-';
+	});
+
+	
 	// PRZECHOWYWANIE FIRM W PAMIĘCI (ZAMIAST GET_FIRMY.PHP)
 	let firmy = {
 		mazowieckie: [
