@@ -1,5 +1,5 @@
 <?php
-include(dbt.php);
+include("dbt.php");
 
 
 // Nawiązanie połączenia z bazą
