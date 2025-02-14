@@ -1,7 +1,7 @@
-<?
-// Dane do połączenia z bazą danych
-$host = 'mysql.ibc.pl'; // Adres hosta
-$dbname = 'baza5950_brcmaestro'; // Nazwa bazy danych
-$user = 'admin5950_brcmaestro'; // Nazwa użytkownika bazy danych
-$password = 'h5C)f0Z)e3'; // Hasło użytkownika bazy danych
+<?php
+// Ustawienia bazy danych
+$servername = "mysql.ibc.pl";
+$username   = "admin5950_brcmaestro";         // dostosuj do swoich ustawień
+$password   = "h5C)f0Z)e3";             // dostosuj do swoich ustawień
+$dbname     = "baza5950_brcmaestro";     // podaj nazwę swojej bazy danych
 ?>
