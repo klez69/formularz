@@ -4,7 +4,8 @@ document.addEventListener('DOMContentLoaded', function () {
 	const submitButton = document.getElementById('submit-button')
 	const daneKlientaDiv = document.getElementById('dane-klienta')
 	const firmaList = document.getElementById('selected-firma-list')
-
+	const firmaSelect = document.getElementById('firma');
+	
 	const pojazdFields = ['marka', 'model', 'moc', 'pojemnosc', 'rok_produkcji']
 	const klientFields = ['imie_nick', 'adres', 'kod', 'miasto', 'telefon', 'email']
 
@@ -112,3 +113,47 @@ document.addEventListener('DOMContentLoaded', function () {
             `
 	}
 })
+
+//dodane nowe
+selectWojewodztwo.addEventListener('change', function () {
+    let wybraneWojewodztwo = this.value;
+    daneFirmyDiv.innerHTML = ''; // Czyszczenie poprzednich danych
+
+    // Czyszczenie opcji w polu wyboru firmy i dodanie domyślnej opcji
+    firmaSelect.innerHTML = '<option value="">-- Wybierz firmę --</option>';
+
+    if (wybraneWojewodztwo && firmy[wybraneWojewodztwo]) {
+        let listaFirm = firmy[wybraneWojewodztwo];
+
+        // Uzupełnienie pola select opcjami
+        listaFirm.forEach(function(firma) {
+            let opt = document.createElement('option');
+            opt.value = firma.email; // lub inna unikalna wartość, np. numer telefonu
+            opt.textContent = firma.firma;
+            firmaSelect.appendChild(opt);
+        });
+
+        // Wyświetlenie firm w dotychczasowej sekcji – zachowując tradycyjny sposób:
+        if (listaFirm.length === 1) {
+            wyswietlDaneFirmy(listaFirm[0]);
+        } else {
+            let listaHTML = '<h3>Dostępne firmy:</h3><ul>';
+            listaFirm.forEach(function(firma) {
+                listaHTML += `
+                    <li>
+                        <p><strong>Firma:</strong> ${firma.firma}</p>
+                        <p><strong>Telefon:</strong> ${firma.telefon}</p>
+                        <p><strong>Email:</strong> <a href="mailto:${firma.email}">${firma.email}</a></p>
+                    </li>
+                `;
+            });
+            listaHTML += '</ul>';
+            daneFirmyDiv.innerHTML = listaHTML;
+        }
+    }
+});
+
+firmaSelect.addEventListener('change', function () {
+    let wybranaFirma = firmaSelect.options[firmaSelect.selectedIndex].text;
+    document.getElementById('selected-firma').textContent = wybranaFirma !== '-- Wybierz firmę --' ? wybranaFirma : '-';
+});
