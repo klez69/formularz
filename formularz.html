@@ -1,105 +1,105 @@
 <!DOCTYPE html>
 <html lang="pl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Formularz zgłoszeniowy</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <div class="form-container">
-    <h1>Formularz zgłoszeniowy</h1>
-    <form action="przetworz.php" method="post">
-      <!-- Dane pojazdu -->
-      <label for="marka">Marka pojazdu:</label>
-      <input type="text" name="marka" id="marka" required />
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Formularz zgłoszeniowy</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<div class="form-container">
+			<h1>Formularz zgłoszeniowy</h1>
+			<form action="przetworz.php" method="post">
+				<!-- Dane pojazdu -->
+				<label for="marka">Marka pojazdu:</label>
+				<input type="text" name="marka" id="marka" required />
 
-      <label for="model">Model pojazdu:</label>
-      <input type="text" name="model" id="model" required />
+				<label for="model">Model pojazdu:</label>
+				<input type="text" name="model" id="model" required />
 
-      <label for="moc">Moc (KM):</label>
-      <input type="number" name="moc" id="moc" required />
+				<label for="moc">Moc (KM):</label>
+				<input type="number" name="moc" id="moc" required />
 
-      <label for="pojemnosc">Pojemność (cm³):</label>
-      <input type="number" name="pojemnosc" id="pojemnosc" required />
+				<label for="pojemnosc">Pojemność (cm³):</label>
+				<input type="number" name="pojemnosc" id="pojemnosc" required />
 
-      <label for="rok_produkcji">Rok produkcji:</label>
-      <input type="number" name="rok_produkcji" id="rok_produkcji" required />
+				<label for="rok_produkcji">Rok produkcji:</label>
+				<input type="number" name="rok_produkcji" id="rok_produkcji" required />
 
-      <!-- Nowe pole: kod silnika bez walidacji -->
-      <label for="kod_silnika">Kod silnika:</label>
-      <input type="text" name="kod_silnika" id="kod_silnika" />
+				<!-- Nowe pole: kod silnika bez walidacji -->
+				<label for="kod_silnika">Kod silnika:</label>
+				<input type="text" name="kod_silnika" id="kod_silnika" />
 
-      <input type="button" value="Sprawdź" id="sprawdz-button" />
+				<input type="button" value="Sprawdź" id="sprawdz-button" />
 
-      <!-- Dane klienta -->
-      <div id="dane-klienta" style="display: none">
-        <h2>Dane klienta:</h2>
+				<!-- Dane klienta -->
+				<div id="dane-klienta" style="display: none">
+					<h2>Dane klienta:</h2>
 
-        <label for="wojewodztwo">Województwo:</label>
-        <select name="wojewodztwo" id="wojewodztwo">
-          <option value="">-- Wybierz województwo --</option>
-          <option value="mazowieckie">Mazowieckie</option>
-          <option value="malopolskie">Małopolskie</option>
-          <option value="slaskie">Śląskie</option>
-        </select>
+					<label for="wojewodztwo">Województwo:</label>
+					<select name="wojewodztwo" id="wojewodztwo">
+						<option value="">-- Wybierz województwo --</option>
+						<option value="mazowieckie">Mazowieckie</option>
+						<option value="malopolskie">Małopolskie</option>
+						<option value="slaskie">Śląskie</option>
+					</select>
 
-        <!-- Nowe pole wyboru firmy -->
-        <label for="firma">Wybierz firmę do której chcesz wysłać zapytanie:</label>
-        <select name="firma" id="firma">
-          <option value="">-- Wybierz firmę --</option>
-        </select>
+					<!-- Nowe pole wyboru firmy -->
+					<label for="firma">Wybierz firmę do której chcesz wysłać zapytanie:</label>
+					<select name="firma" id="firma">
+						<option value="">-- Wybierz firmę --</option>
+					</select>
 
-        <!-- Ukryte pole do przekazania e-maila wybranej firmy -->
-        <input type="hidden" name="email_firmy" id="email_firmy" />
+					<!-- Ukryte pole do przekazania e-maila wybranej firmy -->
+					<input type="hidden" name="email_firmy" id="email_firmy" />
 
-        <label for="imie_nick">Imię lub nick:</label>
-        <input type="text" name="imie_nick" id="imie_nick" required />
+					<label for="imie_nick">Imię lub nick:</label>
+					<input type="text" name="imie_nick" id="imie_nick" required />
 
-        <label for="adres">Adres:</label>
-        <input type="text" name="adres" id="adres" required />
+					<label for="adres">Adres:</label>
+					<input type="text" name="adres" id="adres" required />
 
-        <label for="kod">Kod pocztowy:</label>
-        <input type="text" name="kod" id="kod" required />
+					<label for="kod">Kod pocztowy:</label>
+					<input type="text" name="kod" id="kod" required />
 
-        <label for="miasto">Miasto:</label>
-        <input type="text" name="miasto" id="miasto" required />
+					<label for="miasto">Miasto:</label>
+					<input type="text" name="miasto" id="miasto" required />
 
-        <label for="telefon">Telefon:</label>
-        <input type="text" name="telefon" id="telefon" required />
+					<label for="telefon">Telefon:</label>
+					<input type="text" name="telefon" id="telefon" />
 
-        <label for="email">E-mail:</label>
-        <input type="email" name="email" id="email" required />
-      </div>
+					<label for="email">E-mail:</label>
+					<input type="email" name="email" id="email" required />
+				</div>
 
-      <input type="submit" value="Wyślij" id="submit-button" disabled />
-    </form>
+				<input type="submit" value="Wyślij" id="submit-button" disabled />
+			</form>
 
-    <!-- Podsumowanie wybranych wartości -->
-    <div class="selected-values">
-      <h2>Wybrane wartości:</h2>
-      
-      <p><strong>Marka:</strong> <span id="selected-marka">-</span></p>
-      <p><strong>Model:</strong> <span id="selected-model">-</span></p>
-      <p><strong>Moc:</strong> <span id="selected-moc">-</span></p>
-      <p><strong>Pojemność:</strong> <span id="selected-pojemnosc">-</span></p>
-      <p><strong>Rok produkcji:</strong> <span id="selected-rok_produkcji">-</span></p>
-      <p><strong>Kod silnika:</strong> <span id="selected-kod_silnika">-</span></p>
-      <hr>
-      <p><strong>Imię/Nick:</strong> <span id="selected-imie_nick">-</span></p>
-      <p><strong>Adres:</strong> <span id="selected-adres">-</span></p>
-      <p><strong>Kod pocztowy:</strong> <span id="selected-kod">-</span></p>
-      <p><strong>Miasto:</strong> <span id="selected-miasto">-</span></p>
-      <p><strong>Telefon:</strong> <span id="selected-telefon">-</span></p>
-      <p><strong>Email:</strong> <span id="selected-email">-</span></p>
-      <p><strong>Województwo:</strong> <span id="selected-wojewodztwo">-</span></p>
-      <p><strong>Wybrana firma:</strong> <span id="selected-firma">-</span></p>
-      <hr>
-      <h3>Firmy dla wybranego województwa:</h3>
-      <div id="daneFirmy"></div>
-    </div>
-  </div>
+			<!-- Podsumowanie wybranych wartości -->
+			<div class="selected-values">
+				<h2>Wybrane wartości:</h2>
 
-  <script src="script.js"></script>
-</body>
+				<p><strong>Marka:</strong> <span id="selected-marka">-</span></p>
+				<p><strong>Model:</strong> <span id="selected-model">-</span></p>
+				<p><strong>Moc:</strong> <span id="selected-moc">-</span></p>
+				<p><strong>Pojemność:</strong> <span id="selected-pojemnosc">-</span></p>
+				<p><strong>Rok produkcji:</strong> <span id="selected-rok_produkcji">-</span></p>
+				<p><strong>Kod silnika:</strong> <span id="selected-kod_silnika">-</span></p>
+				<hr />
+				<p><strong>Imię/Nick:</strong> <span id="selected-imie_nick">-</span></p>
+				<p><strong>Adres:</strong> <span id="selected-adres">-</span></p>
+				<p><strong>Kod pocztowy:</strong> <span id="selected-kod">-</span></p>
+				<p><strong>Miasto:</strong> <span id="selected-miasto">-</span></p>
+				<p><strong>Telefon:</strong> <span id="selected-telefon">-</span></p>
+				<p><strong>Email:</strong> <span id="selected-email">-</span></p>
+				<p><strong>Województwo:</strong> <span id="selected-wojewodztwo">-</span></p>
+				<p><strong>Wybrana firma:</strong> <span id="selected-firma">-</span></p>
+				<hr />
+				<h3>Firmy dla wybranego województwa:</h3>
+				<div id="daneFirmy"></div>
+			</div>
+		</div>
+
+		<script src="script.js"></script>
+	</body>
 </html>
