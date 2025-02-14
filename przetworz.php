@@ -1,69 +1,73 @@
 <?php
 include(dbt.php);
 
-// Sprawdź, czy formularz został wysłany
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Pobierz dane z formularza
-    $imie_nick = $_POST['imie_nick'] ?? '';
-    $adres = $_POST['adres'] ?? '';
-    $kod = $_POST['kod'] ?? '';
-    $miasto = $_POST['miasto'] ?? '';
-    $wojewodztwo = $_POST['wojewodztwo'] ?? '';
-    $telefon = $_POST['telefon'] ?? '';
-    $email = $_POST['email'] ?? '';
-    $marka = $_POST['marka'] ?? '';
-    $model = $_POST['model'] ?? '';
-    $kod_silnika = $_POST['kod_silnika'] ?? '';
-    $moc = $_POST['moc'] ?? 0;
-    $pojemnosc = $_POST['pojemnosc'] ?? 0;
-    $rok_produkcji = $_POST['rok_produkcji'] ?? 0;
-    $cena = $_POST['cena'] ?? 0;
 
-    // Połączenie z bazą danych za pomocą mysqli
-    $mysqli = new mysqli($host, $user, $password, $dbname);
+// Nawiązanie połączenia z bazą
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    // Sprawdź, czy połączenie się udało
-    if ($mysqli->connect_error) {
-        die("Błąd połączenia z bazą danych: " . $mysqli->connect_error);
-    }
-
-    // Przygotowanie zapytania SQL
-    $sql = "INSERT INTO zgloszenia (
-        imie_nick, adres, kod, miasto, wojewodztwo, telefon, email, 
-        marka, model, kod_silnika, moc, pojemnosc, rok_produkcji, cena
-    ) VALUES (
-        ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
-    )";
-
-    // Przygotowanie statement
-    $stmt = $mysqli->prepare($sql);
-    if (!$stmt) {
-        die("Błąd przygotowania zapytania: " . $mysqli->error);
-    }
-
-    // Wiązanie parametrów
-    $stmt->bind_param(
-        'ssssssssssiiid', // Typy danych: s - string, i - integer, d - double
-        $imie_nick, $adres, $kod, $miasto, $wojewodztwo, $telefon, $email,
-        $marka, $model, $kod_silnika, $moc, $pojemnosc, $rok_produkcji, $cena
-    );
-
-    // Wykonanie zapytania
-    if ($stmt->execute()) {
-        // Komunikat o sukcesie
-        echo "<h1>Dziękujemy za zgłoszenie!</h1>";
-        echo "<p>Twoje dane zostały zapisane w bazie danych.</p>";
-    } else {
-        // Obsługa błędów
-        echo "<p style='color: red;'>Błąd podczas zapisywania danych: " . $stmt->error . "</p>";
-    }
-
-    // Zamknięcie statement i połączenia
-    $stmt->close();
-    $mysqli->close();
-} else {
-    // Jeśli formularz nie został wysłany, przekieruj użytkownika
-    header("Location: formularz.html");
-    exit();
+// Sprawdzenie połączenia
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
+
+// Odbiór danych z formularza
+$marka         = $_POST['marka'];
+$model         = $_POST['model'];
+$moc           = $_POST['moc'];
+$pojemnosc     = $_POST['pojemnosc'];
+$rok_produkcji = $_POST['rok_produkcji'];
+$kod_silnika   = $_POST['kod_silnika'];
+$wojewodztwo   = $_POST['wojewodztwo'];
+$firma         = $_POST['firma'];       // wartość pola select – nazwa firmy jest wyświetlana, a wartość to adres e-mail
+$imie_nick     = $_POST['imie_nick'];
+$adres         = $_POST['adres'];
+$kod           = $_POST['kod'];
+$miasto        = $_POST['miasto'];
+$telefon       = $_POST['telefon'];
+$email         = $_POST['email'];
+$email_firmy   = $_POST['email_firmy']; // ukryte pole zawierające adres e-mail firmy
+
+// Przygotowanie zapytania SQL
+// Zakładamy, że tabela "zgloszenia" posiada następujące kolumny:
+// id (AUTO_INCREMENT PRIMARY KEY), marka, model, moc, pojemnosc, rok_produkcji, kod_silnika, wojewodztwo, firma,
+// imie_nick, adres, kod, miasto, telefon, email, email_firmy
+$sql = "INSERT INTO zgloszenia (marka, model, moc, pojemnosc, rok_produkcji, kod_silnika, wojewodztwo, firma, imie_nick, adres, kod, miasto, telefon, email, email_firmy)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+$stmt = $conn->prepare($sql);
+if (!$stmt) {
+    die("Prepare failed: " . $conn->error);
+}
+
+// Powiązanie parametrów (przyjmujemy, że pola typu liczbowe są int, a pozostałe string)
+// "ssiiissssssssss" oznacza kolejno: string, string, integer, integer, integer, string, string, string, string, string, string, string, string, string, string
+$stmt->bind_param("ssiiissssssssss", 
+    $marka, 
+    $model, 
+    $moc, 
+    $pojemnosc, 
+    $rok_produkcji, 
+    $kod_silnika, 
+    $wojewodztwo, 
+    $firma, 
+    $imie_nick, 
+    $adres, 
+    $kod, 
+    $miasto, 
+    $telefon, 
+    $email, 
+    $email_firmy
+);
+
+// Wykonanie zapytania i sprawdzenie wyniku
+if ($stmt->execute()) {
+    // Pobranie ID nowo dodanego rekordu
+    $last_id = $conn->insert_id;
+    echo "Rekord został dodany. ID: " . $last_id;
+} else {
+    echo "Błąd: " . $stmt->error;
+}
+
+$stmt->close();
+$conn->close();
 ?>
