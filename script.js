@@ -51,18 +51,18 @@ document.addEventListener('DOMContentLoaded', function () {
     // Dane firm przechowywane lokalnie – zamiast wywoływania GET_FIRMY.PHP
     let firmy = {
         mazowieckie: [
-            { firma: 'CZAKRAM', telefon: '-', email: 'mazowieckie-warszawa@czakram.pl' },
-            { firma: 'AutoSerwis Jan', telefon: '123456789', email: 'serwis.jan@example.com' },
-            { firma: 'Mechanika Kowalski', telefon: '987654321', email: 'mechanika.kowalski@example.com' },
+            { firma: 'CZAKRAM', telefon: '-', email: 'rojek@czakram.pl' },
+            { firma: 'AutoSerwis Jan', telefon: '123456789', email: 'rojek@czakram.pl' },
+            { firma: 'Mechanika Kowalski', telefon: '987654321', email: 'rojek@czakram.pl' },
         ],
         malopolskie: [
-            { firma: 'CZAKRAM', telefon: '-', email: 'malopolskie-krakow@czakram.pl' },
-            { firma: 'AutoNaprawa Nowak', telefon: '555888999', email: 'naprawa.nowak@example.com' },
+            { firma: 'CZAKRAM', telefon: '-', email: 'rojek@czakram.pl' },
+            { firma: 'AutoNaprawa Nowak', telefon: '555888999', email: 'rojek@czakram.pl' },
         ],
         slaskie: [
             { firma: 'CZAKRAM', telefon: '-', email: 'slaskie@czakram.pl' },
-            { firma: 'Serwis AutoFix', telefon: '6656777888', email: 'zautofix@example.com' },
-            { firma: 'Serwis AutoFix', telefon: '5666777888', email: 'bautofix@example.com' },
+            { firma: 'Serwis AutoFix', telefon: '6656777888', email: 'rojek@czakram.pl' },
+            { firma: 'Serwis AutoFix', telefon: '5666777888', email: 'rojek@czakram.pl' },
         ],
     };
     
