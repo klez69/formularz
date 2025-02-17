@@ -66,7 +66,7 @@ $to = $email_firmy;
 // Zakodowanie tematu wiadomości, aby polskie znaki były poprawnie wyświetlane
 $subject = "=?UTF-8?B?" . base64_encode("Nowe zapytanie ze strony brc-maestro.pl w sprawie systemu Maestro") . "?=";
 
-$message = "Witaj,\n\nSzczegóły zgłoszenia:\n"
+$message = "Witaj, klient $imie_nick wysłał ze strony brc-maestro.pl zapytanie w sprawie montażu samochodu $marka $model \n\nSzczegóły zgłoszenia:\n"
          . "Marka: $marka\n"
          . "Model: $model\n"
          . "Moc: $moc\n"
