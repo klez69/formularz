@@ -52,15 +52,17 @@ document.addEventListener('DOMContentLoaded', function () {
     let firmy = {
         mazowieckie: [
             { firma: 'CZAKRAM', telefon: '-', email: 'rojek@czakram.pl' },
-            { firma: 'AutoSerwis Jan', telefon: '123456789', email: 'rojek@czakram.pl' },
-            { firma: 'Mechanika Kowalski', telefon: '987654321', email: 'rojek@czakram.pl' },
+            { firma: 'ENERGY GAZ POLSKA', telefon: '22 8100090', email: 'rojek@czakram.pl' },
+            { firma: 'J.J. KARASIŃSCY  S.C.', telefon: '603 350 272', email: 'rojek@czakram.pl' },
+			{ firma: 'ADGAZ ADAM  STĘPIEŃ', telefon: '509 191 929', email: 'rojek@czakram.pl' },
+			{ firma: 'NOWOTCZYŃSKI PIOTR USŁUGI', telefon: '501 387 642', email: 'rojek@czakram.pl' },
         ],
         malopolskie: [
             { firma: 'CZAKRAM', telefon: '-', email: 'rojek@czakram.pl' },
-            { firma: 'AutoNaprawa Nowak', telefon: '555888999', email: 'rojek@czakram.pl' },
+            { firma: 'F.H.U. KARAT MARZENA ZIĘĆ', telefon: '508 187 622', email: 'rojek@czakram.pl' },
         ],
         slaskie: [
-            { firma: 'CZAKRAM', telefon: '-', email: 'slaskie@czakram.pl' },
+            { firma: 'CZAKRAM SP. Z O.O.', telefon: '32 2221587', email: 'slaskie@czakram.pl' },
             { firma: 'Serwis AutoFix', telefon: '6656777888', email: 'rojek@czakram.pl' },
             { firma: 'Serwis AutoFix', telefon: '5666777888', email: 'rojek@czakram.pl' },
         ],
@@ -96,9 +98,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 listaFirm.forEach(function(firma) {
                     listaHTML += `
                         <li>
-                            <p><strong>Firma:</strong> ${firma.firma}</p>
-                            <p><strong>Telefon:</strong> ${firma.telefon}</p>
-                            <p><strong>Email:</strong> <a href="mailto:${firma.email}">${firma.email}</a></p>
+                            <p><strong>Firma:</strong> ${firma.firma}
+                            <strong>Telefon:</strong> ${firma.telefon}
+                            <strong>Email:</strong> <a href="mailto:${firma.email}">${firma.email}</a></p>
                         </li>
                     `;
                 });
@@ -123,9 +125,9 @@ document.addEventListener('DOMContentLoaded', function () {
     function wyswietlDaneFirmy(firma) {
         daneFirmyDiv.innerHTML = `
             <h3>Dane firmy:</h3>
-            <p><strong>Firma:</strong> ${firma.firma}</p>
-            <p><strong>Telefon:</strong> ${firma.telefon}</p>
-            <p><strong>Email:</strong> <a href="mailto:${firma.email}">${firma.email}</a></p>
+            <p><strong>Firma:</strong> ${firma.firma}
+             <strong>Telefon:</strong> ${firma.telefon}
+             <strong>Email:</strong> <a href="mailto:${firma.email}">${firma.email}</a></p>
         `;
     }
 });
