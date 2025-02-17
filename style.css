@@ -2,7 +2,7 @@
 body {
 	font-family: Arial, sans-serif;
 	font-size: 12px;
-	background-color: #f4f4f4;
+	background-color: #dbdbdb;
 	margin: 0;
 	padding: 0;
 	display: flex;
@@ -11,6 +11,12 @@ body {
 	min-height: 100vh;
 }
 
+#sp-header .logo{
+	height: 110px;
+	display: inline-flex;
+	margin: 0;
+	align-items: center;
+}
 /* Kontener formularza */
 .form-container {
 	background-color: #fff;
@@ -18,9 +24,10 @@ body {
 	border-radius: 8px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	width: 100%;
-	max-width: 1400px; /* Zwiększona szerokość dla dwóch kolumn */
+	max-width: 1200px; /* Zwiększona szerokość dla dwóch kolumn */
 	display: flex;
 	gap: 20px;
+	display: flex;
 }
 
 /* Lewa kolumna (formularz) */
@@ -33,7 +40,7 @@ body {
 	flex: 1;
 	background-color: #f9f9f9;
 	padding: 15px;
-	border-radius: 8px;
+	border-radius: 9px;
 	border: 1px solid #ddd;
 }
 
@@ -71,7 +78,7 @@ body {
 }
 
 .form-container input[type='submit']:hover {
-	background-color: #218838;
+	background-color: #b30000;
 }
 
 /* Style dla sekcji wybranych wartości */
@@ -82,13 +89,19 @@ body {
 
 .selected-values p {
 	margin: 10px 0;
-	color: #ff0000;
-	font-weight: bold;
+	color: #b30000;
+}
+
+/* Klasa dla wyróżnienia pól zgody klienta*/
+.consent p {
+	color: #b30000;
+	font-style: italic;
+	width: 90%;
 }
 
 /* Klasa dla wyróżnienia pól */
 .highlight-red {
-	color: red;
+	color: #b30000;
 	font-weight: bold;
 }
 
@@ -100,17 +113,8 @@ body {
 }
 /* Klasa dla wyróżnienia pól */
 .highlight-red {
-	color: red;
+	color: #b30000;
 	font-weight: bold;
-}
-
-/* Pole cena */
-#cena {
-	background-color: #f9f9f9;
-	border: 1px solid #ccc;
-	color: red;
-	font-weight: bold;
-	font-size: 16px;
 }
 
 /* Style dla list rozwijanych */
@@ -129,7 +133,7 @@ body {
 .form-container input[type='button'] {
 	width: 90%;
 	padding: 10px;
-	background-color: #007bff;
+	background-color: #b30000;
 	color: #fff;
 	border: none;
 	border-radius: 4px;
@@ -138,7 +142,7 @@ body {
 }
 
 .form-container input[type='button']:hover {
-	background-color: #0056b3;
+	background-color: #7c0000;
 }
 
 /* Ukrycie opisu schematu na start */
