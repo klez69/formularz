@@ -1,105 +1,123 @@
-<?php
-include("dbt.php");
+<!DOCTYPE html>
+<html lang="pl">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Formularz zgłoszeniowy</title>
+		<link rel="stylesheet" href="style.css" />
+		<link href="https://brc-maestro.pl//images/favico.ico rel="icon" type="image/vnd.microsoft.icon">
+	</head>
+	<header id="sp-header">
+	<!-- logo -->
+	 <div id="sp-logo" class="col-auto">
+	 <img src="https://brc-maestro.pl/images/mlogo.png">
+	 </div>
+	</header>
+	<body>
+	
+		<div class="form-container">
+			<h1>Formularz</h1>
+			
+			<form action="przetworz.php" method="post">
+				<!-- Dane pojazdu -->
+				<label for="marka">Marka pojazdu:</label>
+				<input type="text" name="marka" id="marka" required />
 
+				<label for="model">Model pojazdu:</label>
+				<input type="text" name="model" id="model" required />
 
-// Nawiązanie połączenia z bazą
-$conn = new mysqli($servername, $username, $password, $dbname);
+				<label for="moc">Moc (KM):</label>
+				<input type="number" name="moc" id="moc" required />
 
-// Sprawdzenie połączenia
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+				<label for="pojemnosc">Pojemność (cm³):</label>
+				<input type="number" name="pojemnosc" id="pojemnosc" required />
 
-// Odbiór danych z formularza
-$marka         = $_POST['marka'];
-$model         = $_POST['model'];
-$moc           = $_POST['moc'];
-$pojemnosc     = $_POST['pojemnosc'];
-$rok_produkcji = $_POST['rok_produkcji'];
-$kod_silnika   = $_POST['kod_silnika'];
-$wojewodztwo   = $_POST['wojewodztwo'];
-$firma         = $_POST['firma'];       // wartość pola select – nazwa firmy jest wyświetlana, a wartość to adres e-mail
-$imie_nick     = $_POST['imie_nick'];
-$adres         = $_POST['adres'];
-$kod           = $_POST['kod'];
-$miasto        = $_POST['miasto'];
-$telefon       = $_POST['telefon'];
-$email         = $_POST['email'];
-$email_firmy   = $_POST['email_firmy']; // ukryte pole zawierające adres e-mail firmy
+				<label for="rok_produkcji">Rok produkcji:</label>
+				<input type="number" name="rok_produkcji" id="rok_produkcji" required />
 
-// Przygotowanie zapytania SQL
-// Zakładamy, że tabela "zgloszenia" posiada następujące kolumny:
-// id (AUTO_INCREMENT PRIMARY KEY), marka, model, moc, pojemnosc, rok_produkcji, kod_silnika, wojewodztwo, firma,
-// imie_nick, adres, kod, miasto, telefon, email, email_firmy
-$sql = "INSERT INTO zgloszenia (marka, model, moc, pojemnosc, rok_produkcji, kod_silnika, wojewodztwo, firma, imie_nick, adres, kod, miasto, telefon, email, email_firmy)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				<!-- Nowe pole: kod silnika bez walidacji -->
+				<label for="kod_silnika">Kod silnika:</label>
+				<input type="text" name="kod_silnika" id="kod_silnika" />
 
-$stmt = $conn->prepare($sql);
-if (!$stmt) {
-    die("Prepare failed: " . $conn->error);
-}
+				<input type="button" value="Sprawdź" id="sprawdz-button" />
 
-// Powiązanie parametrów (przyjmujemy, że pola typu liczbowe są int, a pozostałe string)
-// "ssiiissssssssss" oznacza kolejno: string, string, integer, integer, integer, string, string, string, string, string, string, string, string, string, string
-$stmt->bind_param("ssiiissssssssss", 
-    $marka, 
-    $model, 
-    $moc, 
-    $pojemnosc, 
-    $rok_produkcji, 
-    $kod_silnika, 
-    $wojewodztwo, 
-    $firma, 
-    $imie_nick, 
-    $adres, 
-    $kod, 
-    $miasto, 
-    $telefon, 
-    $email, 
-    $email_firmy
-);
+				<!-- Dane klienta -->
+				<div id="dane-klienta" style="display: none">
+					<h2>Dane klienta:</h2>
 
-if ($stmt->execute()) {
-// Przygotowanie wiadomości e-mail do firmy
-$to = $email_firmy;
+					<label for="wojewodztwo">Województwo:</label>
+					<select name="wojewodztwo" id="wojewodztwo">
+						<option value="">-- Wybierz województwo --</option>
+						<option value="mazowieckie">Mazowieckie</option>
+						<option value="malopolskie">Małopolskie</option>
+						<option value="slaskie">Śląskie</option>
+					</select>
 
-// Zakodowanie tematu wiadomości, aby polskie znaki były poprawnie wyświetlane
-$subject = "=?UTF-8?B?" . base64_encode("Nowe zapytanie ze strony brc-maestro.pl w sprawie systemu Maestro") . "?=";
+					<!-- Nowe pole wyboru firmy -->
+					<label for="firma">Wybierz firmę do której chcesz wysłać zapytanie:</label>
+					<select name="firma" id="firma">
+						<option value="">-- Wybierz firmę --</option>
+					</select>
 
-$message = "Witaj, $firma\n\nSzczegóły zgłoszenia:\n"
-         . "Marka: $marka\n"
-         . "Model: $model\n"
-         . "Moc: $moc\n"
-         . "Pojemność: $pojemnosc\n"
-         . "Rok produkcji: $rok_produkcji\n"
-         . "Kod silnika: $kod_silnika\n"
-         . "Województwo: $wojewodztwo\n\n"
-         . "Dane klienta:\n"
-         . "Imię/Nick: $imie_nick\n"
-         . "Adres: $adres\n"
-         . "Kod pocztowy: $kod\n"
-         . "Miasto: $miasto\n"
-         . "Telefon: $telefon\n"
-         . "Email klienta: $email\n\n"
-         . "Pozdrawiam,\nSystem zgłoszeń";
+					<!-- Ukryte pole do przekazania e-maila wybranej firmy -->
+					<input type="hidden" name="email_firmy" id="email_firmy" />
 
-// Ustawienie nagłówków z informacją o kodowaniu
-$headers = "MIME-Version: 1.0\r\n";
-$headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-$headers .= "From: brc-maestro@czakram.pl\r\n";
-$headers .= "Reply-To: brc-maestro@czakram.pl\r\n";
-$headers .= "X-Mailer: PHP/" . phpversion();
+					<label for="imie_nick">Imię lub nick:</label>
+					<input type="text" name="imie_nick" id="imie_nick" required />
 
-// Wysłanie wiadomości e-mail
-mail($to, $subject, $message, $headers);
-    
-    // Po dodaniu rekordu przekierowanie z powrotem do formularza
-    header("Location: formularz.html");
-    exit;
-} else {
-    echo "Błąd: " . $stmt->error;
-}
+					<label for="adres">Adres:</label>
+					<input type="text" name="adres" id="adres" required />
 
-$stmt->close();
-$conn->close();
-?>
+					<label for="kod">Kod pocztowy:</label>
+					<input type="text" name="kod" id="kod" required />
+
+					<label for="miasto">Miasto:</label>
+					<input type="text" name="miasto" id="miasto" required />
+
+					<label for="telefon">Telefon:</label>
+					<input type="text" name="telefon" id="telefon" />
+
+					<label for="email">E-mail:</label>
+					<input type="email" name="email" id="email" required />
+				
+					<!-- Nowa sekcja zgód -->
+        <div class="consent">
+          <p>* Wyrażam zgodę na przetwarzanie moich danych osobowych zgodnie z Ustawą z dnia 29.08.1997r. o ochronie danych osobowych. Dz. U nr 133 poz.833. Administratorem danych jest firma CZAKRAM.</p>
+          <p>* Zgodnie z ustawą z dnia 18.07.2002 (Dz. U. nr144, poz. 1204) o świadczeniu usług drogą elektroniczną wyrażam zgodę na otrzymywanie informacji handlowych.</p>
+          <p>* Zgadzam się na przetwarzanie danych: <input type="checkbox" name="zgoda" id="zgoda" required /></p>
+        </div>
+      
+					
+					
+				<input type="submit" value="Wyślij" id="submit-button" disabled />
+				</div>
+			</form>
+
+			<!-- Podsumowanie wybranych wartości -->
+			<div class="selected-values">
+				<h2>Wybrane wartości:</h2>
+
+				<p><strong>Marka:</strong> <span id="selected-marka">-</span></p>
+				<p><strong>Model:</strong> <span id="selected-model">-</span></p>
+				<p><strong>Moc:</strong> <span id="selected-moc">-</span></p>
+				<p><strong>Pojemność:</strong> <span id="selected-pojemnosc">-</span></p>
+				<p><strong>Rok produkcji:</strong> <span id="selected-rok_produkcji">-</span></p>
+				<!--<p><strong>Kod silnika:</strong> <span id="selected-kod_silnika">-</span></p>-->
+				<hr />
+				<p><strong>Imię/Nick:</strong> <span id="selected-imie_nick">-</span></p>
+				<p><strong>Adres:</strong> <span id="selected-adres">-</span></p>
+				<p><strong>Kod pocztowy:</strong> <span id="selected-kod">-</span></p>
+				<p><strong>Miasto:</strong> <span id="selected-miasto">-</span></p>
+				<!--<p><strong>Telefon:</strong> <span id="selected-telefon">-</span></p>-->
+				<p><strong>Email:</strong> <span id="selected-email">-</span></p>
+				<p><strong>Województwo:</strong> <span id="selected-wojewodztwo">-</span></p>
+				<p><strong>Wybrana firma:</strong> <span id="selected-firma">-</span></p>
+				<hr />
+				<h3>Firmy dla wybranego województwa:</h3>
+				<div id="daneFirmy"></div>
+			</div>
+		</div>
+
+		<script src="script.js"></script>
+	</body>
+</html>
