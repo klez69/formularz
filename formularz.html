@@ -5,119 +5,229 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Formularz zgłoszeniowy</title>
 		<link rel="stylesheet" href="style.css" />
-		<link href="https://brc-maestro.pl//images/favico.ico rel="icon" type="image/vnd.microsoft.icon">
+		<link href="https://brc-maestro.pl//images/favico.ico" rel="icon" type="image/vnd.microsoft.icon" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 	</head>
-	<header id="sp-header">
-	<!-- logo -->
-	 <div id="sp-logo" class="col-auto">
-	 <img src="https://brc-maestro.pl/images/mlogo.png">
-	 </div>
-	</header>
 	<body>
-	
+		<header>
+			<div class="container">
+				<div class="logo">
+					<a href="https://brc-maestro.pl/szkielet/index.php">
+						<img src="https://brc-maestro.pl/images/mlogo.png" alt="BRC Maestro Logo" />
+					</a>
+				</div>
+				<nav>
+					<ul>
+						<li><a href="https://brc-maestro.pl/szkielet/index.php">Strona główna</a></li>
+						<li><a href="https://brc-maestro.pl/szkielet/galeria.php">Galeria Montaży</a></li>
+						<li><a href="https://brc-maestro.pl/szkielet/zaklady.php">Zakłady Montażowe</a></li>
+						<li><a href="https://brc-maestro.pl/szkielet/lista.php">Lista pojazdów</a></li>
+						<li><a href="https://brc-maestro.pl/szkielet/o-nas.php">Piszą o nas</a></li>
+						<li><a href="https://brc-maestro.pl/formularz/formularz.html">Formularz</a></li>
+						<li><a href="https://brc-maestro.pl/szkielet/kontakt.php">Kontakt</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+
+		<div class="menu-toggle">
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+
 		<div class="form-container">
 			<h1>Formularz</h1>
-			
 			<form action="przetworz.php" method="post">
 				<!-- Dane pojazdu -->
-				<label for="marka">Marka pojazdu:</label>
-				<input type="text" name="marka" id="marka" required />
+				<label for="marka"><font color="#b30000">* Marka pojazdu:</font></label>
+				<select id="marka" required>
+					<option value="">-- Wybierz markę --</option>
+					<option value="Alfa Romeo">Alfa Romeo</option>
+					<option value="Alpine">Alpine</option>
+					<option value="Audi">Audi</option>
+					<option value="Baic">Baic</option>
+					<option value="Bmw">Bmw</option>
+					<option value="Buick">Buick</option>
+					<option value="Cadillac">Cadillac</option>
+					<option value="Changan">Changan</option>
+					<option value="Chery">Chery</option>
+					<option value="Chevrolet">Chevrolet</option>
+					<option value="Citroen">Citroen</option>
+					<option value="Cupra">Cupra</option>
+					<option value="Dacia">Dacia</option>
+					<option value="DFSK">DFSK</option>
+					<option value="DONGFENG">DONGFENG</option>
+					<option value="DS AUTOMOBILES">DS AUTOMOBILES</option>
+					<option value="FAW">FAW</option>
+					<option value="Fiat">Fiat</option>
+					<option value="Ford">Ford</option>
+					<option value="GEELY">GEELY</option>
+					<option value="GMC">GMC</option>
+					<option value="HAVAL">HAVAL</option>
+					<option value="Honda">Honda</option>
+					<option value="Hyundi">Hyundi</option>
+					<option value="INFINITI">INFINITI</option>
+					<option value="JAC">JAC</option>
+					<option value="JAGUAR">JAGUAR</option>
+					<option value="JEEP">JEEP</option>
+					<option value="Kia">Kia</option>
+					<option value="LAND ROVER">LAND ROVER</option>
+					<option value="LEXUS">LEXUS</option>
+					<option value="MAHINDRA">MAHINDRA</option>
+					<option value="MAZDA">MAZDA</option>
+					<option value="MERCEDES">MERCEDES</option>
+					<option value="MG">MG</option>
+					<option value="MINI">MINI</option>
+					<option value="MITSUBISHI">MITSUBISHI</option>
+					<option value="NISSAN">NISSAN</option>
+					<option value="OPEL">OPEL</option>
+					<option value="PEUGEOT">PEUGEOT</option>
+					<option value="PORSCHE">PORSCHE</option>
+					<option value="RENAULT">RENAULT</option>
+					<option value="SEAT">SEAT</option>
+					<option value="SKODA">SKODA</option>
+					<option value="SSANGYONG">SSANGYONG</option>
+					<option value="SUBARU">SUBARU</option>
+					<option value="SUZUKI">SUZUKI</option>
+					<option value="Toyota">Toyota</option>
+					<option value="VOLKSWAGEN">VOLKSWAGEN</option>
+					<option value="VOLVO">VOLVO</option>
+					<option value="Inna">Inna marka</option>
+				</select>
+				<!-- Ręczne wpisanie marki -->
+				<div id="marka-manual" style="display: none">
+					<label for="marka_input"><font color="green">Wpisz markę:</font></label>
+					<input type="text" id="marka_input" />
+				</div>
 
-				<label for="model">Model pojazdu:</label>
-				<input type="text" name="model" id="model" required />
-
-				<label for="moc">Moc (KM):</label>
-				<input type="number" name="moc" id="moc" required />
+				<label for="model"><font color="#b30000">* Model pojazdu:</font></label>
+				<select id="model" required>
+					<option value="">-- Wybierz model --</option>
+					<option value="Inny">Inny model</option>
+				</select>
+				<!-- Ręczne wpisanie modelu -->
+				<div id="model-manual" style="display: none">
+					<label for="model_input"><font color="green">Wpisz model:</font></label>
+					<input type="text" id="model_input" />
+				</div>
 
 				<label for="pojemnosc">Pojemność (cm³):</label>
-				<input type="number" name="pojemnosc" id="pojemnosc" required />
+				<input type="number" name="pojemnosc" id="pojemnosc" />
+
+				<label for="moc">Moc (KM):</label>
+				<input type="number" name="moc" id="moc" />
 
 				<label for="rok_produkcji">Rok produkcji:</label>
-				<input type="number" name="rok_produkcji" id="rok_produkcji" required />
+				<input type="number" name="rok_produkcji" id="rok_produkcji" />
 
-				<!-- Nowe pole: kod silnika bez walidacji -->
 				<label for="kod_silnika">Kod silnika:</label>
 				<input type="text" name="kod_silnika" id="kod_silnika" />
 
+				<!-- Ukryte pola – finalne wartości, które zostaną wysłane -->
+				<input type="hidden" name="marka" id="marka_final" />
+				<input type="hidden" name="model" id="model_final" />
+
+				<!-- Przycisk do wywołania AI -->
 				<input type="button" value="Sprawdź" id="sprawdz-button" />
+
+				<!-- Sekcja wyświetlająca sugestie AI -->
+				<div id="ai-suggestions" style="display: none; margin-top: 15px">
+					<h2>Sugestie AI:</h2>
+					<p id="ai-response"></p>
+				</div>
 
 				<!-- Dane klienta -->
 				<div id="dane-klienta" style="display: none">
 					<h2>Dane klienta:</h2>
-
-					<label for="wojewodztwo">Województwo:</label>
-					<select name="wojewodztwo" id="wojewodztwo">
+					<label for="wojewodztwo"><font color="#b30000">* Województwo:</font></label>
+					<select name="wojewodztwo" id="wojewodztwo" required>
 						<option value="">-- Wybierz województwo --</option>
-						<option value="mazowieckie">Mazowieckie</option>
+						<option value="dolnoslaskie">Dolnośląskie</option>
+						<option value="kujawskopomorskie">Kujawsko-Pomorskie</option>
+						<option value="lubelskie">Lubelskie</option>
+						<option value="lubuskie">Lubuskie</option>
+						<option value="lodzkie">Łódzkie</option>
 						<option value="malopolskie">Małopolskie</option>
+						<option value="mazowieckie">Mazowieckie</option>
+						<option value="opolskie">Opolskie</option>
+						<option value="podkarpackie">Podkarpackie</option>
+						<option value="podlaskie">Podlaskie</option>
+						<option value="pomorskie">Pomorskie</option>
 						<option value="slaskie">Śląskie</option>
+						<option value="swietokrzyskie">Świętokrzyskie</option>
+						<option value="warminskomazurskie">Warmińsko-Mazurskie</option>
+						<option value="wielkopolskie">Wielkopolskie</option>
+						<option value="zachodniopomorskie">Zachodniopomorskie</option>
 					</select>
 
-					<!-- Nowe pole wyboru firmy -->
-					<label for="firma">Wybierz firmę do której chcesz wysłać zapytanie:</label>
-					<select name="firma" id="firma">
+					<label for="firma"><font color="#b30000">* Wybierz firmę:</font></label>
+					<!-- Usuwamy atrybut name z pola select -->
+					<select id="firma" name="firma" required>
 						<option value="">-- Wybierz firmę --</option>
 					</select>
+					<!-- Ukryte pole z e-mailem firmy -->
+					<input type="hidden" name="firma" id="email_firmy" />
 
-					<!-- Ukryte pole do przekazania e-maila wybranej firmy -->
-					<input type="hidden" name="email_firmy" id="email_firmy" />
-
-					<label for="imie_nick">Imię lub nick:</label>
+					<label for="imie_nick"><font color="#b30000">* Imię lub nick:</font></label>
 					<input type="text" name="imie_nick" id="imie_nick" required />
 
 					<label for="adres">Adres:</label>
-					<input type="text" name="adres" id="adres" required />
+					<input type="text" name="adres" id="adres" />
 
 					<label for="kod">Kod pocztowy:</label>
-					<input type="text" name="kod" id="kod" required />
+					<input type="text" name="kod" id="kod" />
 
-					<label for="miasto">Miasto:</label>
+					<label for="miasto"><font color="#b30000">* Miasto:</font></label>
 					<input type="text" name="miasto" id="miasto" required />
 
 					<label for="telefon">Telefon:</label>
 					<input type="text" name="telefon" id="telefon" />
 
-					<label for="email">E-mail:</label>
+					<label for="email"><font color="#b30000">* E-mail:</font></label>
 					<input type="email" name="email" id="email" required />
-				
-					<!-- Nowa sekcja zgód -->
-        <div class="consent">
-          <p>* Wyrażam zgodę na przetwarzanie moich danych osobowych zgodnie z Ustawą z dnia 29.08.1997r. o ochronie danych osobowych. Dz. U nr 133 poz.833. Administratorem danych jest firma CZAKRAM.</p>
-          <p>* Zgodnie z ustawą z dnia 18.07.2002 (Dz. U. nr144, poz. 1204) o świadczeniu usług drogą elektroniczną wyrażam zgodę na otrzymywanie informacji handlowych.</p>
-          <p>* Zgadzam się na przetwarzanie danych: <input type="checkbox" name="zgoda" id="zgoda" required /></p>
-        </div>
-      
-					
-					
-				<input type="submit" value="Wyślij" id="submit-button" disabled />
+
+					<div class="consent">
+						<p>
+							* Wyrażam zgodę na przetwarzanie moich danych osobowych zgodnie z Ustawą z dnia 29.08.1997r. o ochronie
+							danych osobowych. Dz. U nr 133 poz.833. Administratorem danych jest firma CZAKRAM.
+						</p>
+						<p>
+							* Zgodnie z ustawą z dnia 18.07.2002 (Dz. U. nr144, poz. 1204) o świadczeniu usług drogą elektroniczną
+							wyrażam zgodę na otrzymywanie informacji handlowych.
+						</p>
+						<p>* Zgadzam się na przetwarzanie danych: <input type="checkbox" name="zgoda" id="zgoda" required /></p>
+					</div>
+
+					<input type="submit" value="Wyślij" id="submit-button" disabled />
 				</div>
 			</form>
 
 			<!-- Podsumowanie wybranych wartości -->
 			<div class="selected-values">
 				<h2>Wybrane wartości:</h2>
-
 				<p><strong>Marka:</strong> <span id="selected-marka">-</span></p>
 				<p><strong>Model:</strong> <span id="selected-model">-</span></p>
-				<p><strong>Moc:</strong> <span id="selected-moc">-</span></p>
 				<p><strong>Pojemność:</strong> <span id="selected-pojemnosc">-</span></p>
+				<p><strong>Moc:</strong> <span id="selected-moc">-</span></p>
 				<p><strong>Rok produkcji:</strong> <span id="selected-rok_produkcji">-</span></p>
-				<!--<p><strong>Kod silnika:</strong> <span id="selected-kod_silnika">-</span></p>-->
+				<p><strong>Kod silnika:</strong> <span id="selected-kod_silnika">-</span></p>
+				<hr />
+				<p class="typing-text"><strong>Sugestie IA instalacji Maestro:</strong> <span id="selected-ai">-</span></p>
 				<hr />
 				<p><strong>Imię/Nick:</strong> <span id="selected-imie_nick">-</span></p>
 				<p><strong>Adres:</strong> <span id="selected-adres">-</span></p>
 				<p><strong>Kod pocztowy:</strong> <span id="selected-kod">-</span></p>
 				<p><strong>Miasto:</strong> <span id="selected-miasto">-</span></p>
-				<!--<p><strong>Telefon:</strong> <span id="selected-telefon">-</span></p>-->
 				<p><strong>Email:</strong> <span id="selected-email">-</span></p>
 				<p><strong>Województwo:</strong> <span id="selected-wojewodztwo">-</span></p>
-				<p><strong>Wybrana firma:</strong> <span id="selected-firma">-</span></p>
-				<hr />
+				<p><strong>Firma (e-mail):</strong> <span id="selected-firma">-</span></p>
+
 				<h3>Firmy dla wybranego województwa:</h3>
 				<div id="daneFirmy"></div>
 			</div>
 		</div>
-
+		<script src="data.js"></script>
 		<script src="script.js"></script>
 	</body>
 </html>

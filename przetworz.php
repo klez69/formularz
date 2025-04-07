@@ -26,13 +26,14 @@ $miasto        = $_POST['miasto'];
 $telefon       = $_POST['telefon'];
 $email         = $_POST['email'];
 $email_firmy   = $_POST['email_firmy']; // ukryte pole zawierające adres e-mail firmy
+$dataZapisu = date('Y-m-d H:i:s'); // pobiera bieżącą datę i godzinę
 
 // Przygotowanie zapytania SQL
 // Zakładamy, że tabela "zgloszenia" posiada następujące kolumny:
 // id (AUTO_INCREMENT PRIMARY KEY), marka, model, moc, pojemnosc, rok_produkcji, kod_silnika, wojewodztwo, firma,
 // imie_nick, adres, kod, miasto, telefon, email, email_firmy
-$sql = "INSERT INTO zgloszenia (marka, model, moc, pojemnosc, rok_produkcji, kod_silnika, wojewodztwo, firma, imie_nick, adres, kod, miasto, telefon, email, email_firmy)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+$sql = "INSERT INTO zgloszenia (marka, model, moc, pojemnosc, rok_produkcji, kod_silnika, wojewodztwo, firma, imie_nick, adres, kod, miasto, telefon, email, email_firmy, data_zapisu)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 $stmt = $conn->prepare($sql);
 if (!$stmt) {
@@ -41,7 +42,7 @@ if (!$stmt) {
 
 // Powiązanie parametrów (przyjmujemy, że pola typu liczbowe są int, a pozostałe string)
 // "ssiiissssssssss" oznacza kolejno: string, string, integer, integer, integer, string, string, string, string, string, string, string, string, string, string
-$stmt->bind_param("ssiiissssssssss", 
+$stmt->bind_param("ssiiisssssssssss", 
     $marka, 
     $model, 
     $moc, 
@@ -56,12 +57,13 @@ $stmt->bind_param("ssiiissssssssss",
     $miasto, 
     $telefon, 
     $email, 
-    $email_firmy
+    $email_firmy,
+	$dataZapisu
 );
 
 if ($stmt->execute()) {
 // Przygotowanie wiadomości e-mail do firmy
-$to = $email_firmy;
+$to = $firma;
 
 // Zakodowanie tematu wiadomości, aby polskie znaki były poprawnie wyświetlane
 $subject = "=?UTF-8?B?" . base64_encode("Nowe zapytanie ze strony brc-maestro.pl w sprawie systemu Maestro") . "?=";
@@ -81,13 +83,14 @@ $message = "Witaj, klient $imie_nick wysłał ze strony brc-maestro.pl zapytanie
          . "Miasto: $miasto\n"
          . "Telefon: $telefon\n"
          . "Email klienta: $email\n\n"
-         . "Pozdrawiam,\nSystem zgłoszeń";
+         . "Pozdrawiam,\nSystem zgłoszeń wysłał $firma na adres e-mail $email_firmy \nw dniu $dataZapisu";
 
 // Ustawienie nagłówków z informacją o kodowaniu
 $headers = "MIME-Version: 1.0\r\n";
 $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-$headers .= "From: brc-maestro@czakram.pl\r\n";
-$headers .= "Reply-To: brc-maestro@czakram.pl\r\n";
+$headers .= "From: maestro@czakram.pl\r\n";
+$headers .= "Reply-To: maestro@czakram.pl\r\n";
+//$headers .= "Cc: fax@czakram.pl\r\n";  // dodaje kopię do dodatkowego adresu
 $headers .= "X-Mailer: PHP/" . phpversion();
 
 // Wysłanie wiadomości e-mail

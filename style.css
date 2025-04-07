@@ -2,21 +2,31 @@
 body {
 	font-family: Arial, sans-serif;
 	font-size: 12px;
-	background-color: #dbdbdb;
+	/*background-color: #dbdbdb;*/
+	background: linear-gradient(rgba(245 15 7 / 30%), rgba(0, 0, 0, 0.5)),
+		url(https://brc-maestro.pl/images/2024/01/08/1c.webp) no-repeat center center fixed;
+	background-size: cover;
 	margin: 0;
 	padding: 0;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	min-height: 100vh;
 }
 
-#sp-header .logo{
-	height: 110px;
-	display: inline-flex;
-	margin: 0;
-	align-items: center;
+#sp-header {
+	width: 100%;
+	/* background-color: #fff; */
 }
+
+#logo {
+	height: 20px;
+	display: flex;
+	align-items: center;
+	margin: 5px;
+}
+
 /* Kontener formularza */
 .form-container {
 	background-color: #fff;
@@ -24,10 +34,10 @@ body {
 	border-radius: 8px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	width: 100%;
-	max-width: 1200px; /* Zwiększona szerokość dla dwóch kolumn */
+	max-width: 1200px;
 	display: flex;
 	gap: 20px;
-	display: flex;
+	margin: 20px auto;
 }
 
 /* Lewa kolumna (formularz) */
@@ -35,7 +45,7 @@ body {
 	flex: 1;
 }
 
-/* Prawa kolumna (wybrane wartości) */
+/* Prawa kolumna (podsumowanie) */
 .form-container .selected-values {
 	flex: 1;
 	background-color: #f9f9f9;
@@ -44,7 +54,7 @@ body {
 	border: 1px solid #ddd;
 }
 
-/* Style dla etykiet */
+/* Style etykiet */
 .form-container label {
 	display: block;
 	margin-bottom: 5px;
@@ -52,11 +62,12 @@ body {
 	font-weight: bold;
 }
 
-/* Style dla pól input i textarea */
+/* Style pól input, select, textarea */
 .form-container input[type='text'],
 .form-container input[type='email'],
 .form-container input[type='number'],
-.form-container textarea {
+.form-container textarea,
+.form-container select {
 	width: 90%;
 	padding: 10px;
 	margin-bottom: 15px;
@@ -65,8 +76,9 @@ body {
 	font-size: 12px;
 }
 
-/* Style dla przycisku */
-.form-container input[type='submit'] {
+/* Style przycisków */
+.form-container input[type='submit'],
+.form-container input[type='button'] {
 	width: 90%;
 	padding: 10px;
 	background-color: #28a745;
@@ -77,11 +89,19 @@ body {
 	cursor: pointer;
 }
 
+.form-container input[type='button'] {
+	background-color: #b30000;
+}
+
+.form-container input[type='button']:hover {
+	background-color: #7c0000;
+}
+
 .form-container input[type='submit']:hover {
 	background-color: #b30000;
 }
 
-/* Style dla sekcji wybranych wartości */
+/* Style podsumowania */
 .selected-values h2 {
 	margin-top: 0;
 	color: #333;
@@ -92,17 +112,40 @@ body {
 	color: #b30000;
 }
 
-/* Klasa dla wyróżnienia pól zgody klienta*/
+/* animacja IA podsumowania*/
+.typing-text p {
+	overflow: hidden; /* Ukrywa tekst poza widocznym obszarem */
+	border-right: 2px solid black; /* Klasyczny kursor */
+	white-space: nowrap; /* Zapobiega zawijaniu tekstu */
+	font-size: 11px;
+	width: 0; /* Początkowo szerokość zerowa */
+	animation: typing 3s steps(30, end) forwards, /* Animacja pisania */ blink-caret 0.5s step-end infinite; /* Migający kursor */
+}
+
+@keyframes typing {
+	from {
+		width: 16%;
+	}
+	to {
+		width: 100%;
+	}
+}
+
+@keyframes blink-caret {
+	from,
+	to {
+		border-color: transparent;
+	}
+	10% {
+		border-color: black;
+	}
+}
+
+/* Style sekcji zgód */
 .consent p {
 	color: #b30000;
 	font-style: italic;
 	width: 90%;
-}
-
-/* Klasa dla wyróżnienia pól */
-.highlight-red {
-	color: #b30000;
-	font-weight: bold;
 }
 
 /* Responsywność */
@@ -111,59 +154,132 @@ body {
 		flex-direction: column;
 	}
 }
-/* Klasa dla wyróżnienia pól */
-.highlight-red {
-	color: #b30000;
-	font-weight: bold;
+
+/* Header i nawigacja */
+header {
+	background-color: #000;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+	width: 100%;
+	position: relative;
+	z-index: 1000;
 }
 
-/* Style dla list rozwijanych */
-.form-container select {
-	width: 90%;
-	padding: 10px;
-	margin-bottom: 15px;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	font-size: 12px;
-	background-color: #fff;
-	cursor: pointer;
+header .container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px 20px;
+	max-width: 1000px;
+	margin: 10px auto;
+	background-color: rgba(0, 0, 0, 0.8);
+	border-radius: 50px;
 }
 
-/* Style dla przycisku */
-.form-container input[type='button'] {
-	width: 90%;
-	padding: 10px;
-	background-color: #b30000;
+.logo img {
+	height: 50px;
+}
+
+nav ul {
+	display: flex;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+nav ul li {
+	margin-left: 15px;
+}
+
+nav ul li a {
+	text-decoration: none;
 	color: #fff;
-	border: none;
-	border-radius: 4px;
+	font-weight: 500;
+	transition: color 0.3s;
 	font-size: 12px;
-	cursor: pointer;
+	padding: 5px 10px;
+	border-radius: 20px;
 }
 
-.form-container input[type='button']:hover {
-	background-color: #7c0000;
+nav ul li a:hover {
+	color: #e60000;
+	background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* Ukrycie opisu schematu na start */
-#opis-schematu {
+/* Responsywne menu */
+.menu-toggle {
 	display: none;
-	margin-top: 10px;
-	padding: 10px;
-	border-radius: 5px;
-	font-weight: bold;
+	flex-direction: column;
+	justify-content: space-between;
+	width: 30px;
+	height: 21px;
+	cursor: pointer;
+	z-index: 1001;
+	position: absolute;
+	top: 20px;
+	right: 20px;
 }
 
-/* Zielony opis */
-.opis-green {
-	background-color: #d4edda;
-	color: #155724;
-	border: 1px solid #c3e6cb;
+.menu-toggle span {
+	display: block;
+	width: 100%;
+	height: 3px;
+	background-color: white;
+	transition: all 0.3s ease;
 }
 
-/* Czerwony opis */
-.opis-red {
-	background-color: #f8d7da;
-	color: #721c24;
-	border: 1px solid #f5c6cb;
+@media (max-width: 768px) {
+	header .container {
+		border-radius: 20px;
+		padding: 10px;
+	}
+
+	.menu-toggle {
+		display: flex;
+	}
+
+	nav {
+		position: fixed;
+		top: 0;
+		right: -100%;
+		width: 80%;
+		height: 100vh;
+		background-color: rgba(0, 0, 0, 0.95);
+		transition: right 0.3s ease;
+		z-index: 1000;
+		border-radius: 20px 0 0 20px;
+	}
+
+	nav.active {
+		right: 0;
+	}
+
+	nav ul {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		height: 100%;
+		padding: 80px 0;
+	}
+
+	nav ul li {
+		margin: 15px 0;
+	}
+
+	nav ul li a {
+		font-size: 14px;
+		padding: 8px 20px;
+	}
+
+	.menu-toggle.active span:nth-child(1) {
+		transform: translateY(9px) rotate(45deg);
+	}
+
+	.menu-toggle.active span:nth-child(2) {
+		opacity: 0;
+	}
+
+	.menu-toggle.active span:nth-child(3) {
+		transform: translateY(-9px) rotate(-45deg);
+	}
 }
